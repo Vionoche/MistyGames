@@ -12,6 +12,7 @@
 
 #include "shader_m.h"
 
+// TODO: Right output directories
 // TODO: Create Game and GameBuilder classes
 // TODO: Move Game and GameBuilder classes into separate project
 // TODO: Introduce ImGui
