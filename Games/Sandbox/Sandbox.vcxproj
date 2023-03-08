@@ -146,6 +146,7 @@
     <ClCompile Include="src\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\shader_m.h" />
     <ClInclude Include="src\shader_s.h" />
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
@@ -172,6 +173,8 @@
     </Content>
     <None Include="shaders\5.1.transform.frag" />
     <None Include="shaders\5.1.transform.vert" />
+    <None Include="shaders\7.3.camera.frag" />
+    <None Include="shaders\7.3.camera.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
