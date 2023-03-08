@@ -12,6 +12,14 @@
 
 #include "shader_s.h"
 
+// TODO: Create Game and GameBuilder classes
+// TODO: Move Game and GameBuilder classes into separate project
+// TODO: Introduce ImGui
+// TODO: Levels engine
+// TODO: 2D and 3D levels
+// TODO: Render text
+// TODO: Entity Component System
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
