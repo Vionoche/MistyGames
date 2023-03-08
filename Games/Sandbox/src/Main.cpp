@@ -1,7 +1,14 @@
 #include <iostream>
+#include <filesystem>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "stb_image.h"
 
 void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 void ProcessInput(GLFWwindow* window);
@@ -9,8 +16,20 @@ void ProcessInput(GLFWwindow* window);
 constexpr unsigned int SCR_WIDTH = 800;
 constexpr unsigned int SCR_HEIGHT = 600;
 
+// TODO: Create Game and GameBuilder classes
+// TODO: Move Game and GameBuilder classes into separate project
+// TODO: Copying resources into publish directory
+// TODO: Introduce ImGui
+// TODO: Levels engine
+// TODO: 2D and 3D levels
+
 int main()
 {
+    const auto currentPath = std::filesystem::current_path();
+    const auto shadersPath = currentPath / "shaders" / "shader1.tmp";
+    std::cout << "Now we shall begin: " << currentPath.string() << std::endl;
+    std::cout << "Resources: " << shadersPath.string() << std::endl;
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
