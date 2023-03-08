@@ -2,7 +2,6 @@
 // TODO: Create Game and GameBuilder classes
 // TODO: Move Game and GameBuilder classes into separate project
 // TODO: Introduce ImGui
-// TODO: Introduce Assimp
 // TODO: Levels engine
 // TODO: 2D and 3D levels
 // TODO: Render text
