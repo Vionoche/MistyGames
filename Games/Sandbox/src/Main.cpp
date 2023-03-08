@@ -60,8 +60,8 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    auto vertexShader = currentPath / "shaders" / "5.1.transform.vs";
-    auto fragmentShader = currentPath / "shaders" / "5.1.transform.fs";
+    auto vertexShader = currentPath / "shaders" / "5.1.transform.vert";
+    auto fragmentShader = currentPath / "shaders" / "5.1.transform.frag";
     Shader ourShader(vertexShader.string().c_str(), fragmentShader.string().c_str());
 
     // set up vertex data (and buffer(s)) and configure vertex attributes

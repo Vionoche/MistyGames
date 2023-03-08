@@ -170,8 +170,8 @@
     <Content Include="shaders\\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="shaders\5.1.transform.fs" />
-    <None Include="shaders\5.1.transform.vs" />
+    <None Include="shaders\5.1.transform.frag" />
+    <None Include="shaders\5.1.transform.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
