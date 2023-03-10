@@ -1,4 +1,3 @@
-// TODO: Right output directories
 // TODO: Create Game and GameBuilder classes
 // TODO: Move Game and GameBuilder classes into separate project
 // TODO: Levels engine
