@@ -1,4 +1,3 @@
-// TODO: Use vcpkg
 // TODO: Right output directories
 // TODO: Create Game and GameBuilder classes
 // TODO: Move Game and GameBuilder classes into separate project
@@ -7,23 +6,21 @@
 // TODO: Render text
 // TODO: Entity Component System
 
+#include <filesystem>
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #include "shader_m.h"
 #include "camera.h"
 #include "model.h"
-
-#include <filesystem>
-#include <iostream>
-
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
