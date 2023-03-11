@@ -76,15 +76,27 @@ int Game::Init()
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
 
-    // draw in wireframe
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
     return 0;
 }
 
 void Game::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+}
+
+void Game::Render()
+{
+    // configure global opengl state
+    // -----------------------------
+    glEnable(GL_DEPTH_TEST);
+
+    // draw in wireframe
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    while (!glfwWindowShouldClose(_window))
+    {
+        
+    }
 }
 
 int Game::Run()
@@ -94,7 +106,7 @@ int Game::Run()
         return -1;
     }
 
-    // Game Loop
+    Render();
 
     return 0;
 }

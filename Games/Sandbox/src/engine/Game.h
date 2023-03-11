@@ -28,6 +28,7 @@ private:
     GLFWwindow* _window;
 
     int Init();
+    void Render();
 
     static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 };
