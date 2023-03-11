@@ -4,6 +4,7 @@
 // TODO: 2D and 3D levels
 // TODO: Render text
 // TODO: Entity Component System
+// TODO: Copying and classes
 
 #include <filesystem>
 #include <iostream>
@@ -52,9 +53,7 @@ int main()
 
     Game* game = gameBuilder.Build();
 
-    game->Run();
-
-    delete game;*/
+    return game->Run();*/
 
     // glfw: initialize and configure
     // ------------------------------
@@ -67,7 +66,8 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Sandbox", nullptr, nullptr);
+    const char* title = "Sandbox";
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, title, nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -95,7 +95,7 @@ int main()
     // ---------------------------------------
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
+    //ImGuiIO& io = ImGui::GetIO();
     ImGui::StyleColorsDark();
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);

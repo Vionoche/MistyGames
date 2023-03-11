@@ -1,22 +1,18 @@
 #pragma once
 
 #include <glad/glad.h> 
-
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include "stb_image.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
 #include <string>
-#include <fstream>
-#include <sstream>
 #include <iostream>
 #include <map>
 #include <vector>
 #include <filesystem>
 
+#include "stb_image.h"
 #include "mesh.h"
 #include "shader_m.h"
 
@@ -28,8 +24,8 @@ class Model
 {
 public:
     // model data 
-    vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-    vector<Mesh>    meshes;
+    vector<Texture> textures_loaded; // stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+    vector<Mesh> meshes;
     string directory;
     bool gammaCorrection;
 
@@ -43,7 +39,9 @@ public:
     void Draw(Shader& shader)
     {
         for (unsigned int i = 0; i < meshes.size(); i++)
+        {
             meshes[i].Draw(shader);
+        }
     }
 
 private:
@@ -52,19 +50,21 @@ private:
     {
         // read file via ASSIMP
         Assimp::Importer importer;
-        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+        const aiScene* scene = importer.ReadFile(
+            path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
         // check for errors
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
             cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
             return;
         }
+
         // retrieve the directory path of the filepath
         const std::filesystem::path p(path);
-        //directory = path.substr(0, path.find_last_of('/'));
         directory = p.parent_path().string();
 
-        // process ASSIMP's root node recursively
+        // process ASSIMP root node recursively
         processNode(scene->mRootNode, scene);
     }
 
@@ -79,12 +79,12 @@ private:
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
             meshes.push_back(processMesh(mesh, scene));
         }
+
         // after we've processed all of the meshes (if any) we then recursively process each of the children nodes
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
             processNode(node->mChildren[i], scene);
         }
-
     }
 
     Mesh processMesh(aiMesh* mesh, const aiScene* scene)
@@ -99,11 +99,13 @@ private:
         {
             Vertex vertex;
             glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+
             // positions
             vector.x = mesh->mVertices[i].x;
             vector.y = mesh->mVertices[i].y;
             vector.z = mesh->mVertices[i].z;
             vertex.Position = vector;
+
             // normals
             if (mesh->HasNormals())
             {
@@ -112,6 +114,7 @@ private:
                 vector.z = mesh->mNormals[i].z;
                 vertex.Normal = vector;
             }
+
             // texture coordinates
             if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
             {
@@ -133,18 +136,24 @@ private:
                 vertex.Bitangent = vector;
             }
             else
+            {
                 vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+            }
 
             vertices.push_back(vertex);
         }
+
         // now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
         {
             aiFace face = mesh->mFaces[i];
             // retrieve all indices of the face and store them in the indices vector
             for (unsigned int j = 0; j < face.mNumIndices; j++)
+            {
                 indices.push_back(face.mIndices[j]);
+            }
         }
+
         // process materials
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
         // we assume a convention for sampler names in the shaders. Each diffuse texture should be named
@@ -216,15 +225,22 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
 
     int width, height, nrComponents;
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+
     if (data)
     {
         GLenum format;
         if (nrComponents == 1)
+        {
             format = GL_RED;
+        }
         else if (nrComponents == 3)
+        {
             format = GL_RGB;
+        }
         else if (nrComponents == 4)
+        {
             format = GL_RGBA;
+        }
 
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);

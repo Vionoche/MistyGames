@@ -1,11 +1,16 @@
 #pragma once
 
 #include <filesystem>
+#include <GLFW/glfw3.h>
 
 struct GameOptions
 {
-    unsigned int ScreenWith;
-    unsigned int ScreenHeight;
+    int ScreenWith;
+    int ScreenHeight;
+    std::string WindowTitle;
+
+    GLFWcursorposfun MouseCallback;
+    GLFWscrollfun ScrollCallback;
 };
 
 class Game
@@ -13,13 +18,16 @@ class Game
 public:
     Game(GameOptions options);
 
-    void Run();
+    int Run();
 
     ~Game();
 
 private:
     GameOptions _options;
     std::filesystem::path _currentDirectory;
+    GLFWwindow* _window;
 
-    void Init();
+    int Init();
+
+    static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 };
