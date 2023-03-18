@@ -170,6 +170,7 @@
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\engine\Game.h" />
     <ClInclude Include="src\engine\GameBuilder.h" />
+    <ClInclude Include="src\engine\World.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
     <ClInclude Include="src\shader.h" />

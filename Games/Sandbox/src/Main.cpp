@@ -33,16 +33,16 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void ProcessInput(GLFWwindow* window);
 
 // Screen settings
-constexpr unsigned int SCREEN_WIDTH = 1024;
-constexpr unsigned int SCREEN_HEIGHT = 768;
+constexpr int SCREEN_WIDTH = 1024;
+constexpr int SCREEN_HEIGHT = 768;
 
-// camera
+// Camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = SCREEN_WIDTH / 2.0f;
 float lastY = SCREEN_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-// timing
+// Timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
@@ -130,7 +130,7 @@ int main()
     {
         // per-frame time logic
         // --------------------
-        float currentFrame = static_cast<float>(glfwGetTime());
+        const float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
@@ -144,16 +144,16 @@ int main()
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("Hello, world!"); // Create a window called "Hello, world!" and append into it.
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            //ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+            ImGui::Text("This is some useful text."); // Display some text (you can use a format strings too)
+            //ImGui::Checkbox("Demo Window", &show_demo_window); // Edit bools storing our window open/close state
             //ImGui::Checkbox("Another Window", &show_another_window);
 
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f); // Edit 1 float using a slider from 0.0f to 1.0f
             //ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+            if (ImGui::Button("Button")) // Buttons return true when clicked (most widgets return true when edited/activated)
             {
                 counter++;
             }

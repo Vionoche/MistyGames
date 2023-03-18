@@ -16,6 +16,18 @@ Game::Game(GameOptions options)
     _currentDirectory = std::filesystem::current_path();
 }
 
+int Game::Run()
+{
+    if (!Init())
+    {
+        return -1;
+    }
+
+    Render();
+
+    return 0;
+}
+
 int Game::Init()
 {
     // glfw: initialize and configure
@@ -73,7 +85,6 @@ int Game::Init()
     const char* glsl_version = "#version 130";
     ImGui_ImplOpenGL3_Init(glsl_version);
 
-    // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
 
     return 0;
@@ -97,18 +108,6 @@ void Game::Render()
     {
         
     }
-}
-
-int Game::Run()
-{
-    if (!Init())
-    {
-        return -1;
-    }
-
-    Render();
-
-    return 0;
 }
 
 Game::~Game()
