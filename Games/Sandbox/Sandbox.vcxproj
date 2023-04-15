@@ -165,11 +165,15 @@
     <ClCompile Include="src\engine\GameBuilder.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
+    <ClCompile Include="src\systems\BoundaryBoxSystem.h" />
+    <ClCompile Include="src\systems\PositionSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\engine\Component.h" />
     <ClInclude Include="src\engine\Game.h" />
     <ClInclude Include="src\engine\GameBuilder.h" />
+    <ClInclude Include="src\engine\System.h" />
     <ClInclude Include="src\engine\World.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
@@ -177,6 +181,7 @@
     <ClInclude Include="src\shader_m.h" />
     <ClInclude Include="src\shader_s.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\systems\HealthSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="textures\\**\*.*">

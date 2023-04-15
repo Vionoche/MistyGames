@@ -1,11 +1,14 @@
 #pragma once
+
+#include <unordered_map>
 #include <vector>
 
 int Example();
 
 class Component
 {
-    
+public:
+    int EntityId;
 };
 
 class Health : public Component
@@ -21,25 +24,32 @@ public:
     int Y;
 };
 
+class BoundaryBox: public Component
+{
+public:
+    int Radius;
+};
+
 template<class T, class U>
 concept Derived = std::is_base_of_v<U, T>;
 
 class Entity
 {
 public:
-    Entity(int id)
+    Entity(int id) : Id(id)
     {
-        Id = id;
     }
 
-    int Id;
-    std::vector<Component> Components;
+    const int Id;
+    const std::vector<Component*> Components;
 };
 
 class World
 {
 public:
     std::vector<Entity*> Entities;
+    std::vector<Component*> Components;
+    std::unordered_map<int, Component*> ComponentEntities;
 
     Entity* CreateEntity()
     {
@@ -89,15 +99,31 @@ public:
     }
 
     template<Derived<Component> TComponent>
-    void AddComponent(int entityEd, TComponent component)
+    void AddComponent(int entityId, TComponent component)
     {
-        
+        Entity* entity = GetEntity(entityId);
+        if (entity == nullptr)
+        {
+            return;
+        }
+
+        entity->Components.push_back(component);
     }
 
     template<Derived<Component> TComponent>
     void RemoveComponent(int entityId, TComponent component)
     {
-        
+        Entity* entity = GetEntity(entityId);
+        if (entity == nullptr)
+        {
+            return;
+        }
+
+        for (auto iterator = entity->Components.begin(); iterator != entity->Components.end();)
+        {
+            Component* currentComponent = *iterator;
+            
+        }
     }
 
 private:
@@ -125,17 +151,24 @@ public:
     void virtual Render();
 };
 
-inline int Example()
+int Example()
 {
-    const World world;
-    UiManager uiManger;
+    // Global Init
+
+    // World Init
+    World world;
+
+    // Load Resources (Models, Textures, Shaders)
+
+    UiManager uiManager;
+
     System playerSystem(world);
     System collisionSystem(world);
     System renderSystem(world);
 
     while (true)
     {
-        if (!uiManger.ProcessInput())
+        if (!uiManager.ProcessInput())
         {
             break;
         }
@@ -144,7 +177,7 @@ inline int Example()
         collisionSystem.ProcessComponents();
         renderSystem.ProcessComponents();
 
-        uiManger.Render();
+        uiManager.Render();
     }
 
     return 0;
