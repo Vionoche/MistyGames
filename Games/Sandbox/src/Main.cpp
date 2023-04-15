@@ -4,7 +4,6 @@
 // TODO: 2D and 3D levels
 // TODO: Render text
 // TODO: Entity Component System
-// TODO: Copying and classes
 
 #include <filesystem>
 #include <iostream>
