@@ -96,5 +96,6 @@
     <None Include="shaders\7.3.camera.vert" />
     <None Include="shaders\1.model_loading.vert" />
     <None Include="shaders\1.model_loading.frag" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

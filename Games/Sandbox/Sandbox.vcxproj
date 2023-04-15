@@ -204,6 +204,7 @@
     <Content Include="shaders\\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="README.md" />
     <None Include="shaders\1.model_loading.frag" />
     <None Include="shaders\1.model_loading.vert" />
     <None Include="shaders\5.1.transform.frag" />
