@@ -7,11 +7,6 @@ class Component
 public:
     int EntityId;
 
-    Component() : EntityId(0)
-    {
-        std::cout << "Component " << EntityId << " was created" << std::endl;
-    }
-
     Component(int entityId) : EntityId(entityId)
     {
         std::cout << "Component " << EntityId << " was created" << std::endl;
@@ -25,16 +20,6 @@ public:
     virtual ~Component()
     {
         std::cout << "Component " << EntityId << " was destroyed" << std::endl;
-    }
-
-    void SetId(int entityId)
-    {
-        EntityId = entityId;
-    }
-
-    int GetId() const
-    {
-        return EntityId;
     }
 
     void virtual PrintName() const
