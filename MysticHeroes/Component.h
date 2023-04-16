@@ -9,7 +9,6 @@ public:
 
     Component(int entityId) : EntityId(entityId)
     {
-        std::cout << "Component " << EntityId << " was created" << std::endl;
     }
 
     Component(const Component& other) : EntityId(other.EntityId)
@@ -17,13 +16,10 @@ public:
         std::cout << "Component " << EntityId << " was copied" << std::endl;
     }
 
-    virtual ~Component()
-    {
-        std::cout << "Component " << EntityId << " was destroyed" << std::endl;
-    }
-
     void virtual PrintName() const
     {
         std::cout << "Base Component EntityId = " << EntityId << std::endl;
     }
+
+    virtual ~Component() = default;
 };
