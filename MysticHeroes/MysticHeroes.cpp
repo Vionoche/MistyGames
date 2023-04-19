@@ -8,15 +8,15 @@
 class Health : public Component
 {
 public:
-    uint32_t HealthPoints;
-    uint32_t PhysicalResist;
-    uint32_t MagicResist;
+    int HealthPoints;
+    float PhysicalResist;
+    float MagicResist;
 
     Health(
         int entityId,
-        uint32_t healthPoints,
-        uint32_t physicalResist,
-        uint32_t magicResist)
+        int healthPoints,
+        float physicalResist,
+        float magicResist)
         : Component(entityId), HealthPoints(healthPoints), PhysicalResist(physicalResist), MagicResist(magicResist)
     {
     }
@@ -24,6 +24,22 @@ public:
     void PrintName() const override
     {
         std::cout << "Health Component EntityId = " << EntityId << std::endl;
+    }
+};
+
+class Player : public Component
+{
+public:
+    Player(int entityId) : Component(entityId)
+    {
+    }
+};
+
+class Monster : public Component
+{
+public:
+    Monster(int entityId) : Component(entityId)
+    {
     }
 };
 
@@ -61,10 +77,23 @@ public:
     }
 };
 
+class TakenDamage : public Component
+{
+public:
+    uint32_t PhysicalDamage;
+    uint32_t MagicDamage;
+
+    TakenDamage(int entityId, uint32_t physicalDamage, uint32_t magicDamage)
+        : Component(entityId), PhysicalDamage(physicalDamage), MagicDamage(magicDamage)
+    {
+    }
+};
+
 Entity* CreatePlayer(const int entityId)
 {
     Entity* player = new Entity(entityId, "Player");
-    player->Components.push_back(std::make_shared<Health>(entityId, 100, 0, 0));
+    player->Components.push_back(std::make_shared<Player>(entityId));
+    player->Components.push_back(std::make_shared<Health>(entityId, 100, 0.0f, 0.0f));
     player->Components.push_back(std::make_shared<CharacterExperience>(entityId, 0));
     player->Components.push_back(std::make_shared<AttackDamage>(entityId, 20, 0));
 
@@ -74,7 +103,8 @@ Entity* CreatePlayer(const int entityId)
 Entity* CreateGoblin(const int entityId)
 {
     Entity* monster = new Entity(entityId, "Goblin");
-    monster->Components.push_back(std::make_shared<Health>(entityId, 20, 0, 0));
+    monster->Components.push_back(std::make_shared<Monster>(entityId));
+    monster->Components.push_back(std::make_shared<Health>(entityId, 20, 0.0f, 0.0f));
     monster->Components.push_back(std::make_shared<RewardExperience>(entityId, 20));
     monster->Components.push_back(std::make_shared<AttackDamage>(entityId, 5, 0));
 
@@ -84,7 +114,8 @@ Entity* CreateGoblin(const int entityId)
 Entity* CreateHobgoblin(const int entityId)
 {
     Entity* monster = new Entity(entityId, "Hobgoblin");
-    monster->Components.push_back(std::make_shared<Health>(entityId, 30, 0, 0));
+    monster->Components.push_back(std::make_shared<Monster>(entityId));
+    monster->Components.push_back(std::make_shared<Health>(entityId, 30, 0.0f, 0.0f));
     monster->Components.push_back(std::make_shared<RewardExperience>(entityId, 50));
     monster->Components.push_back(std::make_shared<AttackDamage>(entityId, 8, 0));
 
@@ -94,7 +125,8 @@ Entity* CreateHobgoblin(const int entityId)
 Entity* CreateSkeleton(const int entityId)
 {
     Entity* monster = new Entity(entityId, "Skeleton");
-    monster->Components.push_back(std::make_shared<Health>(entityId, 50, 50, 50));
+    monster->Components.push_back(std::make_shared<Monster>(entityId));
+    monster->Components.push_back(std::make_shared<Health>(entityId, 50, 0.5f, 0.5f));
     monster->Components.push_back(std::make_shared<RewardExperience>(entityId, 100));
     monster->Components.push_back(std::make_shared<AttackDamage>(entityId, 10, 0));
 
@@ -116,6 +148,21 @@ TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& compone
     return nullptr;
 }
 
+template<class TComponent>
+void RemoveComponent(std::vector<std::shared_ptr<Component>>& components)
+{
+    for (auto iterator = components.begin(); iterator != components.end();)
+    {
+        Component* current = (*iterator).get();
+        if (TComponent* component = dynamic_cast<TComponent*>(current))
+        {
+            iterator = components.erase(iterator);
+            return;
+        }
+        ++iterator;
+    }
+}
+
 void PrintEntities(const std::vector<std::shared_ptr<Entity>>& entities)
 {
     for (int index = 0; index < static_cast<int>(entities.size()); index++)
@@ -123,13 +170,117 @@ void PrintEntities(const std::vector<std::shared_ptr<Entity>>& entities)
         const Entity& entity = *entities[index];
         std::cout << entity.EntityName << "(" << entity.EntityId << ")";
 
-        Health* health = FindComponent<Health>(entity.Components);
+        const Health* health = FindComponent<Health>(entity.Components);
         if (health)
         {
             std::cout << " HP " << health->HealthPoints;
         }
 
         std::cout << std::endl;
+    }
+}
+
+void ProcessPlayerInputSystem(const std::vector<std::shared_ptr<Entity>>& entities, int targetId)
+{
+    const char* playerName = nullptr;
+    uint32_t physicalDamage = 0;
+    uint32_t magicDamage = 0;
+
+    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    {
+        const Entity& entity = *entities[index];
+        const Player* player = FindComponent<Player>(entity.Components);
+        if (!player)
+        {
+            continue;
+        }
+
+        const AttackDamage* attackDamage = FindComponent<AttackDamage>(entity.Components);
+        if (!attackDamage)
+        {
+            continue;
+        }
+
+        playerName = entity.EntityName.c_str();
+        physicalDamage = attackDamage->PhysicalDamage;
+        magicDamage = attackDamage->MagicDamage;
+    }
+
+    if (physicalDamage == 0 && magicDamage == 0)
+    {
+        return;
+    }
+
+    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    {
+        Entity& entity = *entities[index];
+        if (entity.EntityId != targetId)
+        {
+            continue;
+        }
+
+        const Monster* monster = FindComponent<Monster>(entity.Components);
+        if (!monster)
+        {
+            continue;
+        }
+
+        entity.Components.push_back(std::make_shared<TakenDamage>(targetId, physicalDamage, magicDamage));
+
+        std::cout << playerName << " hits " << physicalDamage << "phys and " << magicDamage << "mag damage to " << entity.EntityName << std::endl;
+    }
+}
+
+// TODO: Process multiple damages
+void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
+{
+    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    {
+        Entity& entity = *entities[index];
+        const TakenDamage* takenDamage = FindComponent<TakenDamage>(entity.Components);
+        if (!takenDamage)
+        {
+            continue;
+        }
+
+        Health* health = FindComponent<Health>(entity.Components);
+        if (!health)
+        {
+            continue;
+        }
+
+        const float physicalCoefficient = 1.0f - health->PhysicalResist;
+        const float magicCoefficient = 1.0f - health->MagicResist;
+
+        const uint32_t physicalDamage = (uint32_t)(physicalCoefficient * (float)takenDamage->PhysicalDamage);
+        const uint32_t magicDamage = (uint32_t)(magicCoefficient * (float)takenDamage->MagicDamage);
+        const uint32_t damage = physicalDamage + magicDamage;
+        health->HealthPoints -= (int)damage;
+
+        RemoveComponent<TakenDamage>(entity.Components);
+
+        std::cout << entity.EntityName << " gets " << damage << "!" << std::endl;
+    }
+}
+
+// TODO: Add experience processing
+void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
+{
+    for (auto iterator = entities.begin(); iterator != entities.end();)
+    {
+        const Entity* entity = (*iterator).get();
+        const Health* health = FindComponent<Health>(entity->Components);
+
+        if (health && health->HealthPoints <= 0)
+        {
+            iterator = entities.erase(iterator);
+
+            std::cout << entity->EntityName << " dies!" << std::endl;
+
+            return;
+        }
+
+        ++iterator;
     }
 }
 
@@ -165,17 +316,11 @@ int main()
         std::cout << "Type monster id for attack: ";
         std::cin >> inputCode;
 
-        // System 1
-        // Find players attack damage
-        // Calculate output damage and create the Damage Component for chosen monster
+        ProcessPlayerInputSystem(entities, inputCode);
+        
+        ProcessDamageSystem(entities);
 
-        // System 2
-        // If Damage Component exists, do the damage (recalculate HP) and remove the Damage Component
-        // Log into console
-
-        // System 3
-        // If entity with negative HP exists, remove the entity
-        // Log into console
+        ProcessDeadEntitiesSystem(entities);
 
         // System 4
         // If there is no monster or player died, finish the game

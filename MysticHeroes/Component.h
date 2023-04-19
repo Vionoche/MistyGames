@@ -13,13 +13,16 @@ public:
 
     Component(const Component& other) : EntityId(other.EntityId)
     {
-        std::cout << "Component " << EntityId << " was copied" << std::endl;
+        std::cout << "Component for EntityId =" << EntityId << " was copied" << std::endl;
     }
 
     void virtual PrintName() const
     {
-        std::cout << "Base Component EntityId = " << EntityId << std::endl;
+        std::cout << "Base Component for EntityId = " << EntityId << std::endl;
     }
 
-    virtual ~Component() = default;
+    virtual ~Component()
+    {
+        //std::cout << "Component for EntityId = " << EntityId << " was destroyed" << std::endl;
+    }
 };
