@@ -23,6 +23,6 @@ public:
 
     virtual ~Component()
     {
-        //std::cout << "Component for EntityId = " << EntityId << " was destroyed" << std::endl;
+        std::cout << "Component for EntityId = " << EntityId << " was destroyed" << std::endl;
     }
 };

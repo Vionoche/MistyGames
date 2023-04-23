@@ -133,6 +133,7 @@ Entity* CreateSkeleton(const int entityId)
     return monster;
 }
 
+// TODO: Find all components by type
 template<class TComponent>
 TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& components)
 {
@@ -149,12 +150,27 @@ TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& compone
 }
 
 template<class TComponent>
-void RemoveComponent(std::vector<std::shared_ptr<Component>>& components)
+void RemoveComponentByType(std::vector<std::shared_ptr<Component>>& components)
 {
     for (auto iterator = components.begin(); iterator != components.end();)
     {
         Component* current = (*iterator).get();
         if (TComponent* component = dynamic_cast<TComponent*>(current))
+        {
+            iterator = components.erase(iterator);
+            return;
+        }
+        ++iterator;
+    }
+}
+
+template<class TComponent>
+void RemoveComponentByPointer(const TComponent* component, std::vector<std::shared_ptr<Component>>& components)
+{
+    for (auto iterator = components.begin(); iterator != components.end();)
+    {
+        Component* current = (*iterator).get();
+        if (current == component)
         {
             iterator = components.erase(iterator);
             return;
@@ -237,7 +253,6 @@ void ProcessPlayerInputSystem(const std::vector<std::shared_ptr<Entity>>& entiti
     }
 }
 
-// TODO: Process multiple damages
 void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
 {
     for (int index = 0; index < static_cast<int>(entities.size()); index++)
@@ -252,6 +267,7 @@ void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
         Health* health = FindComponent<Health>(entity.Components);
         if (!health)
         {
+            RemoveComponentByPointer<TakenDamage>(takenDamage, entity.Components);
             continue;
         }
 
@@ -263,7 +279,7 @@ void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
         const uint32_t damage = physicalDamage + magicDamage;
         health->HealthPoints -= (int)damage;
 
-        RemoveComponent<TakenDamage>(entity.Components);
+        RemoveComponentByPointer<TakenDamage>(takenDamage, entity.Components);
 
         std::cout << entity.EntityName << " gets " << damage << "!" << std::endl;
     }
@@ -363,6 +379,8 @@ int main()
 
         // System 6
         // Introduce character levels
+
+        // Introduce TextLogging system
 
         PrintEntities(entities);
     }
