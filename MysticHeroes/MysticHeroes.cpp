@@ -309,6 +309,8 @@ int main()
     // Main loop
     std::cout << std::endl;
 
+    PrintEntities(entities);
+
     int inputCode = -1;
 
     while (inputCode != 0)
@@ -323,7 +325,17 @@ int main()
         ProcessDeadEntitiesSystem(entities);
 
         // System 4
-        // If there is no monster or player died, finish the game
+        // If there is no monster or the player died, finish the game
+
+        // System 5
+        // When a monster dies the player gets an experience
+
+        // System 6
+        // Monsters attacks the player and do damage
+
+        // Refactor systems and move them into separate classes
+
+        // Introduce levels (or worlds)
 
         PrintEntities(entities);
     }
