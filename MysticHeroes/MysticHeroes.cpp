@@ -176,6 +176,12 @@ void PrintEntities(const std::vector<std::shared_ptr<Entity>>& entities)
             std::cout << " HP " << health->HealthPoints;
         }
 
+        const CharacterExperience* experience = FindComponent<CharacterExperience>(entity.Components);
+        if (experience)
+        {
+            std::cout << " Exp " << experience->ExperiencePoints;
+        }
+
         std::cout << std::endl;
     }
 }
@@ -263,9 +269,20 @@ void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
     }
 }
 
-// TODO: Add experience processing
 void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
 {
+    Entity* playerEntity = nullptr;
+    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    {
+        Entity& entity = *entities[index];
+        const Player* player = FindComponent<Player>(entity.Components);
+        if (player)
+        {
+            playerEntity = &entity;
+            break;
+        }
+    }
+
     for (auto iterator = entities.begin(); iterator != entities.end();)
     {
         const Entity* entity = (*iterator).get();
@@ -273,6 +290,16 @@ void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
 
         if (health && health->HealthPoints <= 0)
         {
+            const RewardExperience* reward = FindComponent<RewardExperience>(entity->Components);
+            if (reward && playerEntity)
+            {
+                CharacterExperience* characterExperience = FindComponent<CharacterExperience>(playerEntity->Components);
+                if (characterExperience)
+                {
+                    characterExperience->ExperiencePoints += reward->ExperiencePoints;
+                }
+            }
+
             iterator = entities.erase(iterator);
 
             std::cout << entity->EntityName << " dies!" << std::endl;
@@ -328,14 +355,14 @@ int main()
         // If there is no monster or the player died, finish the game
 
         // System 5
-        // When a monster dies the player gets an experience
-
-        // System 6
         // Monsters attacks the player and do damage
 
         // Refactor systems and move them into separate classes
 
         // Introduce levels (or worlds)
+
+        // System 6
+        // Introduce character levels
 
         PrintEntities(entities);
     }
