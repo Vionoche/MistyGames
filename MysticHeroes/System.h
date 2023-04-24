@@ -20,8 +20,7 @@ void ProcessEntityAttack(const Entity& attacker, Entity& defender)
     }
 
     defender.Components.push_back(
-        std::make_shared<TakenDamage>(
-            defender.EntityId, attackDamage->PhysicalDamage, attackDamage->MagicDamage));
+        std::make_shared<TakenDamage>(defender.EntityId, attackDamage->PhysicalDamage, attackDamage->MagicDamage));
 
     std::cout << attacker.EntityName
               << " hits " << attackDamage->PhysicalDamage << " physical and "
@@ -37,20 +36,19 @@ void ProcessPlayerInputSystem(const std::vector<std::shared_ptr<Entity>>& entiti
         return;
     }
 
-    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    for (auto& enemy : entities)
     {
-        Entity& enemy = *entities[index];
-        if (enemy.EntityId != targetId)
+        if (enemy->EntityId != targetId)
         {
             continue;
         }
 
-        if (const Monster* monster = FindComponent<Monster>(enemy.Components); !monster)
+        if (const Monster* monster = FindComponent<Monster>(enemy->Components); !monster)
         {
             continue;
         }
 
-        ProcessEntityAttack(*player, enemy);
+        ProcessEntityAttack(*player, *enemy);
     }
 }
 
@@ -62,16 +60,14 @@ void ProcessMonsterAttackSystem(const std::vector<std::shared_ptr<Entity>>& enti
         return;
     }
 
-    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    for (auto& enemy : entities)
     {
-        Entity& enemy = *entities[index];
-
-        if (const Monster* monster = FindComponent<Monster>(enemy.Components); !monster)
+        if (const Monster* monster = FindComponent<Monster>(enemy->Components); !monster)
         {
             continue;
         }
 
-        ProcessEntityAttack(enemy, *player);
+        ProcessEntityAttack(*enemy, *player);
     }
 }
 

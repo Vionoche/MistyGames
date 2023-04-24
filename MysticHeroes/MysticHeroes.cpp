@@ -10,18 +10,17 @@
 
 void PrintEntities(const std::vector<std::shared_ptr<Entity>>& entities)
 {
-    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    for (auto& entity : entities)
     {
-        const Entity& entity = *entities[index];
-        std::cout << entity.EntityName << "(" << entity.EntityId << ")";
+        std::cout << entity->EntityName << "(" << entity->EntityId << ")";
 
-        const Health* health = FindComponent<Health>(entity.Components);
+        const Health* health = FindComponent<Health>(entity->Components);
         if (health)
         {
             std::cout << " HP " << health->HealthPoints;
         }
 
-        const CharacterExperience* experience = FindComponent<CharacterExperience>(entity.Components);
+        const CharacterExperience* experience = FindComponent<CharacterExperience>(entity->Components);
         if (experience)
         {
             std::cout << " Exp " << experience->ExperiencePoints;
@@ -76,12 +75,14 @@ int main()
 
         const int fightResult = ProcessFightEndSystem(entities);
 
+        PrintEntities(entities);
+
         if (fightResult > 0)
         {
             break;
         }
 
-        // Bug: Entity must release the memory when it dies
+        // Bug: Entity must be released from the memory when it dies
 
         // Refactor systems and move them into separate classes
 
@@ -96,11 +97,8 @@ int main()
         // Improve data structures and search algorithms
 
         // Introduce TextLogging system
-
-        PrintEntities(entities);
     }
 
     std::cout << std::endl;
-
     std::cout << "The End" << std::endl;
 }
