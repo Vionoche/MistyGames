@@ -40,6 +40,7 @@ int main()
     std::shared_ptr<Entity> player(CreatePlayer(++globalId));
     entities.push_back(player);
 
+    // Init the level (world)
     std::shared_ptr<Entity> goblin1(CreateGoblin(++globalId));
     entities.push_back(goblin1);
     std::shared_ptr<Entity> goblin2(CreateGoblin(++globalId));
@@ -66,10 +67,14 @@ int main()
         std::cin >> inputCode;
 
         ProcessPlayerInputSystem(entities, inputCode);
-        
+
+        ProcessMonsterAttackSystem(entities);
+
         ProcessDamageSystem(entities);
 
         ProcessDeadEntitiesSystem(entities);
+
+        // Bug: Entity must release the memory when it dies
 
         // System 4
         // If there is no monster or the player died, finish the game
@@ -79,13 +84,15 @@ int main()
 
         // Refactor systems and move them into separate classes
 
-        // Introduce levels (or worlds)
+        // Introduce levels (worlds)
 
         // System 6
         // Introduce character levels
 
         // System 7
         // Introduce turn-based system
+
+        // Improve data structures and search algorithms
 
         // Introduce TextLogging system
 

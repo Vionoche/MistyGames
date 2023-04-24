@@ -6,60 +6,73 @@
 #include "Entity.h"
 #include "World.h"
 
-void ProcessPlayerInputSystem(const std::vector<std::shared_ptr<Entity>>& entities, int targetId)
+void ProcessEntityAttack(const Entity& attacker, Entity& defender)
 {
-    const char* playerName = nullptr;
-    uint32_t physicalDamage = 0;
-    uint32_t magicDamage = 0;
-
-    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    const AttackDamage* attackDamage = FindComponent<AttackDamage>(attacker.Components);
+    if (!attackDamage)
     {
-        const Entity& entity = *entities[index];
-        const Player* player = FindComponent<Player>(entity.Components);
-        if (!player)
-        {
-            continue;
-        }
-
-        const AttackDamage* attackDamage = FindComponent<AttackDamage>(entity.Components);
-        if (!attackDamage)
-        {
-            continue;
-        }
-
-        playerName = entity.EntityName.c_str();
-        physicalDamage = attackDamage->PhysicalDamage;
-        magicDamage = attackDamage->MagicDamage;
+        return;
     }
 
-    if (physicalDamage == 0 && magicDamage == 0)
+    if (attackDamage->PhysicalDamage == 0 && attackDamage->MagicDamage == 0)
+    {
+        return;
+    }
+
+    defender.Components.push_back(
+        std::make_shared<TakenDamage>(
+            defender.EntityId, attackDamage->PhysicalDamage, attackDamage->MagicDamage));
+
+    std::cout << attacker.EntityName
+              << " hits " << attackDamage->PhysicalDamage << " physical and "
+              << attackDamage->MagicDamage << " magic damage to "
+              << defender.EntityName << std::endl;
+}
+
+void ProcessPlayerInputSystem(const std::vector<std::shared_ptr<Entity>>& entities, int targetId)
+{
+    const Entity* player = FindEntityByComponent<Player>(entities);
+    if (!player)
     {
         return;
     }
 
     for (int index = 0; index < static_cast<int>(entities.size()); index++)
     {
-        Entity& entity = *entities[index];
-        if (entity.EntityId != targetId)
+        Entity& enemy = *entities[index];
+        if (enemy.EntityId != targetId)
         {
             continue;
         }
 
-        const Monster* monster = FindComponent<Monster>(entity.Components);
-        if (!monster)
+        if (const Monster* monster = FindComponent<Monster>(enemy.Components); !monster)
         {
             continue;
         }
 
-        entity.Components.push_back(std::make_shared<TakenDamage>(targetId, physicalDamage, magicDamage));
-
-        std::cout << playerName << " hits " << physicalDamage << "phys and " << magicDamage << "mag damage to " << entity.EntityName << std::endl;
+        ProcessEntityAttack(*player, enemy);
     }
 }
 
 void ProcessMonsterAttackSystem(const std::vector<std::shared_ptr<Entity>>& entities)
 {
+    Entity* player = FindEntityByComponent<Player>(entities);
+    if (!player)
+    {
+        return;
+    }
 
+    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    {
+        Entity& enemy = *entities[index];
+
+        if (const Monster* monster = FindComponent<Monster>(enemy.Components); !monster)
+        {
+            continue;
+        }
+
+        ProcessEntityAttack(enemy, *player);
+    }
 }
 
 void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
@@ -96,16 +109,10 @@ void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
 
 void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
 {
-    Entity* playerEntity = nullptr;
-    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    const Entity* player = FindEntityByComponent<Player>(entities);
+    if (!player)
     {
-        Entity& entity = *entities[index];
-        const Player* player = FindComponent<Player>(entity.Components);
-        if (player)
-        {
-            playerEntity = &entity;
-            break;
-        }
+        return;
     }
 
     for (auto iterator = entities.begin(); iterator != entities.end();)
@@ -115,11 +122,9 @@ void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
 
         if (health && health->HealthPoints <= 0)
         {
-            const RewardExperience* reward = FindComponent<RewardExperience>(entity->Components);
-            if (reward && playerEntity)
+            if (const RewardExperience* reward = FindComponent<RewardExperience>(entity->Components))
             {
-                CharacterExperience* characterExperience = FindComponent<CharacterExperience>(playerEntity->Components);
-                if (characterExperience)
+                if (CharacterExperience* characterExperience = FindComponent<CharacterExperience>(player->Components))
                 {
                     characterExperience->ExperiencePoints += reward->ExperiencePoints;
                 }

@@ -6,7 +6,6 @@
 #include "Component.h"
 
 // TODO: Find all components by type
-// TODO: Find entities by component types
 
 template<class TComponent>
 TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& components)
@@ -51,4 +50,19 @@ void RemoveComponentByPointer(const TComponent* component, std::vector<std::shar
         }
         ++iterator;
     }
+}
+
+template<class TComponent>
+Entity * FindEntityByComponent(const std::vector<std::shared_ptr<Entity>>& entities)
+{
+    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    {
+        Entity& entity = *entities[index];
+        if (FindComponent<TComponent>(entity.Components))
+        {
+            return &entity;
+        }
+    }
+
+    return nullptr;
 }
