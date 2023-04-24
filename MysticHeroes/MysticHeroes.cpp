@@ -74,10 +74,14 @@ int main()
 
         ProcessDeadEntitiesSystem(entities);
 
-        // Bug: Entity must release the memory when it dies
+        const int fightResult = ProcessFightEndSystem(entities);
 
-        // System 4
-        // If there is no monster or the player died, finish the game
+        if (fightResult > 0)
+        {
+            break;
+        }
+
+        // Bug: Entity must release the memory when it dies
 
         // Refactor systems and move them into separate classes
 

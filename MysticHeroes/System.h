@@ -138,3 +138,39 @@ void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
         ++iterator;
     }
 }
+
+constexpr int PlayerDied = 1;
+constexpr int PlayerWin = 2;
+
+int ProcessFightEndSystem(const std::vector<std::shared_ptr<Entity>>& entities)
+{
+    uint32_t playersCount = 0;
+    uint32_t monstersCount = 0;
+
+    for (auto& entity : entities)
+    {
+        if (FindComponent<Player>(entity->Components))
+        {
+            playersCount++;
+        }
+
+        if (FindComponent<Monster>(entity->Components))
+        {
+            monstersCount++;
+        }
+    }
+
+    if (playersCount == 0)
+    {
+        std::cout << "You died" << std::endl;
+        return PlayerDied;
+    }
+
+    if (monstersCount == 0)
+    {
+        std::cout << "You win!" << std::endl;
+        return PlayerWin;
+    }
+
+    return 0;
+}

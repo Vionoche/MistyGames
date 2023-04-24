@@ -6,7 +6,7 @@ Entity* CreatePlayer(const int entityId)
 {
     Entity* player = new Entity(entityId, "Player");
     player->Components.push_back(std::make_shared<Player>(entityId));
-    player->Components.push_back(std::make_shared<Health>(entityId, 100, 0.0f, 0.0f));
+    player->Components.push_back(std::make_shared<Health>(entityId, 1000, 0.0f, 0.0f));
     player->Components.push_back(std::make_shared<CharacterExperience>(entityId, 0));
     player->Components.push_back(std::make_shared<AttackDamage>(entityId, 20, 0));
 
