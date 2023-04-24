@@ -142,6 +142,9 @@
   <ItemGroup>
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="System.h" />
+    <ClInclude Include="World.h" />
+    <ClInclude Include="WorldFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
