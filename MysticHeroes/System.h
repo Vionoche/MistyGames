@@ -77,33 +77,31 @@ void ProcessMonsterAttackSystem(const std::vector<std::shared_ptr<Entity>>& enti
 
 void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
 {
-    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    for (auto& defender : entities)
     {
-        Entity& entity = *entities[index];
-        const TakenDamage* takenDamage = FindComponent<TakenDamage>(entity.Components);
-        if (!takenDamage)
-        {
-            continue;
-        }
-
-        Health* health = FindComponent<Health>(entity.Components);
+        Health* health = FindComponent<Health>(defender->Components);
         if (!health)
         {
-            RemoveComponentByPointer<TakenDamage>(takenDamage, entity.Components);
+            RemoveComponentByType<TakenDamage>(defender->Components);
             continue;
         }
 
         const float physicalCoefficient = 1.0f - health->PhysicalResist;
         const float magicCoefficient = 1.0f - health->MagicResist;
 
-        const uint32_t physicalDamage = (uint32_t)(physicalCoefficient * (float)takenDamage->PhysicalDamage);
-        const uint32_t magicDamage = (uint32_t)(magicCoefficient * (float)takenDamage->MagicDamage);
-        const uint32_t damage = physicalDamage + magicDamage;
-        health->HealthPoints -= (int)damage;
+        const std::vector<TakenDamage*> takenDamages = FindComponents<TakenDamage>(defender->Components);
 
-        RemoveComponentByPointer<TakenDamage>(takenDamage, entity.Components);
+        for (auto& takenDamage : takenDamages)
+        {
+            const uint32_t physicalDamage = (uint32_t)(physicalCoefficient * (float)takenDamage->PhysicalDamage);
+            const uint32_t magicDamage = (uint32_t)(magicCoefficient * (float)takenDamage->MagicDamage);
+            const uint32_t damage = physicalDamage + magicDamage;
+            health->HealthPoints -= (int)damage;
 
-        std::cout << entity.EntityName << " gets " << damage << "!" << std::endl;
+            RemoveComponentByPointer<TakenDamage>(takenDamage, defender->Components);
+
+            std::cout << defender->EntityName << " gets " << damage << "!" << std::endl;
+        }
     }
 }
 

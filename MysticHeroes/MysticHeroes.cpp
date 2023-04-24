@@ -79,9 +79,6 @@ int main()
         // System 4
         // If there is no monster or the player died, finish the game
 
-        // System 5
-        // Monsters attacks the player and do damage
-
         // Refactor systems and move them into separate classes
 
         // Introduce levels (worlds)

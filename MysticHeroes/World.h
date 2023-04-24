@@ -5,8 +5,6 @@
 
 #include "Component.h"
 
-// TODO: Find all components by type
-
 template<class TComponent>
 TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& components)
 {
@@ -23,12 +21,29 @@ TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& compone
 }
 
 template<class TComponent>
+std::vector<TComponent*> FindComponents(const std::vector<std::shared_ptr<Component>>& components)
+{
+    std::vector<TComponent*> results;
+
+    for (int index = 0; index < static_cast<int>(components.size()); index++)
+    {
+        Component* current = components[index].get();
+        if (TComponent* component = dynamic_cast<TComponent*>(current))
+        {
+            results.push_back(component);
+        }
+    }
+
+    return results;
+}
+
+template<class TComponent>
 void RemoveComponentByType(std::vector<std::shared_ptr<Component>>& components)
 {
     for (auto iterator = components.begin(); iterator != components.end();)
     {
         Component* current = (*iterator).get();
-        if (TComponent* component = dynamic_cast<TComponent*>(current))
+        if (dynamic_cast<TComponent*>(current))
         {
             iterator = components.erase(iterator);
             return;
