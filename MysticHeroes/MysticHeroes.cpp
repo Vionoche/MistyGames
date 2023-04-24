@@ -1,5 +1,4 @@
 #include <iostream>
-#include <memory>
 #include <vector>
 
 #include "Component.h"
@@ -8,7 +7,7 @@
 #include "World.h"
 #include "WorldFactory.h"
 
-void PrintEntities(const std::vector<std::shared_ptr<Entity>>& entities)
+void PrintEntities(const std::vector<Entity*>& entities)
 {
     for (auto& entity : entities)
     {
@@ -34,24 +33,16 @@ int main()
 {
     // Init the game
     int globalId = 100;
-    std::vector<std::shared_ptr<Entity>> entities;
+    std::vector<Entity*> entities;
 
-    std::shared_ptr<Entity> player(CreatePlayer(++globalId));
-    entities.push_back(player);
+    entities.push_back(CreatePlayer(++globalId));
 
     // Init the level (world)
-    std::shared_ptr<Entity> goblin1(CreateGoblin(++globalId));
-    entities.push_back(goblin1);
-    std::shared_ptr<Entity> goblin2(CreateGoblin(++globalId));
-    entities.push_back(goblin2);
-    std::shared_ptr<Entity> goblin3(CreateGoblin(++globalId));
-    entities.push_back(goblin3);
-
-    std::shared_ptr<Entity> hobgoblin(CreateHobgoblin(++globalId));
-    entities.push_back(hobgoblin);
-
-    std::shared_ptr<Entity> skeleton(CreateSkeleton(++globalId));
-    entities.push_back(skeleton);
+    entities.push_back(CreateGoblin(++globalId));
+    entities.push_back(CreateGoblin(++globalId));
+    entities.push_back(CreateGoblin(++globalId));
+    entities.push_back(CreateHobgoblin(++globalId));
+    entities.push_back(CreateSkeleton(++globalId));
 
     // Main loop
     std::cout << std::endl;
@@ -82,8 +73,6 @@ int main()
             break;
         }
 
-        // Bug: Entity must be released from the memory when it dies
-
         // Refactor systems and move them into separate classes
 
         // Introduce levels (worlds)
@@ -96,7 +85,12 @@ int main()
 
         // Improve data structures and search algorithms
 
-        // Introduce TextLogging system
+        // Introduce text logging system
+    }
+
+    for (const auto& entity : entities)
+    {
+        delete entity;
     }
 
     std::cout << std::endl;

@@ -28,7 +28,7 @@ void ProcessEntityAttack(const Entity& attacker, Entity& defender)
               << defender.EntityName << std::endl;
 }
 
-void ProcessPlayerInputSystem(const std::vector<std::shared_ptr<Entity>>& entities, int targetId)
+void ProcessPlayerInputSystem(const std::vector<Entity*>& entities, int targetId)
 {
     const Entity* player = FindEntityByComponent<Player>(entities);
     if (!player)
@@ -52,7 +52,7 @@ void ProcessPlayerInputSystem(const std::vector<std::shared_ptr<Entity>>& entiti
     }
 }
 
-void ProcessMonsterAttackSystem(const std::vector<std::shared_ptr<Entity>>& entities)
+void ProcessMonsterAttackSystem(const std::vector<Entity*>& entities)
 {
     Entity* player = FindEntityByComponent<Player>(entities);
     if (!player)
@@ -71,7 +71,7 @@ void ProcessMonsterAttackSystem(const std::vector<std::shared_ptr<Entity>>& enti
     }
 }
 
-void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
+void ProcessDamageSystem(const std::vector<Entity*>& entities)
 {
     for (auto& defender : entities)
     {
@@ -101,22 +101,19 @@ void ProcessDamageSystem(const std::vector<std::shared_ptr<Entity>>& entities)
     }
 }
 
-void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
+void ProcessDeadEntitiesSystem(std::vector<Entity*>& entities)
 {
     const Entity* player = FindEntityByComponent<Player>(entities);
-    if (!player)
-    {
-        return;
-    }
 
     for (auto iterator = entities.begin(); iterator != entities.end();)
     {
-        const Entity* entity = (*iterator).get();
+        const Entity* entity = *iterator;
         const Health* health = FindComponent<Health>(entity->Components);
 
         if (health && health->HealthPoints <= 0)
         {
-            if (const RewardExperience* reward = FindComponent<RewardExperience>(entity->Components))
+            const RewardExperience* reward = FindComponent<RewardExperience>(entity->Components);
+            if (reward && player)
             {
                 if (CharacterExperience* characterExperience = FindComponent<CharacterExperience>(player->Components))
                 {
@@ -124,11 +121,12 @@ void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
                 }
             }
 
-            iterator = entities.erase(iterator);
-
             std::cout << entity->EntityName << " dies!" << std::endl;
 
-            return;
+            iterator = entities.erase(iterator);
+            delete entity;
+
+            continue;
         }
 
         ++iterator;
@@ -138,7 +136,7 @@ void ProcessDeadEntitiesSystem(std::vector<std::shared_ptr<Entity>>& entities)
 constexpr int PlayerDied = 1;
 constexpr int PlayerWin = 2;
 
-int ProcessFightEndSystem(const std::vector<std::shared_ptr<Entity>>& entities)
+int ProcessFightEndSystem(const std::vector<Entity*>& entities)
 {
     uint32_t playersCount = 0;
     uint32_t monstersCount = 0;

@@ -25,10 +25,9 @@ std::vector<TComponent*> FindComponents(const std::vector<std::shared_ptr<Compon
 {
     std::vector<TComponent*> results;
 
-    for (int index = 0; index < static_cast<int>(components.size()); index++)
+    for (auto& current : components)
     {
-        Component* current = components[index].get();
-        if (TComponent* component = dynamic_cast<TComponent*>(current))
+        if (TComponent* component = dynamic_cast<TComponent*>(current.get()))
         {
             results.push_back(component);
         }
@@ -68,14 +67,13 @@ void RemoveComponentByPointer(const TComponent* component, std::vector<std::shar
 }
 
 template<class TComponent>
-Entity * FindEntityByComponent(const std::vector<std::shared_ptr<Entity>>& entities)
+Entity * FindEntityByComponent(const std::vector<Entity*>& entities)
 {
-    for (int index = 0; index < static_cast<int>(entities.size()); index++)
+    for (auto& entity : entities)
     {
-        Entity& entity = *entities[index];
-        if (FindComponent<TComponent>(entity.Components))
+        if (FindComponent<TComponent>(entity->Components))
         {
-            return &entity;
+            return entity;
         }
     }
 
