@@ -8,6 +8,8 @@ class Node
 public:
     Node(const char* nodeName);
 
+    Node(const Node& other) = delete;
+
     std::string GetName() const;
 
     void AddNode(Node* node);

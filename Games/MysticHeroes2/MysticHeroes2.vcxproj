@@ -138,16 +138,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Node.cpp" />
+    <ClCompile Include="src\Engine\Observable.cpp" />
+    <ClCompile Include="src\Engine\Subscription.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Nodes\Health.cpp" />
-    <ClCompile Include="src\Nodes\Monster.cpp" />
-    <ClCompile Include="src\Nodes\Player.cpp" />
+    <ClCompile Include="src\PlayerCharacters\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\IObserver.h" />
     <ClInclude Include="src\Engine\Node.h" />
+    <ClInclude Include="src\Engine\Observable.h" />
+    <ClInclude Include="src\Engine\Observers.h" />
+    <ClInclude Include="src\Engine\Subscription.h" />
+    <ClInclude Include="src\Levels\Level.h" />
+    <ClInclude Include="src\Monsters\Goblin.h" />
+    <ClInclude Include="src\Monsters\Hobgoblin.h" />
+    <ClInclude Include="src\Monsters\Skeleton.h" />
     <ClInclude Include="src\Nodes\Health.h" />
-    <ClInclude Include="src\Nodes\Monster.h" />
-    <ClInclude Include="src\Nodes\Player.h" />
+    <ClInclude Include="src\Monsters\Monster.h" />
+    <ClInclude Include="src\PlayerCharacters\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

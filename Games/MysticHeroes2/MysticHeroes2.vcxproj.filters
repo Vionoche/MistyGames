@@ -21,13 +21,16 @@
     <ClCompile Include="src\Engine\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Nodes\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Nodes\Monster.cpp">
+    <ClCompile Include="src\PlayerCharacters\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Nodes\Health.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Subscription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Observable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +41,34 @@
     <ClInclude Include="src\Nodes\Health.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Nodes\Player.h">
+    <ClInclude Include="src\PlayerCharacters\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Nodes\Monster.h">
+    <ClInclude Include="src\Monsters\Monster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Levels\Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Monsters\Skeleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Monsters\Goblin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Monsters\Hobgoblin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Observers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\IObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Observable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Subscription.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
