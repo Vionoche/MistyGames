@@ -27,10 +27,7 @@
     <ClCompile Include="src\Nodes\Health.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Subscription.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\Observable.cpp">
+    <ClCompile Include="src\Engine\SignalsTest.h">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,16 +56,7 @@
     <ClInclude Include="src\Monsters\Hobgoblin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Observers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\IObserver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Observable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Subscription.h">
+    <ClInclude Include="src\Engine\Signals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

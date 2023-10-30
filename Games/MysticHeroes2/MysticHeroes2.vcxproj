@@ -138,18 +138,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Node.cpp" />
-    <ClCompile Include="src\Engine\Observable.cpp" />
-    <ClCompile Include="src\Engine\Subscription.cpp" />
+    <ClCompile Include="src\Engine\SignalsTest.h" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Nodes\Health.cpp" />
     <ClCompile Include="src\PlayerCharacters\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\IObserver.h" />
     <ClInclude Include="src\Engine\Node.h" />
-    <ClInclude Include="src\Engine\Observable.h" />
-    <ClInclude Include="src\Engine\Observers.h" />
-    <ClInclude Include="src\Engine\Subscription.h" />
+    <ClInclude Include="src\Engine\Signals.h" />
     <ClInclude Include="src\Levels\Level.h" />
     <ClInclude Include="src\Monsters\Goblin.h" />
     <ClInclude Include="src\Monsters\Hobgoblin.h" />

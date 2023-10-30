@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 
-#include "Engine/Observers.h"
 #include "Engine/Node.h"
+#include "Engine/SignalsTest.h"
 
 int main()
 {
@@ -11,5 +11,5 @@ int main()
 
     Node n("name");
 
-    TestObservables();
+    TestSignals();
 }
