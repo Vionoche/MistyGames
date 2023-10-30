@@ -12,7 +12,7 @@ struct ModelDto
     std::string Description;
 };
 
-class FloatListener : public IObserverTemplate<float>
+class FloatListener : public IObserver<float>
 {
 public:
     FloatListener(const char* name) : _name(name)
@@ -34,7 +34,7 @@ private:
     std::string _name;
 };
 
-class StringListener : public IObserverTemplate<std::string>
+class StringListener : public IObserver<std::string>
 {
 public:
     StringListener(const char* name) : _name(name)
@@ -56,7 +56,7 @@ private:
     std::string _name;
 };
 
-class ModelDtoListener : public IObserverTemplate<ModelDto>
+class ModelDtoListener : public IObserver<ModelDto>
 {
 public:
     ModelDtoListener(const char* name) : _name(name)
@@ -80,9 +80,9 @@ private:
 
 static void TestSignals()
 {
-    ObservableTemplate<float> floatSignal;
-    ObservableTemplate<std::string> stringSignal;
-    ObservableTemplate<ModelDto> modelDtoSignal;
+    Observable<float> floatSignal;
+    Observable<std::string> stringSignal;
+    Observable<ModelDto> modelDtoSignal;
 
     FloatListener* floatListener1 = new FloatListener("Mr. Float");
     FloatListener* floatListener2 = new FloatListener("Ms. Float");

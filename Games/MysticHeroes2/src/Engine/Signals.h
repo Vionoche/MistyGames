@@ -3,33 +3,33 @@
 #include <vector>
 
 template<class T>
-class SubscriptionTemplate;
+class Subscription;
 
 template<class T>
-class IObserverTemplate;
+class IObserver;
 
 template<class T>
-class ObservableTemplate;
+class Observable;
 
 
 template<class T>
-class ObservableTemplate
+class Observable
 {
 public:
-    SubscriptionTemplate<T>* Subscribe(IObserverTemplate<T>* observer)
+    Subscription<T>* Subscribe(IObserver<T>* observer)
     {
         _observers.push_back(observer);
 
-        SubscriptionTemplate<T>* subscription = new SubscriptionTemplate<T>(this, observer);
+        Subscription<T>* subscription = new Subscription<T>(this, observer);
 
         return subscription;
     }
 
-    void Unsubscribe(const IObserverTemplate<T>* observer)
+    void Unsubscribe(const IObserver<T>* observer)
     {
         for (auto iterator = _observers.begin(); iterator != _observers.end();)
         {
-            if (const IObserverTemplate<T>* item = *iterator; item == observer)
+            if (const IObserver<T>* item = *iterator; item == observer)
             {
                 iterator = _observers.erase(iterator);
                 continue;
@@ -52,30 +52,30 @@ public:
     }
 
 protected:
-    std::vector<IObserverTemplate<T>*> _observers;
+    std::vector<IObserver<T>*> _observers;
 };
 
 
 template<class T>
-class IObserverTemplate
+class IObserver
 {
 public:
     virtual void OnNext(const T* dataPointer) { }
 
-    virtual ~IObserverTemplate() = default;
+    virtual ~IObserver() = default;
 };
 
 
 template<class T>
-class SubscriptionTemplate
+class Subscription
 {
 public:
-    SubscriptionTemplate(ObservableTemplate<T>* signal, IObserverTemplate<T>* observer)
+    Subscription(Observable<T>* signal, IObserver<T>* observer)
         : _signal(signal), _observer(observer)
     {
     }
 
-    ~SubscriptionTemplate()
+    ~Subscription()
     {
         if (_signal && _observer)
         {
@@ -85,6 +85,6 @@ public:
     }
 
 private:
-    ObservableTemplate<T>* _signal;
-    IObserverTemplate<T>* _observer;
+    Observable<T>* _signal;
+    IObserver<T>* _observer;
 };
