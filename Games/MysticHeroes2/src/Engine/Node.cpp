@@ -54,8 +54,10 @@ Node::~Node()
 {
     for (const auto& nodeName : _nodes | std::views::keys)
     {
-        RemoveNode(nodeName.c_str());
+        const Node* node = _nodes[nodeName];
+        delete node;
     }
+    _nodes.clear();
 
     std::cout << "Node " << _nodeName << " was destroyed" << std::endl;
 }
