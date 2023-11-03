@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <unordered_map>
 
@@ -20,13 +21,23 @@ public:
 
     Node* GetNode(const char* nodeName);
 
+    bool HasNodes() const;
+
     std::vector<Node*> GetNodes() const;
 
     virtual void EnterTree() {}
 
     virtual void Ready() {}
 
-    virtual void Process() {}
+    virtual void Process()
+    {
+        std::cout << "Process node: " << _nodeName << std::endl;
+    }
+
+    virtual void Draw()
+    {
+        std::cout << "Draw node: " << _nodeName << std::endl;
+    }
 
     virtual void ExitTree() {}
 

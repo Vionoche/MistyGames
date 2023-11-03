@@ -1,30 +1,35 @@
 #include <iostream>
-#include <string>
+#include <stack>
 
+#include "Engine/InputState.h"
 #include "Engine/Node.h"
+#include "Engine/Processing.h"
 
 int main()
 {
     Node* mainNode = new Node("Game");
     Node* level01 = new Node("Level01");
     level01->AddNode(new Node("Monster01"));
+    level01->AddNode(new Node("Monster02"));
     mainNode->AddNode(level01);
     Node* level02 = new Node("Level02");
+    Node* building01 = new Node("Building01");
+    building01->AddNode(new Node("Table"));
+    building01->AddNode(new Node("Stool01"));
+    building01->AddNode(new Node("Stool02"));
+    level02->AddNode(building01);
+    level02->AddNode(new Node("Building02"));
     mainNode->AddNode(level02);
 
-    int inputCode = -1;
+    InputState inputState;
 
-    while (inputCode != 0)
+    while (inputState.GetInputCode() != 0)
     {
-        // process nodes
-        // render nodes
+        ProcessNodes<&Node::Process>(mainNode);
+        ProcessNodes<&Node::Draw>(mainNode);
 
-        // clear input
-
-        std::cout << "Type monster id for attack: ";
-        std::cin >> inputCode;
-
-        // read input
+        inputState.Clear();
+        inputState.ReadInput();
     }
 
     delete mainNode;

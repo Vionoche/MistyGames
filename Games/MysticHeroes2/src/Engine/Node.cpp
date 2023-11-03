@@ -38,9 +38,14 @@ Node* Node::GetNode(const char* nodeName)
     return _nodes[nodeName];
 }
 
+bool Node::HasNodes() const
+{
+    return !_nodes.empty();
+}
+
 std::vector<Node*> Node::GetNodes() const
 {
-    std::vector<Node*> childNodes(_nodes.size());
+    std::vector<Node*> childNodes;
 
     for (auto node : _nodes | std::views::values)
     {

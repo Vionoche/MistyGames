@@ -138,12 +138,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\Node.cpp" />
+    <ClCompile Include="src\Engine\Processing.h" />
     <ClCompile Include="src\Engine\SignalsTest.h" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Nodes\Health.cpp" />
     <ClCompile Include="src\PlayerCharacters\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\InputState.h" />
     <ClInclude Include="src\Engine\Node.h" />
     <ClInclude Include="src\Engine\Signals.h" />
     <ClInclude Include="src\Levels\Level.h" />
