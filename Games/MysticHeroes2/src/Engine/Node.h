@@ -1,13 +1,12 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 #include <unordered_map>
 
 class Node
 {
 public:
-    Node(const char* nodeName);
+    Node(const char* nodeName) : _nodeName(nodeName) {}
 
     Node(const Node& other) = delete;
 
@@ -29,15 +28,9 @@ public:
 
     virtual void Ready() {}
 
-    virtual void Process()
-    {
-        std::cout << "Process node: " << _nodeName << std::endl;
-    }
+    virtual void Process() {}
 
-    virtual void Draw()
-    {
-        std::cout << "Draw node: " << _nodeName << std::endl;
-    }
+    virtual void Draw() {}
 
     virtual void ExitTree() {}
 

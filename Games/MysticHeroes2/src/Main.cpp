@@ -4,32 +4,31 @@
 #include "Engine/InputState.h"
 #include "Engine/Node.h"
 #include "Engine/Processing.h"
+#include "Monsters/Goblin.h"
+#include "Monsters/Hobgoblin.h"
+#include "Monsters/Skeleton.h"
+#include "PlayerCharacters/Player.h"
 
 int main()
 {
+    int globalId = 100;
     Node* mainNode = new Node("Game");
-    Node* level01 = new Node("Level01");
-    level01->AddNode(new Node("Monster01"));
-    level01->AddNode(new Node("Monster02"));
+    Node* level01 = new Node("Level");
+    level01->AddNode(new Player("WarriorPlayer"));
+    level01->AddNode(new Goblin(++globalId));
+    level01->AddNode(new Goblin(++globalId));
+    level01->AddNode(new Goblin(++globalId));
+    level01->AddNode(new Hobgoblin(++globalId));
+    level01->AddNode(new Skeleton(++globalId));
     mainNode->AddNode(level01);
-    Node* level02 = new Node("Level02");
-    Node* building01 = new Node("Building01");
-    building01->AddNode(new Node("Table"));
-    building01->AddNode(new Node("Stool01"));
-    building01->AddNode(new Node("Stool02"));
-    level02->AddNode(building01);
-    level02->AddNode(new Node("Building02"));
-    mainNode->AddNode(level02);
 
-    InputState inputState;
-
-    while (inputState.GetInputCode() != 0)
+    while (InputState.GetInputCode() != 0)
     {
         ProcessNodes<&Node::Process>(mainNode);
         ProcessNodes<&Node::Draw>(mainNode);
 
-        inputState.Clear();
-        inputState.ReadInput();
+        InputState.Clear();
+        InputState.ReadInput();
     }
 
     delete mainNode;

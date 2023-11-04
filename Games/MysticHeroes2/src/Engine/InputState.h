@@ -29,3 +29,5 @@ public:
 private:
     int _inputCode;
 };
+
+static InputState InputState;

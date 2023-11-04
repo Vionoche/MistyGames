@@ -1,14 +1,8 @@
 #include "Node.h"
 
-#include <iostream>
 #include <ranges>
 #include <string>
 #include <unordered_map>
-
-Node::Node(const char* nodeName): _nodeName(nodeName)
-{
-    std::cout << "Node " << _nodeName << " was created" << std::endl;
-}
 
 std::string Node::GetName() const
 {
@@ -63,6 +57,4 @@ Node::~Node()
         delete node;
     }
     _nodes.clear();
-
-    std::cout << "Node " << _nodeName << " was destroyed" << std::endl;
 }
