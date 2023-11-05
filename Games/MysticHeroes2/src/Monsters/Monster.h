@@ -1,11 +1,12 @@
 #pragma once
 
-#include <cstdint>
-
 #include "../Engine/Node.h"
+#include "../Engine/Signals.h"
 #include "../Nodes/Attack.h"
 #include "../Nodes/CharacterName.h"
 #include "../Nodes/Health.h"
+
+class Player;
 
 class Monster : public Node
 {
@@ -28,6 +29,8 @@ public:
         AddNode(new Attack("Attack", physicalDamage, magicDamage));
     }
 
+    Observable<Monster*> MonsterDieEventHandler;
+
     int GetMonsterId() const
     {
         return _monsterId;
@@ -35,7 +38,13 @@ public:
 
     void Process() override
     {
-        
+        const auto attack = FindNode<Attack>(_nodes);
+        const auto player = FindNode<Player>(_parent->GetNodes());
+
+        if (attack && player)
+        {
+            attack->MakeDamage((Node*)player);
+        }
     }
 
     void Draw() override

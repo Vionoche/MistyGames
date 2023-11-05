@@ -3,6 +3,7 @@
 #include "Engine/InputState.h"
 #include "Engine/Node.h"
 #include "Engine/Processing.h"
+#include "Levels/Level.h"
 #include "Monsters/Monsters.h"
 #include "PlayerCharacters/Player.h"
 
@@ -10,7 +11,7 @@ int main()
 {
     int globalId = 100;
     Node* mainNode = new Node("Game");
-    Node* level01 = new Node("Level");
+    Level* level01 = new Level("Level");
     level01->AddNode(new Player("WarriorPlayer"));
     level01->AddNode(new Goblin(++globalId));
     level01->AddNode(new Goblin(++globalId));
@@ -19,9 +20,19 @@ int main()
     level01->AddNode(new Skeleton(++globalId));
     mainNode->AddNode(level01);
 
+    bool firstRun = true;
+
     while (InputState.GetInputCode() != 0)
     {
-        ProcessNodes<&Node::Process>(mainNode);
+        if (firstRun)
+        {
+            firstRun = false;
+        }
+        else
+        {
+            ProcessNodes<&Node::Process>(mainNode);
+        }
+        
         ProcessNodes<&Node::Draw>(mainNode);
 
         InputState.Clear();

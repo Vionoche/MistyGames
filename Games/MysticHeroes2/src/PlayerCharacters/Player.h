@@ -4,10 +4,11 @@
 
 #include "../Engine/InputState.h"
 #include "../Engine/Node.h"
-#include "../Monsters/Monster.h"
 #include "../Nodes/Attack.h"
 #include "../Nodes/CharacterName.h"
 #include "../Nodes/Health.h"
+
+class Monster;
 
 class Player : public Node
 {

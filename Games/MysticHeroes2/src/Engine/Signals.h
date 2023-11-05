@@ -38,7 +38,7 @@ public:
         }
     }
 
-    void Emit(const T* dataPointer) const
+    void Emit(const T dataPointer) const
     {
         for (const auto observer : _observers)
         {
@@ -60,7 +60,7 @@ template<class T>
 class IObserver
 {
 public:
-    virtual void OnNext(const T* dataPointer) { }
+    virtual void OnNext(const T dataPointer) { }
 
     virtual ~IObserver() = default;
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Engine/Node.h"
+#include "../Engine/Signals.h"
 #include "../Nodes/CharacterName.h"
 
 class Health : public Node
@@ -13,6 +14,8 @@ public:
           _magicResist(magicResist)
     {
     }
+
+    Observable<int> HealthOverObservable;
 
     int GetHealthPoints() const
     {
@@ -43,6 +46,12 @@ public:
         if (const auto targetName = FindNode<CharacterName>(_parent->GetNodes()))
         {
             std::cout << targetName->GetName() << " gets " << damage << "!" << std::endl;
+
+            if (_healthPoints <= 0)
+            {
+                std::cout << targetName->GetName() << " dies!" << std::endl;
+                HealthOverObservable.Emit(0);
+            }
         }
     }
 
