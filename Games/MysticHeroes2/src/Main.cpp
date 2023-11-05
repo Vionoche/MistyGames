@@ -32,9 +32,13 @@ int main()
         {
             ProcessNodes<&Node::Process>(mainNode);
         }
-        
+
+        NodeDeletingQueue::GetInstance().DeleteNodes();
+
+        std::cout << std::endl;
         ProcessNodes<&Node::Draw>(mainNode);
 
+        std::cout << std::endl;
         InputState.Clear();
         InputState.ReadInput();
     }

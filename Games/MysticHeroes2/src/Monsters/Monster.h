@@ -52,13 +52,12 @@ public:
         AddNode(new CharacterName(monsterTitle));
 
         const auto health = new Health("Health", healthPoints, physicalResist, magicResist);
-        _healthOverSubscription = health->HealthOverObservable.Subscribe(new MonsterHealthOverListener(this, &Monster::OnHealthOverHandler));
+        _healthOverSubscription = health->HealthOverObservable.Subscribe(
+            new MonsterHealthOverListener(this, &Monster::OnHealthOverHandler));
         AddNode(health);
 
         AddNode(new Attack("Attack", physicalDamage, magicDamage));
     }
-
-    Observable<Monster*> MonsterDieEventHandler;
 
     int GetMonsterId() const
     {
@@ -101,12 +100,10 @@ public:
 protected:
     int _monsterId;
     uint32_t _rewardExperiencePoints;
+    Subscription<int>* _healthOverSubscription = nullptr;
 
     void OnHealthOverHandler(int healthPoints)
     {
-        
+        QueueToDelete();
     }
-
-private:
-    Subscription<int>* _healthOverSubscription = nullptr;
 };

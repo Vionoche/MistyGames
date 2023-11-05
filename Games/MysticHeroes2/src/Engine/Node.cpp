@@ -4,9 +4,9 @@
 #include <string>
 #include <unordered_map>
 
-std::string Node::GetName() const
+const char* Node::GetName() const
 {
-    return _nodeName;
+    return _nodeName.c_str();
 }
 
 void Node::AddNode(Node* node)
@@ -18,6 +18,11 @@ void Node::AddNode(Node* node)
 void Node::SetParent(Node* parent)
 {
     _parent = parent;
+}
+
+Node* Node::GetParent() const
+{
+    return _parent;
 }
 
 void Node::RemoveNode(const char* nodeName)
@@ -47,6 +52,11 @@ std::vector<Node*> Node::GetNodes() const
     }
 
     return childNodes;
+}
+
+void Node::QueueToDelete()
+{
+    NodeDeletingQueue::GetInstance().QueueToDelete(this);
 }
 
 Node::~Node()

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <ranges>
+#include <set>
 #include <string>
+#include <vector>
 #include <unordered_map>
 
 class Node
@@ -11,11 +13,13 @@ public:
 
     Node(const Node& other) = delete;
 
-    std::string GetName() const;
+    const char* GetName() const;
 
     void AddNode(Node* node);
 
     void SetParent(Node* parent);
+
+    Node* GetParent() const;
 
     void RemoveNode(const char* nodeName);
 
@@ -24,6 +28,8 @@ public:
     bool HasNodes() const;
 
     std::vector<Node*> GetNodes() const;
+
+    void QueueToDelete();
 
     virtual void Process() {}
 
@@ -98,3 +104,53 @@ std::vector<TNode*> FindNodes(const std::unordered_map<std::string, Node*>& node
 
     return results;
 }
+
+
+class NodeDeletingQueue
+{
+public:
+    NodeDeletingQueue(NodeDeletingQueue const&) = delete;
+
+    void operator=(NodeDeletingQueue const&) = delete;
+
+    static NodeDeletingQueue& GetInstance()
+    {
+        static NodeDeletingQueue instance;
+        return instance;
+    }
+
+    void QueueToDelete(Node* node)
+    {
+        _nodesForDeleting.insert(node);
+    }
+
+    void DeleteNodes()
+    {
+        if (_nodesForDeleting.empty())
+        {
+            return;
+        }
+
+        for (const auto node : _nodesForDeleting)
+        {
+            if (node)
+            {
+                if (const auto parent = node->GetParent())
+                {
+                    parent->RemoveNode(node->GetName());
+                }
+                else
+                {
+                    delete node;
+                }
+            }
+        }
+
+        _nodesForDeleting.clear();
+    }
+
+private:
+    NodeDeletingQueue() = default;
+
+    std::set<Node*> _nodesForDeleting;
+};
