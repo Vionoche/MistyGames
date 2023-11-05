@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "../Engine/Node.h"
 #include "../Engine/Signals.h"
 #include "../Nodes/CharacterName.h"

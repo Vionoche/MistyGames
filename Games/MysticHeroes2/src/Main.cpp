@@ -22,7 +22,7 @@ int main()
 
     bool firstRun = true;
 
-    while (InputState.GetInputCode() != 0)
+    while (InputState::GetInstance().GetInputCode() != 0)
     {
         if (firstRun)
         {
@@ -39,8 +39,8 @@ int main()
         ProcessNodes<&Node::Draw>(mainNode);
 
         std::cout << std::endl;
-        InputState.Clear();
-        InputState.ReadInput();
+        InputState::GetInstance().Clear();
+        InputState::GetInstance().ReadInput();
     }
 
     delete mainNode;

@@ -27,6 +27,12 @@
     <ClCompile Include="src\Engine\Processing.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Monsters\Monster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerCharacters\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Node.h">

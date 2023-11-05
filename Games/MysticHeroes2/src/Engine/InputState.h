@@ -5,9 +5,14 @@
 class InputState
 {
 public:
-    InputState()
+    InputState(InputState const&) = delete;
+
+    void operator=(InputState const&) = delete;
+
+    static InputState& GetInstance()
     {
-        _inputCode = -1;
+        static InputState instance;
+        return instance;
     }
 
     void ReadInput()
@@ -27,7 +32,6 @@ public:
     }
 
 private:
-    int _inputCode;
+    InputState() = default;
+    int _inputCode = -1;
 };
-
-static InputState InputState;

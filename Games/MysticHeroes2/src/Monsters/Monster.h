@@ -7,7 +7,6 @@
 #include "../Nodes/Health.h"
 
 
-class Player;
 class Monster;
 typedef void (Monster::* MonsterHealthOverHandler)(int);
 
@@ -64,33 +63,9 @@ public:
         return _monsterId;
     }
 
-    void Process() override
-    {
-        const auto attack = FindNode<Attack>(_nodes);
-        const auto player = FindNode<Player>(_parent->GetNodes());
+    void Process() override;
 
-        if (attack && player)
-        {
-            attack->MakeDamage((Node*)player);
-        }
-    }
-
-    void Draw() override
-    {
-        const auto characterName = FindNode<CharacterName>(_nodes);
-        if (characterName == nullptr)
-        {
-            std::cout << _nodeName << " doesn't have any name" << std::endl;
-            return;
-        }
-
-        std::cout << characterName->GetName() << " (" << _monsterId << ")";
-
-        if (const auto health = (Health*)GetNode("Health"))
-        {
-            std::cout << " HP " << health->GetHealthPoints() << std::endl;
-        }
-    }
+    void Draw() override;
 
     ~Monster() override
     {
@@ -102,8 +77,5 @@ protected:
     uint32_t _rewardExperiencePoints;
     Subscription<int>* _healthOverSubscription = nullptr;
 
-    void OnHealthOverHandler(int healthPoints)
-    {
-        QueueToDelete();
-    }
+    void OnHealthOverHandler(int healthPoints);
 };

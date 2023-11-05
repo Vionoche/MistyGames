@@ -141,6 +141,8 @@
     <ClCompile Include="src\Engine\Processing.h" />
     <ClCompile Include="src\Engine\SignalsTest.h" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Monsters\Monster.cpp" />
+    <ClCompile Include="src\PlayerCharacters\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\InputState.h" />
