@@ -6,26 +6,55 @@
 #include "../Nodes/CharacterName.h"
 #include "../Nodes/Health.h"
 
+
 class Player;
+class Monster;
+typedef void (Monster::* MonsterHealthOverHandler)(int);
+
+
+class MonsterHealthOverListener : public IObserver<int>
+{
+public:
+    MonsterHealthOverListener(
+        Monster* monster,
+        MonsterHealthOverHandler onHealthOverHandler)
+        : _monster(monster), _onHealthOverHandler(onHealthOverHandler)
+    {
+    }
+
+    void OnNext(const int dataPointer) override
+    {
+        (_monster->*_onHealthOverHandler)(dataPointer);
+    }
+
+private:
+    Monster* _monster;
+    MonsterHealthOverHandler _onHealthOverHandler;
+};
+
 
 class Monster : public Node
 {
 public:
     Monster(
-        int monsterId,
+        const int monsterId,
         const char* monsterTitle,
-        int healthPoints,
-        float physicalResist,
-        float magicResist,
-        uint32_t physicalDamage,
-        uint32_t magicDamage,
-        uint32_t rewardExperiencePoints)
-    : Node(std::string(monsterTitle + std::to_string(monsterId)).c_str()),
-    _monsterId(monsterId),
-    _rewardExperiencePoints(rewardExperiencePoints)
+        const int healthPoints,
+        const float physicalResist,
+        const float magicResist,
+        const uint32_t physicalDamage,
+        const uint32_t magicDamage,
+        const uint32_t rewardExperiencePoints)
+        : Node(std::string(monsterTitle + std::to_string(monsterId)).c_str()),
+          _monsterId(monsterId),
+          _rewardExperiencePoints(rewardExperiencePoints)
     {
         AddNode(new CharacterName(monsterTitle));
-        AddNode(new Health("Health", healthPoints, physicalResist, magicResist));
+
+        const auto health = new Health("Health", healthPoints, physicalResist, magicResist);
+        _healthOverSubscription = health->HealthOverObservable.Subscribe(new MonsterHealthOverListener(this, &Monster::OnHealthOverHandler));
+        AddNode(health);
+
         AddNode(new Attack("Attack", physicalDamage, magicDamage));
     }
 
@@ -64,7 +93,20 @@ public:
         }
     }
 
+    ~Monster() override
+    {
+        delete _healthOverSubscription;
+    }
+
 protected:
     int _monsterId;
     uint32_t _rewardExperiencePoints;
+
+    void OnHealthOverHandler(int healthPoints)
+    {
+        
+    }
+
+private:
+    Subscription<int>* _healthOverSubscription = nullptr;
 };

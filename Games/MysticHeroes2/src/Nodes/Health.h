@@ -7,7 +7,11 @@
 class Health : public Node
 {
 public:
-    Health(const char* nodeName, int healthPoints, float physicalResist, float magicResist)
+    Health(
+        const char* nodeName,
+        const int healthPoints,
+        const float physicalResist,
+        const float magicResist)
         : Node(nodeName),
           _healthPoints(healthPoints),
           _physicalResist(physicalResist),
@@ -50,7 +54,7 @@ public:
             if (_healthPoints <= 0)
             {
                 std::cout << targetName->GetName() << " dies!" << std::endl;
-                HealthOverObservable.Emit(0);
+                HealthOverObservable.Emit(_healthPoints);
             }
         }
     }

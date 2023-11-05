@@ -80,8 +80,9 @@ public:
         if (_signal && _observer)
         {
             _signal->Unsubscribe(_observer);
-            delete _observer;
         }
+
+        delete _observer;
     }
 
 private:
