@@ -40,7 +40,7 @@ public:
 
     void Draw() override
     {
-        const auto characterName = FindNode<CharacterName>(this->GetNodes());
+        const auto characterName = FindNode<CharacterName>(_nodes);
         if (characterName == nullptr)
         {
             std::cout << _nodeName << " doesn't have any name" << std::endl;

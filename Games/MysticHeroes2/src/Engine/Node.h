@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ranges>
 #include <string>
 #include <unordered_map>
 
@@ -53,11 +54,41 @@ TNode* FindNode(const std::vector<Node*>& nodes)
 }
 
 template<class TNode>
+TNode* FindNode(const std::unordered_map<std::string, Node*>& nodes)
+{
+    for (auto current : nodes | std::views::values)
+    {
+        if (TNode* node = dynamic_cast<TNode*>(current))
+        {
+            return node;
+        }
+    }
+
+    return nullptr;
+}
+
+template<class TNode>
 std::vector<TNode*> FindNodes(const std::vector<Node*>& nodes)
 {
     std::vector<TNode*> results;
 
     for (auto& current : nodes)
+    {
+        if (TNode* node = dynamic_cast<TNode*>(current))
+        {
+            results.push_back(node);
+        }
+    }
+
+    return results;
+}
+
+template<class TNode>
+std::vector<TNode*> FindNodes(const std::unordered_map<std::string, Node*>& nodes)
+{
+    std::vector<TNode*> results;
+
+    for (auto current : nodes | std::views::values)
     {
         if (TNode* node = dynamic_cast<TNode*>(current))
         {

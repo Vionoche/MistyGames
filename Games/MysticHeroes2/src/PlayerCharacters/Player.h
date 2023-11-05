@@ -38,7 +38,7 @@ public:
         {
             if (monster->GetMonsterId() == inputCode)
             {
-                if (const auto attack = FindNode<Attack>(this->GetNodes()))
+                if (const auto attack = FindNode<Attack>(_nodes))
                 {
                     attack->MakeDamage(monster);
                     break;
@@ -49,12 +49,16 @@ public:
 
     void Draw() override
     {
+        if (const auto characterName = FindNode<CharacterName>(_nodes))
+        {
+            std::cout << characterName->GetName();
+        }
+        else
+        {
+            std::cout << "Undefined";
+        }
 
-
-        std::cout << _nodeName;
-
-        auto health = (Health*)GetNode("Health");
-        if (health)
+        if (const auto health = (Health*)GetNode("Health"))
         {
             std::cout << " HP " << health->GetHealthPoints();
         }
