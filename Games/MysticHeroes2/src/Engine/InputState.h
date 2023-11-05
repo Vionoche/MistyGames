@@ -12,7 +12,7 @@ public:
 
     void ReadInput()
     {
-        std::cout << "Type monster id for attack: ";
+        std::cout << "Type monster id for attack or type 0 for exit: ";
         std::cin >> _inputCode;
     }
 

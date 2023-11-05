@@ -3,23 +3,29 @@
 #include <cstdint>
 
 #include "../Engine/Node.h"
+#include "../Nodes/Attack.h"
+#include "../Nodes/CharacterName.h"
 #include "../Nodes/Health.h"
 
 class Monster : public Node
 {
 public:
-    Monster(int monsterId,
-            const char* monsterTitle,
-            int healthPoints,
-            float physicalResist,
-            float magicResist,
-            uint32_t rewardExperiencePoints)
-        : Node(std::string(monsterTitle + std::to_string(monsterId)).c_str()),
-          _monsterId(monsterId),
-          _monsterTitle(monsterTitle),
-          _rewardExperiencePoints(rewardExperiencePoints)
+    Monster(
+        int monsterId,
+        const char* monsterTitle,
+        int healthPoints,
+        float physicalResist,
+        float magicResist,
+        uint32_t physicalDamage,
+        uint32_t magicDamage,
+        uint32_t rewardExperiencePoints)
+    : Node(std::string(monsterTitle + std::to_string(monsterId)).c_str()),
+    _monsterId(monsterId),
+    _rewardExperiencePoints(rewardExperiencePoints)
     {
+        AddNode(new CharacterName(monsterTitle));
         AddNode(new Health("Health", healthPoints, physicalResist, magicResist));
+        AddNode(new Attack("Attack", physicalDamage, magicDamage));
     }
 
     int GetMonsterId() const
@@ -27,22 +33,21 @@ public:
         return _monsterId;
     }
 
-    const char* GetMonsterTitle() const
+    void Process() override
     {
-        return _monsterTitle.c_str();
-    }
-
-    void DamageHit(const uint32_t takenPhysicalDamage, const uint32_t takenMagicDamage)
-    {
-        if (const auto health = (Health*)GetNode("Health"))
-        {
-            health->ProcessDamage(takenPhysicalDamage, takenMagicDamage);
-        }
+        
     }
 
     void Draw() override
     {
-        std::cout << _monsterTitle << " (" << _monsterId << ")";
+        const auto characterName = FindNode<CharacterName>(this->GetNodes());
+        if (characterName == nullptr)
+        {
+            std::cout << _nodeName << " doesn't have any name" << std::endl;
+            return;
+        }
+
+        std::cout << characterName->GetName() << " (" << _monsterId << ")";
 
         if (const auto health = (Health*)GetNode("Health"))
         {
@@ -52,6 +57,5 @@ public:
 
 protected:
     int _monsterId;
-    std::string _monsterTitle;
     uint32_t _rewardExperiencePoints;
 };

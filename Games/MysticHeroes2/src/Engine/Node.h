@@ -24,15 +24,9 @@ public:
 
     std::vector<Node*> GetNodes() const;
 
-    virtual void EnterTree() {}
-
-    virtual void Ready() {}
-
     virtual void Process() {}
 
     virtual void Draw() {}
-
-    virtual void ExitTree() {}
 
     virtual ~Node();
 
@@ -41,3 +35,35 @@ protected:
     Node* _parent = nullptr;
     std::unordered_map<std::string, Node*> _nodes;
 };
+
+
+template<class TNode>
+TNode* FindNode(const std::vector<Node*>& nodes)
+{
+    for (int index = 0; index < static_cast<int>(nodes.size()); index++)
+    {
+        Node* current = nodes[index];
+        if (TNode* node = dynamic_cast<TNode*>(current))
+        {
+            return node;
+        }
+    }
+
+    return nullptr;
+}
+
+template<class TNode>
+std::vector<TNode*> FindNodes(const std::vector<Node*>& nodes)
+{
+    std::vector<TNode*> results;
+
+    for (auto& current : nodes)
+    {
+        if (TNode* node = dynamic_cast<TNode*>(current))
+        {
+            results.push_back(node);
+        }
+    }
+
+    return results;
+}

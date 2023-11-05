@@ -1,12 +1,9 @@
 #include <iostream>
-#include <stack>
 
 #include "Engine/InputState.h"
 #include "Engine/Node.h"
 #include "Engine/Processing.h"
-#include "Monsters/Goblin.h"
-#include "Monsters/Hobgoblin.h"
-#include "Monsters/Skeleton.h"
+#include "Monsters/Monsters.h"
 #include "PlayerCharacters/Player.h"
 
 int main()

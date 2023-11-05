@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Engine/Node.h"
+#include "../Nodes/CharacterName.h"
 
 class Health : public Node
 {
@@ -28,7 +29,7 @@ public:
         return _magicResist;
     }
 
-    void ProcessDamage(const uint32_t takenPhysicalDamage, const uint32_t takenMagicDamage)
+    void TakeDamage(const uint32_t takenPhysicalDamage, const uint32_t takenMagicDamage)
     {
         const float physicalCoefficient = 1.0f - _physicalResist;
         const float magicCoefficient = 1.0f - _magicResist;
@@ -38,6 +39,11 @@ public:
         const uint32_t damage = physicalDamage + magicDamage;
 
         _healthPoints -= (int)damage;
+
+        if (const auto targetName = FindNode<CharacterName>(_parent->GetNodes()))
+        {
+            std::cout << targetName->GetName() << " gets " << damage << "!" << std::endl;
+        }
     }
 
 private:
