@@ -7,18 +7,38 @@
 #include "Monsters/Monsters.h"
 #include "PlayerCharacters/Player.h"
 
+
+int GlobalLevelStatus = 0;
+
+typedef
+void (*LevelOverHandler)(int);
+
+class LevelOverListener : public IObserver<int>
+{
+public:
+    void OnNext(const int dataPointer) override
+    {
+        GlobalLevelStatus = dataPointer;
+    }
+};
+
 int main()
 {
     int globalId = 100;
+
     Node* mainNode = new Node("Game");
-    Level* level01 = new Level("Level");
-    level01->AddNode(new Player("WarriorPlayer"));
-    level01->AddNode(new Goblin(++globalId));
-    level01->AddNode(new Goblin(++globalId));
-    level01->AddNode(new Goblin(++globalId));
-    level01->AddNode(new Hobgoblin(++globalId));
-    level01->AddNode(new Skeleton(++globalId));
-    mainNode->AddNode(level01);
+
+    Level* level = new Level("Level");
+    const auto levelOverSubscription = level->LevelOverObservable.Subscribe(new LevelOverListener());
+
+    level->AddNode(new Player("WarriorPlayer"));
+    level->AddNode(new Goblin(++globalId));
+    level->AddNode(new Goblin(++globalId));
+    level->AddNode(new Goblin(++globalId));
+    level->AddNode(new Hobgoblin(++globalId));
+    level->AddNode(new Skeleton(++globalId));
+
+    mainNode->AddNode(level);
 
     bool firstRun = true;
 
@@ -38,11 +58,17 @@ int main()
         std::cout << std::endl;
         ProcessNodes<&Node::Draw>(mainNode);
 
+        if (GlobalLevelStatus != 0)
+        {
+            break;
+        }
+
         std::cout << std::endl;
         InputState::GetInstance().Clear();
         InputState::GetInstance().ReadInput();
     }
 
+    delete levelOverSubscription;
     delete mainNode;
 
     std::cout << std::endl;

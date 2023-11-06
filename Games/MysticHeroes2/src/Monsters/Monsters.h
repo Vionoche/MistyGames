@@ -16,7 +16,7 @@ class Hobgoblin : public Monster
 {
 public:
     Hobgoblin(int monsterId)
-        : Monster(monsterId, "Hobgoblin", 30, 0.0f, 0.0f, 8, 0, 50)
+        : Monster(monsterId, "Hobgoblin", 30, 0.0f, 0.0f, 5, 3, 50)
     {
     }
 };

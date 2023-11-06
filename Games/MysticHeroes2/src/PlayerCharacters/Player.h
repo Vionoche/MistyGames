@@ -3,10 +3,36 @@
 #include <cstdint>
 
 #include "../Engine/InputState.h"
+#include "../Engine/Signals.h"
 #include "../Engine/Node.h"
 #include "../Nodes/Attack.h"
 #include "../Nodes/CharacterName.h"
 #include "../Nodes/Health.h"
+
+class Player;
+typedef void (Player::* PlayerHealthOverHandler)(int);
+
+
+class PlayerHealthOverListener : public IObserver<int>
+{
+public:
+    PlayerHealthOverListener(
+        Player* player,
+        PlayerHealthOverHandler onHealthOverHandler)
+        : _player(player), _onHealthOverHandler(onHealthOverHandler)
+    {
+    }
+
+    void OnNext(const int dataPointer) override
+    {
+        (_player->*_onHealthOverHandler)(dataPointer);
+    }
+
+private:
+    Player* _player;
+    PlayerHealthOverHandler _onHealthOverHandler;
+};
+
 
 class Player : public Node
 {
@@ -15,7 +41,12 @@ public:
         : Node(nodeName)
     {
         AddNode(new CharacterName(nodeName));
-        AddNode(new Health("Health", 1000, 0.0f, 0.0f));
+
+        const auto health = new Health("Health", 200, 0.5f, 0.25f);
+        _healthOverSubscription = health->HealthOverObservable.Subscribe(
+            new PlayerHealthOverListener(this, &Player::OnHealthOverHandler));
+        AddNode(health);
+
         AddNode(new Attack("Attack", 20, 0));
     }
 
@@ -29,10 +60,19 @@ public:
         return _characterExperiencePoints;
     }
 
+    bool GetIsDead() const
+    {
+        return _isDead;
+    }
+
     void Process() override;
 
     void Draw() override;
 
 protected:
     uint32_t _characterExperiencePoints = 0;
+    bool _isDead = false;
+    Subscription<int>* _healthOverSubscription = nullptr;
+
+    void OnHealthOverHandler(int healthPoints);
 };

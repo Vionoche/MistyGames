@@ -3,6 +3,11 @@
 
 void Player::Process()
 {
+    if (_isDead)
+    {
+        return;
+    }
+
     const int inputCode = InputState::GetInstance().GetInputCode();
     if (inputCode <= 0)
     {
@@ -34,10 +39,21 @@ void Player::Draw()
         std::cout << "Undefined";
     }
 
+    if (_isDead)
+    {
+        std::cout << " is dead" << std::endl;
+        return;
+    }
+
     if (const auto health = (Health*)GetNode("Health"))
     {
         std::cout << " HP " << health->GetHealthPoints();
     }
 
     std::cout << " Exp " << _characterExperiencePoints << std::endl;
+}
+
+void Player::OnHealthOverHandler(int healthPoints)
+{
+    _isDead = true;
 }
