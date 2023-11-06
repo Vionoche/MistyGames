@@ -23,7 +23,7 @@ int main()
 {
     int globalId = 100;
 
-    Node* mainNode = new Node("Game");
+    Node* game = new Node("Game");
 
     Level* level = new Level("Level");
     const auto levelOverSubscription = level->LevelOverObservable.Subscribe(new LevelOverListener());
@@ -35,7 +35,7 @@ int main()
     level->AddNode(new Hobgoblin(++globalId));
     level->AddNode(new Skeleton(++globalId));
 
-    mainNode->AddNode(level);
+    game->AddNode(level);
 
     bool firstRun = true;
 
@@ -47,13 +47,13 @@ int main()
         }
         else
         {
-            ProcessNodes<&Node::Process>(mainNode);
+            ProcessNodes<&Node::Process>(game);
         }
 
         NodeDeletingQueue::GetInstance().DeleteNodes();
 
         std::cout << std::endl;
-        ProcessNodes<&Node::Draw>(mainNode);
+        ProcessNodes<&Node::Draw>(game);
 
         if (GlobalLevelStatus != 0)
         {
@@ -66,7 +66,7 @@ int main()
     }
 
     delete levelOverSubscription;
-    delete mainNode;
+    delete game;
 
     std::cout << std::endl;
     std::cout << "The End" << std::endl;
