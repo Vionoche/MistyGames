@@ -9,30 +9,6 @@
 #include "../Nodes/CharacterName.h"
 #include "../Nodes/Health.h"
 
-class Player;
-typedef void (Player::* PlayerHealthOverHandler)(int);
-
-
-class PlayerHealthOverListener : public IObserver<int>
-{
-public:
-    PlayerHealthOverListener(
-        Player* player,
-        PlayerHealthOverHandler onHealthOverHandler)
-        : _player(player), _onHealthOverHandler(onHealthOverHandler)
-    {
-    }
-
-    void OnNext(const int dataPointer) override
-    {
-        (_player->*_onHealthOverHandler)(dataPointer);
-    }
-
-private:
-    Player* _player;
-    PlayerHealthOverHandler _onHealthOverHandler;
-};
-
 
 class Player : public Node
 {
@@ -44,7 +20,7 @@ public:
 
         const auto health = new Health("Health", 200, 0.5f, 0.25f);
         _healthOverSubscription = health->HealthOverObservable.Subscribe(
-            new PlayerHealthOverListener(this, &Player::OnHealthOverHandler));
+            new Listener(this, &Player::OnHealthOverHandler));
         AddNode(health);
 
         AddNode(new Attack("Attack", 20, 0));

@@ -89,3 +89,25 @@ private:
     Observable<T>* _signal;
     IObserver<T>* _observer;
 };
+
+
+template<class TData, class TClass>
+class Listener : public IObserver<TData>
+{
+public:
+    Listener(
+        TClass* player,
+        void(TClass::* handler)(TData))
+        : _player(player), _handler(handler)
+    {
+    }
+
+    void OnNext(const TData dataPointer) override
+    {
+        (_player->*_handler)(dataPointer);
+    }
+
+private:
+    TClass* _player;
+    void(TClass::* _handler)(TData);
+};

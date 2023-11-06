@@ -7,31 +7,6 @@
 #include "../Nodes/Health.h"
 
 
-class Monster;
-typedef void (Monster::* MonsterHealthOverHandler)(int);
-
-
-class MonsterHealthOverListener : public IObserver<int>
-{
-public:
-    MonsterHealthOverListener(
-        Monster* monster,
-        MonsterHealthOverHandler onHealthOverHandler)
-        : _monster(monster), _onHealthOverHandler(onHealthOverHandler)
-    {
-    }
-
-    void OnNext(const int dataPointer) override
-    {
-        (_monster->*_onHealthOverHandler)(dataPointer);
-    }
-
-private:
-    Monster* _monster;
-    MonsterHealthOverHandler _onHealthOverHandler;
-};
-
-
 class Monster : public Node
 {
 public:
@@ -52,7 +27,7 @@ public:
 
         const auto health = new Health("Health", healthPoints, physicalResist, magicResist);
         _healthOverSubscription = health->HealthOverObservable.Subscribe(
-            new MonsterHealthOverListener(this, &Monster::OnHealthOverHandler));
+            new Listener(this, &Monster::OnHealthOverHandler));
         AddNode(health);
 
         AddNode(new Attack("Attack", physicalDamage, magicDamage));

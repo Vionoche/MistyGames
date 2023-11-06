@@ -10,9 +10,6 @@
 
 int GlobalLevelStatus = 0;
 
-typedef
-void (*LevelOverHandler)(int);
-
 class LevelOverListener : public IObserver<int>
 {
 public:
