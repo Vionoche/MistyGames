@@ -6,6 +6,7 @@
 #include "../Engine/Signals.h"
 #include "../Engine/Node.h"
 #include "../Nodes/Attack.h"
+#include "../Nodes/CharacterLevel.h"
 #include "../Nodes/CharacterName.h"
 #include "../Nodes/Health.h"
 
@@ -24,16 +25,19 @@ public:
         AddNode(health);
 
         AddNode(new Attack("Attack", 20, 0));
+
+        const auto characterLevel = new CharacterLevel("CharacterLevel");
+        _characterLevelSubscription = characterLevel->LevelUpObservable.Subscribe(
+            new Listener(this, &Player::OnLevelUpHandler));
+        AddNode(characterLevel);
     }
 
-    void AddCharacterExperiencePoints(uint32_t experiencePoints)
+    void AddCharacterExperiencePoints(const uint32_t experiencePoints) const
     {
-        _characterExperiencePoints += experiencePoints;
-    }
-
-    uint32_t GetCharacterExperiencePoints() const
-    {
-        return _characterExperiencePoints;
+        if (const auto characterLevel = FindNode<CharacterLevel>(_nodes))
+        {
+            characterLevel->AddExperiencePoints(experiencePoints);
+        }
     }
 
     bool GetIsDead() const
@@ -46,9 +50,11 @@ public:
     void Draw() override;
 
 protected:
-    uint32_t _characterExperiencePoints = 0;
     bool _isDead = false;
     Subscription<int>* _healthOverSubscription = nullptr;
+    Subscription<uint32_t>* _characterLevelSubscription = nullptr;
 
     void OnHealthOverHandler(int healthPoints);
+
+    void OnLevelUpHandler(uint32_t newLevel);
 };

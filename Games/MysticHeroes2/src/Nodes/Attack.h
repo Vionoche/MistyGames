@@ -7,7 +7,7 @@
 class Attack : public Node
 {
 public:
-    Attack(const char* nodeName, uint32_t physicalDamage, uint32_t magicDamage)
+    Attack(const char* nodeName, const uint32_t physicalDamage, const uint32_t magicDamage)
         : Node(nodeName),
           _physicalDamage(physicalDamage),
           _magicDamage(magicDamage)
@@ -22,6 +22,12 @@ public:
     uint32_t GetMagicDamage() const
     {
         return _magicDamage;
+    }
+
+    void UpdateDamage(const uint32_t physicalDamage, const uint32_t magicDamage)
+    {
+        _physicalDamage = physicalDamage;
+        _magicDamage = magicDamage;
     }
 
     void MakeDamage(const Node* target) const

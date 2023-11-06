@@ -154,6 +154,7 @@
     <ClInclude Include="src\Nodes\CharacterName.h" />
     <ClInclude Include="src\Nodes\Health.h" />
     <ClInclude Include="src\Monsters\Monster.h" />
+    <ClInclude Include="src\Nodes\CharacterLevel.h" />
     <ClInclude Include="src\PlayerCharacters\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -50,10 +50,29 @@ void Player::Draw()
         std::cout << " HP " << health->GetHealthPoints();
     }
 
-    std::cout << " Exp " << _characterExperiencePoints << std::endl;
+    if (const auto characterLevel = (CharacterLevel*)GetNode("CharacterLevel"))
+    {
+        std::cout << " Level " << characterLevel->GetCurrentLevel();
+        std::cout << " Exp " << characterLevel->GetExperiencePoints() << std::endl;
+    }
 }
 
 void Player::OnHealthOverHandler(int healthPoints)
 {
     _isDead = true;
+}
+
+void Player::OnLevelUpHandler(const uint32_t newLevel)
+{
+    if (const auto attack = FindNode<Attack>(_nodes))
+    {
+        attack->UpdateDamage(20 + (2 * newLevel), 0);
+    }
+
+    if (const auto health = FindNode<Health>(_nodes))
+    {
+        health->UpdateHealthPoints(200 + (10 * (int)newLevel));
+    }
+
+    std::cout << "Level Up!" << std::endl;
 }
