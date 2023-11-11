@@ -1,3 +1,6 @@
+// TODO: Split engine classes from domain classes.
+// TODO: Add World and System classes.
+
 #include <iostream>
 #include <vector>
 
