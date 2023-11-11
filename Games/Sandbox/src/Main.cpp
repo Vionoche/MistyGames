@@ -1,9 +1,6 @@
-// TODO: Create Game and GameBuilder classes
-// TODO: Move Game and GameBuilder classes into separate project
-// TODO: Levels engine
+// TODO: Use the Nodes system from the MysticHeroes2 (use library project?)
 // TODO: 2D and 3D levels
 // TODO: Render text
-// TODO: Entity Component System
 
 #include <filesystem>
 #include <iostream>

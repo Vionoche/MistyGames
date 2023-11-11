@@ -7,7 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{07502F88
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Games\Sandbox\Sandbox.vcxproj", "{03D77B30-10CF-42DC-8CD0-EDCCB4B6A3CC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MysticHeroes", "MysticHeroes\MysticHeroes.vcxproj", "{F00AE058-DF39-4DA0-989F-640CBD0F14FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MysticHeroes", "Games\MysticHeroes\MysticHeroes.vcxproj", "{F00AE058-DF39-4DA0-989F-640CBD0F14FF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MysticHeroes2", "Games\MysticHeroes2\MysticHeroes2.vcxproj", "{9E307396-F83A-4850-8340-1E10E3A14A7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,14 @@ Global
 		{F00AE058-DF39-4DA0-989F-640CBD0F14FF}.Release|x64.Build.0 = Release|x64
 		{F00AE058-DF39-4DA0-989F-640CBD0F14FF}.Release|x86.ActiveCfg = Release|Win32
 		{F00AE058-DF39-4DA0-989F-640CBD0F14FF}.Release|x86.Build.0 = Release|Win32
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Debug|x64.ActiveCfg = Debug|x64
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Debug|x64.Build.0 = Debug|x64
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Debug|x86.ActiveCfg = Debug|Win32
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Debug|x86.Build.0 = Debug|Win32
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Release|x64.ActiveCfg = Release|x64
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Release|x64.Build.0 = Release|x64
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Release|x86.ActiveCfg = Release|Win32
+		{9E307396-F83A-4850-8340-1E10E3A14A7E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{03D77B30-10CF-42DC-8CD0-EDCCB4B6A3CC} = {07502F88-4B3D-4407-BEDC-5F6FF3C05A8D}
 		{F00AE058-DF39-4DA0-989F-640CBD0F14FF} = {07502F88-4B3D-4407-BEDC-5F6FF3C05A8D}
+		{9E307396-F83A-4850-8340-1E10E3A14A7E} = {07502F88-4B3D-4407-BEDC-5F6FF3C05A8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1370CEC9-9FEA-42FD-BFFD-89B6F0EDDDB5}

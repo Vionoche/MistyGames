@@ -1,3 +1,6 @@
+// TODO: Split engine classes from domain classes.
+// TODO: Add World and System classes.
+
 #include <iostream>
 #include <vector>
 
@@ -72,20 +75,6 @@ int main()
         {
             break;
         }
-
-        // Refactor systems and move them into separate classes
-
-        // Introduce levels (worlds)
-
-        // System 6
-        // Introduce character levels
-
-        // System 7
-        // Introduce turn-based system
-
-        // Improve data structures and search algorithms
-
-        // Introduce text logging system
     }
 
     for (const auto& entity : entities)
