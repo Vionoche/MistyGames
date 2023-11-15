@@ -77,6 +77,7 @@ template<class TNode>
 std::vector<TNode*> FindNodes(const std::vector<Node*>& nodes)
 {
     std::vector<TNode*> results;
+    results.reserve(nodes.size());
 
     for (auto& current : nodes)
     {
@@ -93,6 +94,7 @@ template<class TNode>
 std::vector<TNode*> FindNodes(const std::unordered_map<std::string, Node*>& nodes)
 {
     std::vector<TNode*> results;
+    results.reserve(nodes.size());
 
     for (auto current : nodes | std::views::values)
     {
