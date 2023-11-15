@@ -45,6 +45,7 @@ bool Node::HasNodes() const
 std::vector<Node*> Node::GetNodes() const
 {
     std::vector<Node*> childNodes;
+    childNodes.reserve(_nodes.size());
 
     for (auto node : _nodes | std::views::values)
     {
