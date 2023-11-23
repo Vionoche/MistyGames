@@ -6,12 +6,20 @@
 #include <vector>
 #include <unordered_map>
 
+enum NotificationType
+{
+    Process,
+    Draw
+};
+
 class Node
 {
 public:
     Node(const char* nodeName) : _nodeName(nodeName) {}
 
     Node(const Node& other) = delete;
+
+    void operator=(Node const&) = delete;
 
     const char* GetName() const;
 
@@ -31,9 +39,9 @@ public:
 
     void QueueToDelete();
 
-    virtual void Process() {}
+    virtual void SendNotification(NotificationType notificationType);
 
-    virtual void Draw() {}
+    virtual void Process() {}
 
     virtual ~Node();
 
