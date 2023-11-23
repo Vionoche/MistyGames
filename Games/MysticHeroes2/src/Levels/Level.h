@@ -2,6 +2,7 @@
 
 #include "../Engine/Node.h"
 #include "../Monsters/Monster.h"
+#include "../Nodes/ConsolePrinter.h"
 #include "../PlayerCharacters/Player.h"
 
 
@@ -9,11 +10,11 @@ constexpr int PlayerDied = 1;
 constexpr int PlayerWin = 2;
 
 
-class Level : public Node
+class Level : public ConsolePrinter
 {
 public:
     Level(const char* nodeName)
-        : Node(nodeName)
+        : ConsolePrinter(nodeName)
     {
     }
 

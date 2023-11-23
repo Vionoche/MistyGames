@@ -8,14 +8,15 @@
 #include "../Nodes/Attack.h"
 #include "../Nodes/CharacterLevel.h"
 #include "../Nodes/CharacterName.h"
+#include "../Nodes/ConsolePrinter.h"
 #include "../Nodes/Health.h"
 
 
-class Player : public Node
+class Player : public ConsolePrinter
 {
 public:
     Player(const char* nodeName)
-        : Node(nodeName)
+        : ConsolePrinter(nodeName)
     {
         AddNode(new CharacterName(nodeName));
 

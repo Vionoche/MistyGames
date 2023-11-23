@@ -152,6 +152,7 @@
     <ClInclude Include="src\Monsters\Monsters.h" />
     <ClInclude Include="src\Nodes\Attack.h" />
     <ClInclude Include="src\Nodes\CharacterName.h" />
+    <ClInclude Include="src\Nodes\ConsolePrinter.h" />
     <ClInclude Include="src\Nodes\Health.h" />
     <ClInclude Include="src\Monsters\Monster.h" />
     <ClInclude Include="src\Nodes\CharacterLevel.h" />

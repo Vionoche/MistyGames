@@ -4,10 +4,11 @@
 #include "../Engine/Signals.h"
 #include "../Nodes/Attack.h"
 #include "../Nodes/CharacterName.h"
+#include "../Nodes/ConsolePrinter.h"
 #include "../Nodes/Health.h"
 
 
-class Monster : public Node
+class Monster : public ConsolePrinter
 {
 public:
     Monster(
@@ -19,7 +20,7 @@ public:
         const uint32_t physicalDamage,
         const uint32_t magicDamage,
         const uint32_t rewardExperiencePoints)
-        : Node(std::string(monsterTitle + std::to_string(monsterId)).c_str()),
+        : ConsolePrinter(std::string(monsterTitle + std::to_string(monsterId)).c_str()),
           _monsterId(monsterId),
           _rewardExperiencePoints(rewardExperiencePoints)
     {

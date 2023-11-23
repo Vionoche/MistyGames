@@ -60,6 +60,20 @@ void Node::QueueToDelete()
     NodeDeletingQueue::GetInstance().QueueToDelete(this);
 }
 
+void Node::SendNotification(const NotificationType notificationType)
+{
+    if (notificationType == NotificationType::Process)
+    {
+        Process();
+    }
+
+    for (const auto& nodeName : _nodes | std::views::keys)
+    {
+        Node* node = _nodes[nodeName];
+        node->SendNotification(notificationType);
+    }
+}
+
 Node::~Node()
 {
     for (const auto& nodeName : _nodes | std::views::keys)

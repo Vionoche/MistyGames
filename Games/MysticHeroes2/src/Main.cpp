@@ -2,7 +2,6 @@
 
 #include "Engine/InputState.h"
 #include "Engine/Node.h"
-#include "Engine/Processing.h"
 #include "Levels/Level.h"
 #include "Monsters/Monsters.h"
 #include "PlayerCharacters/Player.h"
@@ -47,13 +46,13 @@ int main()
         }
         else
         {
-            ProcessNodes<&Node::Process>(game);
+            game->SendNotification(NotificationType::Process);
         }
 
         NodeDeletingQueue::GetInstance().DeleteNodes();
 
         std::cout << std::endl;
-        ProcessNodes<&Node::Draw>(game);
+        game->SendNotification(NotificationType::Draw);
 
         if (GlobalLevelStatus != 0)
         {
