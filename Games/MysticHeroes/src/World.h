@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "Component.h"
+#include "../Engine/Component.h"
 
 template<class TComponent>
 TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& components)

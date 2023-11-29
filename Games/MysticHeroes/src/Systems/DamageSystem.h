@@ -2,8 +2,10 @@
 
 #include <vector>
 
-#include "../System.h"
-#include "../Entity.h"
+#include "../Components/Health.h"
+#include "../Components/TakenDamage.h"
+#include "../Engine/Entity.h"
+#include "../Engine/System.h"
 #include "../World.h"
 
 class DamageSystem : public ISystem

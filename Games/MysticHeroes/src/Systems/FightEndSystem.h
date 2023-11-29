@@ -2,8 +2,9 @@
 
 #include <vector>
 
-#include "../System.h"
-#include "../Entity.h"
+#include "../Components/Monster.h"
+#include "../Engine/Entity.h"
+#include "../Engine/System.h"
 #include "../World.h"
 
 constexpr int PlayerDied = 1;

@@ -3,7 +3,9 @@
 #include <vector>
 
 #include "AttackSystemBase.h"
-#include "../Entity.h"
+#include "../Components/Monster.h"
+#include "../Components/Player.h"
+#include "../Engine/Entity.h"
 #include "../World.h"
 
 class MonsterAttackSystem : public AttackSystemBase

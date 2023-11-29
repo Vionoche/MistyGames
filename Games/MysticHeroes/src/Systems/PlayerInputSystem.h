@@ -3,8 +3,10 @@
 #include <vector>
 
 #include "AttackSystemBase.h"
+#include "../Components/Monster.h"
+#include "../Components/Player.h"
 #include "../Engine/InputState.h"
-#include "../Entity.h"
+#include "../Engine/Entity.h"
 #include "../World.h"
 
 class PlayerInputSystem : public AttackSystemBase

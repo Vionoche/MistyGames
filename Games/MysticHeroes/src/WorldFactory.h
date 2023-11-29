@@ -1,6 +1,12 @@
 #pragma once
 
-#include "Entity.h"
+#include "Components/AttackDamage.h"
+#include "Components/CharacterExperience.h"
+#include "Components/Health.h"
+#include "Components/Monster.h"
+#include "Components/Player.h"
+#include "Components/RewardExperience.h"
+#include "Engine/Entity.h"
 
 Entity* CreatePlayer(const int entityId)
 {

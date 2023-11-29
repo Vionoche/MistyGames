@@ -4,7 +4,6 @@
 
 #include "Entity.h"
 
-
 class ISystem
 {
 public:

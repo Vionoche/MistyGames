@@ -2,7 +2,10 @@
 
 #include <vector>
 
-#include "../System.h"
+#include "../Components/AttackDamage.h"
+#include "../Components/TakenDamage.h"
+#include "../Engine/Entity.h"
+#include "../Engine/System.h"
 #include "../World.h"
 
 class AttackSystemBase : public ISystem

@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "Engine/InputState.h"
-#include "Entity.h"
+#include "Engine/Entity.h"
 #include "WorldFactory.h"
 #include "Systems/DamageSystem.h"
 #include "Systems/DeadEntitiesSystem.h"

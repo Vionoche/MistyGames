@@ -2,7 +2,10 @@
 
 #include <vector>
 
-#include "../System.h"
+#include "../Components/Health.h"
+#include "../Components/CharacterExperience.h"
+#include "../Engine/Entity.h"
+#include "../Engine/System.h"
 
 class PrintEntitiesSystem : ISystem
 {
