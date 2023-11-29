@@ -8,7 +8,10 @@
 class ISystem
 {
 public:
-    virtual int Process(std::vector<Entity*>& entities);
+    virtual int Process(std::vector<Entity*>& entities)
+    {
+        return 0;
+    }
 
     virtual ~ISystem() = default;
 };
