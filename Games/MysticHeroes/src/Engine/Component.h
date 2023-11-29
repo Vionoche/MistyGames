@@ -26,10 +26,7 @@ public:
         std::cout << "Base Component for EntityId = " << EntityId << std::endl;
     }
 
-    virtual ~Component()
-    {
-        std::cout << "Component for EntityId = " << EntityId << " was destroyed" << std::endl;
-    }
+    virtual ~Component() = default;
 };
 
 
@@ -85,7 +82,7 @@ void RemoveComponentByPointer(const TComponent* component, std::vector<std::shar
 {
     for (auto iterator = components.begin(); iterator != components.end();)
     {
-        Component* current = (*iterator).get();
+        Component* current = iterator->get();
         if (current == component)
         {
             iterator = components.erase(iterator);
