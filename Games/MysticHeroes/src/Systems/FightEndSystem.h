@@ -3,9 +3,9 @@
 #include <vector>
 
 #include "../Components/Monster.h"
+#include "../Engine/Component.h"
 #include "../Engine/Entity.h"
 #include "../Engine/System.h"
-#include "../World.h"
 
 constexpr int PlayerDied = 1;
 constexpr int PlayerWin = 2;

@@ -5,9 +5,9 @@
 #include "AttackSystemBase.h"
 #include "../Components/Monster.h"
 #include "../Components/Player.h"
+#include "../Engine/Component.h"
 #include "../Engine/InputState.h"
 #include "../Engine/Entity.h"
-#include "../World.h"
 
 class PlayerInputSystem : public AttackSystemBase
 {

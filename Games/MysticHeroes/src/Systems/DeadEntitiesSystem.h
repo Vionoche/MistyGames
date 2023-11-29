@@ -5,9 +5,9 @@
 #include "../Components/Player.h"
 #include "../Components/CharacterExperience.h"
 #include "../Components/RewardExperience.h"
+#include "../Engine/Component.h"
 #include "../Engine/Entity.h"
 #include "../Engine/System.h"
-#include "../World.h"
 
 class DeadEntitiesSystem : public ISystem
 {

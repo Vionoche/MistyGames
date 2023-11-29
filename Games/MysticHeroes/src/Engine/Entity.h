@@ -5,6 +5,8 @@
 
 #include "Component.h"
 
+class Component;
+
 class Entity
 {
 public:

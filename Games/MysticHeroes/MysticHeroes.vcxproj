@@ -158,7 +158,6 @@
     <ClInclude Include="src\Systems\MonsterAttackSystem.h" />
     <ClInclude Include="src\Systems\PlayerInputSystem.h" />
     <ClInclude Include="src\Systems\PrintEntitiesSystem.h" />
-    <ClInclude Include="src\World.h" />
     <ClInclude Include="src\WorldFactory.h" />
   </ItemGroup>
   <ItemGroup>
