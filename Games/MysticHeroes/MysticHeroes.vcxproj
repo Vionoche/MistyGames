@@ -138,11 +138,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\MysticHeroes.cpp" />
+    <ClCompile Include="src\Systems\AttackSystemBase.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\InputState.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\System.h" />
+    <ClInclude Include="src\Systems\DamageSystem.h" />
+    <ClInclude Include="src\Systems\DeadEntitiesSystem.h" />
+    <ClInclude Include="src\Systems\FightEndSystem.h" />
+    <ClInclude Include="src\Systems\MonsterAttackSystem.h" />
+    <ClInclude Include="src\Systems\PlayerInputSystem.h" />
+    <ClInclude Include="src\Systems\PrintEntitiesSystem.h" />
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\WorldFactory.h" />
   </ItemGroup>

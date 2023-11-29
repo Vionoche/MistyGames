@@ -11,10 +11,9 @@ public:
     {
     }
 
-    Component(const Component& other) : EntityId(other.EntityId)
-    {
-        std::cout << "Component for EntityId =" << EntityId << " was copied" << std::endl;
-    }
+    Component(const Component& other) = delete;
+
+    void operator=(Component const&) = delete;
 
     void virtual PrintName() const
     {

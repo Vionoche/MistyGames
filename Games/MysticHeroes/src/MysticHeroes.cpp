@@ -1,36 +1,15 @@
-// TODO: Split engine classes from domain classes.
-// TODO: Add World and System classes.
-
 #include <iostream>
 #include <vector>
 
-#include "Component.h"
+#include "Engine/InputState.h"
 #include "Entity.h"
-#include "System.h"
-#include "World.h"
 #include "WorldFactory.h"
-
-void PrintEntities(const std::vector<Entity*>& entities)
-{
-    for (auto& entity : entities)
-    {
-        std::cout << entity->EntityName << "(" << entity->EntityId << ")";
-
-        const Health* health = FindComponent<Health>(entity->Components);
-        if (health)
-        {
-            std::cout << " HP " << health->HealthPoints;
-        }
-
-        const CharacterExperience* experience = FindComponent<CharacterExperience>(entity->Components);
-        if (experience)
-        {
-            std::cout << " Exp " << experience->ExperiencePoints;
-        }
-
-        std::cout << std::endl;
-    }
-}
+#include "Systems/DamageSystem.h"
+#include "Systems/DeadEntitiesSystem.h"
+#include "Systems/FightEndSystem.h"
+#include "Systems/MonsterAttackSystem.h"
+#include "Systems/PlayerInputSystem.h"
+#include "Systems/PrintEntitiesSystem.h"
 
 int main()
 {
@@ -50,28 +29,33 @@ int main()
     // Main loop
     std::cout << std::endl;
 
-    PrintEntities(entities);
+    PrintEntitiesSystem printEntitiesSystem;
+    PlayerInputSystem playerInputSystem;
+    MonsterAttackSystem monsterAttackSystem;
+    DamageSystem damageSystem;
+    DeadEntitiesSystem deadEntitiesSystem;
+    FightEndSystem fightEndSystem;
 
-    int inputCode = -1;
+    printEntitiesSystem.Process(entities);
 
-    while (inputCode != 0)
+    while (InputState::GetInstance().GetInputCode() != 0)
     {
-        std::cout << "Type monster id for attack: ";
-        std::cin >> inputCode;
+        InputState::GetInstance().Clear();
+        InputState::GetInstance().ReadInput();
 
-        ProcessPlayerInputSystem(entities, inputCode);
+        int processResult = playerInputSystem.Process(entities);
 
-        ProcessMonsterAttackSystem(entities);
+        processResult = monsterAttackSystem.Process(entities);
 
-        ProcessDamageSystem(entities);
+        processResult = damageSystem.Process(entities);
 
-        ProcessDeadEntitiesSystem(entities);
+        processResult = deadEntitiesSystem.Process(entities);
 
-        const int fightResult = ProcessFightEndSystem(entities);
+        processResult = fightEndSystem.Process(entities);
 
-        PrintEntities(entities);
+        processResult = printEntitiesSystem.Process(entities);
 
-        if (fightResult > 0)
+        if (processResult > 0)
         {
             break;
         }
