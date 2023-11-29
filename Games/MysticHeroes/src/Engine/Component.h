@@ -1,9 +1,35 @@
 #pragma once
 
+#include <iostream>
 #include <memory>
 #include <vector>
 
-#include "Component.h"
+#include "Entity.h"
+
+class Entity;
+
+class Component
+{
+public:
+    int EntityId;
+
+    Component(int entityId) : EntityId(entityId)
+    {
+    }
+
+    Component(const Component& other) = delete;
+
+    void operator=(Component const&) = delete;
+
+    void virtual PrintName() const
+    {
+        std::cout << "Base Component for EntityId = " << EntityId << std::endl;
+    }
+
+    virtual ~Component() = default;
+};
+
+
 
 template<class TComponent>
 TComponent* FindComponent(const std::vector<std::shared_ptr<Component>>& components)
@@ -56,7 +82,7 @@ void RemoveComponentByPointer(const TComponent* component, std::vector<std::shar
 {
     for (auto iterator = components.begin(); iterator != components.end();)
     {
-        Component* current = (*iterator).get();
+        Component* current = iterator->get();
         if (current == component)
         {
             iterator = components.erase(iterator);
@@ -67,7 +93,7 @@ void RemoveComponentByPointer(const TComponent* component, std::vector<std::shar
 }
 
 template<class TComponent>
-Entity * FindEntityByComponent(const std::vector<Entity*>& entities)
+Entity* FindEntityByComponent(const std::vector<Entity*>& entities)
 {
     for (auto& entity : entities)
     {
