@@ -71,6 +71,15 @@
     <ClInclude Include="src\Nodes\ConsolePrinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Levels\MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Levels\Levels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -148,7 +148,10 @@
     <ClInclude Include="src\Engine\InputState.h" />
     <ClInclude Include="src\Engine\Node.h" />
     <ClInclude Include="src\Engine\Signals.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Levels\Level.h" />
+    <ClInclude Include="src\Levels\Levels.h" />
+    <ClInclude Include="src\Levels\MainMenu.h" />
     <ClInclude Include="src\Monsters\Monsters.h" />
     <ClInclude Include="src\Nodes\Attack.h" />
     <ClInclude Include="src\Nodes\CharacterName.h" />

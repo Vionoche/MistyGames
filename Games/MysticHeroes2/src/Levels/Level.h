@@ -42,6 +42,6 @@ public:
             return;
         }
 
-        InputState::GetInstance().SetInputMessage("Type monster id for attack or type 0 for exit: ");
+        InputState::GetInstance().SetInputMessage("Type monster id for attack or type 0 to exit: ");
     }
 };
