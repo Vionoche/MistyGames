@@ -29,6 +29,7 @@ public:
             std::cout << "YOU DIED" << std::endl;
             std::cout << std::endl;
             LevelOverObservable.Emit(PlayerDied);
+            return;
         }
 
         const auto monsters = FindNodes<Monster>(_nodes);
@@ -38,6 +39,9 @@ public:
             std::cout << "YOU WIN!" << std::endl;
             std::cout << std::endl;
             LevelOverObservable.Emit(PlayerWin);
+            return;
         }
+
+        InputState::GetInstance().SetInputMessage("Type monster id for attack or type 0 for exit: ");
     }
 };

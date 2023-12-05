@@ -60,8 +60,10 @@ int main()
         }
 
         std::cout << std::endl;
-        InputState::GetInstance().Clear();
+
+        InputState::GetInstance().ClearInputCode();
         InputState::GetInstance().ReadInput();
+        InputState::GetInstance().ClearInputMessage();
     }
 
     delete levelOverSubscription;

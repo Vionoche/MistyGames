@@ -11,7 +11,7 @@ int main()
     {
         const int processResult = level.Process();
 
-        InputState::GetInstance().Clear();
+        InputState::GetInstance().ClearInputCode();
         InputState::GetInstance().ReadInput();
 
         if (processResult > 0)

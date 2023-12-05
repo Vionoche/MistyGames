@@ -15,15 +15,24 @@ public:
         return instance;
     }
 
-    void ReadInput()
+    void SetInputMessage(const char* inputMessage)
     {
-        std::cout << "Type monster id for attack or type 0 for exit: ";
-        std::cin >> _inputCode;
+        _inputMessage = inputMessage;
     }
 
-    void Clear()
+    void ClearInputMessage()
     {
-        _inputCode = -1;
+        _inputMessage.clear();
+    }
+
+    void ReadInput()
+    {
+        if (!_inputMessage.empty())
+        {
+            std::cout << _inputMessage;
+        }
+
+        std::cin >> _inputCode;
     }
 
     int GetInputCode() const
@@ -31,7 +40,13 @@ public:
         return _inputCode;
     }
 
+    void ClearInputCode()
+    {
+        _inputCode = -1;
+    }
+
 private:
     InputState() = default;
     int _inputCode = -1;
+    std::string _inputMessage;
 };

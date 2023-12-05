@@ -20,7 +20,7 @@ public:
         std::cin >> _inputCode;
     }
 
-    void Clear()
+    void ClearInputCode()
     {
         _inputCode = -1;
     }
