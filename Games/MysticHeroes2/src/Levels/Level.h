@@ -44,4 +44,7 @@ public:
 
         InputState::GetInstance().SetInputMessage("Type monster id for attack or type 0 to exit: ");
     }
+
+protected:
+    int _globalId = 0;
 };
