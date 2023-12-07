@@ -15,21 +15,21 @@ public:
     }
 
     Observable<int> LevelWasChosenObservable;
+    Observable<bool> ExitGameObservable;
 
     void Process() override
     {
         const auto inputCode = InputState::GetInstance().GetInputCode();
 
-        switch (inputCode)
+        if (inputCode == 0)
         {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        default:
-            break;
+            ExitGameObservable.Emit(true);
+            return;
+        }
+
+        if (inputCode >= 1 && inputCode <= 3)
+        {
+            LevelWasChosenObservable.Emit(inputCode);
         }
     }
 
@@ -38,6 +38,7 @@ public:
         std::cout << "1. New Sorpigal" << std::endl;
         std::cout << "2. Goblin Watch Dungeon" << std::endl;
         std::cout << "3. Sunken Temple Dungeon" << std::endl;
+        std::cout << std::endl;
 
         InputState::GetInstance().SetInputMessage("Type menu number to choose a level or type 0 to exit: ");
     }

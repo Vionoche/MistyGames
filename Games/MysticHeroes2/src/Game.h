@@ -7,5 +7,8 @@ public:
     Game(const char* nodeName)
         : Node(nodeName)
     {
+        // TODO: Add Player and add coping\saving Player (through DTO)
+        // TODO: Add Main Menu
+        // TODO: Handle Level switching and pass the Player
     }
 };

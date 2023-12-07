@@ -5,7 +5,7 @@
 #include "../Nodes/ConsolePrinter.h"
 #include "../PlayerCharacters/Player.h"
 
-
+// TODO: to enum
 constexpr int PlayerDied = 1;
 constexpr int PlayerWin = 2;
 

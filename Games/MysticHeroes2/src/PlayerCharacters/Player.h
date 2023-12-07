@@ -2,7 +2,6 @@
 
 #include <cstdint>
 
-#include "../Engine/InputState.h"
 #include "../Engine/Signals.h"
 #include "../Engine/Node.h"
 #include "../Nodes/Attack.h"
@@ -10,6 +9,12 @@
 #include "../Nodes/CharacterName.h"
 #include "../Nodes/ConsolePrinter.h"
 #include "../Nodes/Health.h"
+
+
+struct PlayerModel
+{
+    
+};
 
 
 class Player : public ConsolePrinter
@@ -45,6 +50,10 @@ public:
     {
         return _isDead;
     }
+
+    PlayerModel SavePlayer();
+
+    void LoadPlayer(PlayerModel playerModel);
 
     void Process() override;
 

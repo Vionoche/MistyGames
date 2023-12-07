@@ -1,5 +1,16 @@
+#include "../Engine/InputState.h"
 #include "../Monsters/Monster.h"
 #include "Player.h"
+
+PlayerModel Player::SavePlayer()
+{
+    PlayerModel model;
+    return model;
+}
+
+void Player::LoadPlayer(PlayerModel playerModel)
+{
+}
 
 void Player::Process()
 {
