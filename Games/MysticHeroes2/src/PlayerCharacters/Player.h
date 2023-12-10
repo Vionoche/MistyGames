@@ -35,6 +35,8 @@ public:
 
     void Draw() override;
 
+    ~Player() override;
+
 protected:
     bool _isDead = false;
     Subscription<int>* _healthOverSubscription = nullptr;

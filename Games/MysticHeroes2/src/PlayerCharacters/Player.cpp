@@ -125,6 +125,12 @@ void Player::Draw()
     }
 }
 
+Player::~Player()
+{
+    delete _healthOverSubscription;
+    delete _characterLevelSubscription;
+}
+
 void Player::OnHealthOverHandler(int healthPoints)
 {
     _isDead = true;
