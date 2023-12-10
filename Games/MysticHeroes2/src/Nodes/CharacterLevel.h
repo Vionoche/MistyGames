@@ -28,6 +28,12 @@ public:
         _experiencePoints += experiencePoints;
     }
 
+    void Update(const uint32_t currentLevel, const uint32_t experiencePoints)
+    {
+        _currentLevel = currentLevel;
+        _experiencePoints = experiencePoints;
+    }
+
     void Process() override
     {
         if (_isMaxLevel)
@@ -35,7 +41,7 @@ public:
             return;
         }
 
-        if (_currentLevel == 5)
+        if (_currentLevel >= 5)
         {
             _isMaxLevel = true;
             return;

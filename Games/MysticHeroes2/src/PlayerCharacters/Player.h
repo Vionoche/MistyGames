@@ -3,57 +3,33 @@
 #include <cstdint>
 
 #include "../Engine/Signals.h"
-#include "../Engine/Node.h"
-#include "../Nodes/Attack.h"
-#include "../Nodes/CharacterLevel.h"
-#include "../Nodes/CharacterName.h"
 #include "../Nodes/ConsolePrinter.h"
-#include "../Nodes/Health.h"
 
 
 struct PlayerModel
 {
-    
+    int HealthPoints;
+    float PhysicalResist;
+    float MagicResist;
+    uint32_t PhysicalDamage;
+    uint32_t MagicDamage;
+    uint32_t CurrentLevel;
+    uint32_t ExperiencePoints;
 };
 
 
 class Player : public ConsolePrinter
 {
 public:
-    Player(const char* nodeName)
-        : ConsolePrinter(nodeName)
-    {
-        AddNode(new CharacterName(nodeName));
+    Player(const char* nodeName);
 
-        const auto health = new Health("Health", 200, 0.5f, 0.25f);
-        _healthOverSubscription = health->HealthOverObservable.Subscribe(
-            new Listener(this, &Player::OnHealthOverHandler));
-        AddNode(health);
+    void AddCharacterExperiencePoints(uint32_t experiencePoints) const;
 
-        AddNode(new Attack("Attack", 20, 0));
+    bool GetIsDead() const;
 
-        const auto characterLevel = new CharacterLevel("CharacterLevel");
-        _characterLevelSubscription = characterLevel->LevelUpObservable.Subscribe(
-            new Listener(this, &Player::OnLevelUpHandler));
-        AddNode(characterLevel);
-    }
+    PlayerModel SavePlayer() const;
 
-    void AddCharacterExperiencePoints(const uint32_t experiencePoints) const
-    {
-        if (const auto characterLevel = FindNode<CharacterLevel>(_nodes))
-        {
-            characterLevel->AddExperiencePoints(experiencePoints);
-        }
-    }
-
-    bool GetIsDead() const
-    {
-        return _isDead;
-    }
-
-    PlayerModel SavePlayer();
-
-    void LoadPlayer(PlayerModel playerModel);
+    void LoadPlayer(const PlayerModel& playerModel) const;
 
     void Process() override;
 

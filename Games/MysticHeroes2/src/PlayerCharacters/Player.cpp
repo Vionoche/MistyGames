@@ -1,16 +1,73 @@
 #include "../Engine/InputState.h"
 #include "../Monsters/Monster.h"
+#include "../Nodes/Attack.h"
+#include "../Nodes/CharacterLevel.h"
+#include "../Nodes/CharacterName.h"
+#include "../Nodes/Health.h"
 #include "Player.h"
 
-PlayerModel Player::SavePlayer()
+Player::Player(const char* nodeName): ConsolePrinter(nodeName)
 {
-    PlayerModel model;
+    AddNode(new CharacterName(nodeName));
+
+    const auto health = new Health("Health", 200, 0.5f, 0.25f);
+    _healthOverSubscription = health->HealthOverObservable.Subscribe(
+        new Listener(this, &Player::OnHealthOverHandler));
+    AddNode(health);
+
+    AddNode(new Attack("Attack", 20, 0));
+
+    const auto characterLevel = new CharacterLevel("CharacterLevel");
+    _characterLevelSubscription = characterLevel->LevelUpObservable.Subscribe(
+        new Listener(this, &Player::OnLevelUpHandler));
+    AddNode(characterLevel);
+}
+
+void Player::AddCharacterExperiencePoints(const uint32_t experiencePoints) const
+{
+    if (const auto characterLevel = FindNode<CharacterLevel>(_nodes))
+    {
+        characterLevel->AddExperiencePoints(experiencePoints);
+    }
+}
+
+bool Player::GetIsDead() const
+{
+    return _isDead;
+}
+
+PlayerModel Player::SavePlayer() const
+{
+    const auto health = FindNode<Health>(_nodes);
+    const auto attack = FindNode<Attack>(_nodes);
+    const auto characterLevel = FindNode<CharacterLevel>(_nodes);
+
+    const PlayerModel model
+    {
+        health->GetHealthPoints(),
+        health->GetPhysicalResist(),
+        health->GetMagicResist(),
+        attack->GetPhysicalDamage(),
+        attack->GetMagicDamage(),
+        characterLevel->GetCurrentLevel(),
+        characterLevel->GetExperiencePoints()
+    };
+
     return model;
 }
 
-void Player::LoadPlayer(PlayerModel playerModel)
+void Player::LoadPlayer(const PlayerModel& playerModel) const
 {
+    const auto health = FindNode<Health>(_nodes);
+    const auto attack = FindNode<Attack>(_nodes);
+    const auto characterLevel = FindNode<CharacterLevel>(_nodes);
+
+    health->Update(playerModel.HealthPoints, playerModel.PhysicalResist, playerModel.MagicResist);
+    attack->UpdateDamage(playerModel.PhysicalDamage, playerModel.MagicDamage);
+    characterLevel->Update(playerModel.CurrentLevel, playerModel.ExperiencePoints);
 }
+
+
 
 void Player::Process()
 {

@@ -43,6 +43,13 @@ public:
         _healthPoints = healthPoints;
     }
 
+    void Update(const int healthPoints, const float physicalResist, const float magicResist)
+    {
+        _healthPoints = healthPoints;
+        _physicalResist = physicalResist;
+        _magicResist = magicResist;
+    }
+
     void TakeDamage(const uint32_t takenPhysicalDamage, const uint32_t takenMagicDamage)
     {
         const float physicalCoefficient = 1.0f - _physicalResist;
