@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Engine/InputState.h"
 #include "../Engine/Node.h"
 #include "../Monsters/Monster.h"
 #include "../Nodes/ConsolePrinter.h"

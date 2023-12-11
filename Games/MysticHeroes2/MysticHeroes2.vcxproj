@@ -150,6 +150,7 @@
     <ClInclude Include="src\Engine\Node.h" />
     <ClInclude Include="src\Engine\Signals.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Levels\GameLevel.h" />
     <ClInclude Include="src\Levels\Level.h" />
     <ClInclude Include="src\Levels\Levels.h" />
     <ClInclude Include="src\Levels\MainMenu.h" />

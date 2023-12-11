@@ -1,6 +1,11 @@
 #pragma once
+
+#include <vector>
+
 #include "Engine/Node.h"
 #include "Engine/Signals.h"
+#include "Levels/GameLevel.h"
+
 
 class Game : public Node
 {
@@ -14,9 +19,10 @@ public:
     ~Game() override;
 
 private:
-    Subscription<int>* _gameOverSubscription = nullptr;
+    std::vector<GameLevel> _gameLevels;
     Subscription<int>* _levelWasChosenSubscription = nullptr;
     Subscription<bool>* _exitGameSubscription = nullptr;
+    Subscription<int>* _levelOverSubscription = nullptr;
 
     void OnLevelOverHandler(int levelStatus);
 

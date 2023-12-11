@@ -1,17 +1,21 @@
 #pragma once
 
 #include <iostream>
+#include <utility>
+#include <vector>
 
 #include "../Engine/InputState.h"
 #include "../Engine/Signals.h"
+#include "../Levels/GameLevel.h"
 #include "../Nodes/ConsolePrinter.h"
 
 class MainMenu : public ConsolePrinter
 {
 public:
-    MainMenu(const char* nodeName)
-        : ConsolePrinter(nodeName)
+    MainMenu(std::vector<GameLevel> gameLevels)
+        : ConsolePrinter("Main menu")
     {
+        _gameLevels = std::move(gameLevels);
     }
 
     Observable<int> LevelWasChosenObservable;
@@ -35,11 +39,16 @@ public:
 
     void Draw() override
     {
-        std::cout << "1. New Sorpigal" << std::endl;
-        std::cout << "2. Goblin Watch Dungeon" << std::endl;
-        std::cout << "3. Sunken Temple Dungeon" << std::endl;
+        for (const auto& gameLevel : _gameLevels)
+        {
+            std::cout << gameLevel.LevelName << std::endl;
+        }
+
         std::cout << std::endl;
 
         InputState::GetInstance().SetInputMessage("Type menu number to choose a level or type 0 to exit: ");
     }
+
+private:
+    std::vector<GameLevel> _gameLevels;
 };
