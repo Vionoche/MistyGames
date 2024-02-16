@@ -21,12 +21,12 @@ public:
 private:
     std::vector<GameLevel> _gameLevels;
     Subscription<int>* _levelWasChosenSubscription = nullptr;
-    Subscription<bool>* _exitGameSubscription = nullptr;
     Subscription<int>* _levelOverSubscription = nullptr;
-
-    void OnLevelOverHandler(int levelStatus);
+    Subscription<bool>* _exitGameSubscription = nullptr;
 
     void OnLevelWasChosenHandler(int level);
+
+    void OnLevelOverHandler(int levelStatus);
 
     void OnExitGameHandler(bool isExit);
 };

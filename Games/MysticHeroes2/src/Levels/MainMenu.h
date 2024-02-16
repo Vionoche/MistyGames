@@ -31,9 +31,13 @@ public:
             return;
         }
 
-        if (inputCode >= 1 && inputCode <= 3)
+        for (const auto& gameLevel : _gameLevels)
         {
-            LevelWasChosenObservable.Emit(inputCode);
+            if (gameLevel.LevelId == inputCode)
+            {
+                LevelWasChosenObservable.Emit(inputCode);
+                return;
+            }
         }
     }
 
@@ -41,7 +45,7 @@ public:
     {
         for (const auto& gameLevel : _gameLevels)
         {
-            std::cout << gameLevel.LevelName << std::endl;
+            std::cout << gameLevel.LevelId << ". " << gameLevel.LevelName << std::endl;
         }
 
         std::cout << std::endl;

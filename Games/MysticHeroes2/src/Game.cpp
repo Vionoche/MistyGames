@@ -7,12 +7,12 @@
 Game::Game(const char* nodeName): Node(nodeName)
 {
     // Game Levels
-    _gameLevels.push_back(GameLevel { 1, "1. New Sorpigal" });
-    _gameLevels.push_back(GameLevel { 2, "2. Goblin Watch Dungeon" });
-    _gameLevels.push_back(GameLevel { 3, "3. Sunken Temple Dungeon" });
+    _gameLevels.push_back(GameLevel { 1, "New Sorpigal" });
+    _gameLevels.push_back(GameLevel { 2, "Goblin Watch Dungeon" });
+    _gameLevels.push_back(GameLevel { 3, "Sunken Temple Dungeon" });
 
     // Main Menu
-    const auto mainMenu = new MainMenu();
+    const auto mainMenu = new MainMenu(_gameLevels);
     _levelWasChosenSubscription = mainMenu->LevelWasChosenObservable.Subscribe(
         new Listener(this, &Game::OnLevelWasChosenHandler));
     AddNode(mainMenu);

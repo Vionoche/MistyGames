@@ -7,15 +7,21 @@
 #include "PlayerCharacters/Player.h"
 
 
-int GlobalLevelStatus = 0;
-
 class LevelOverListener : public IObserver<int>
 {
 public:
     void OnNext(const int dataPointer) override
     {
-        GlobalLevelStatus = dataPointer;
+        _levelStatus = dataPointer;
     }
+
+    int GetLevelStatus() const
+    {
+        return _levelStatus;
+    }
+
+private:
+    int _levelStatus = 0;
 };
 
 int main()
@@ -25,7 +31,8 @@ int main()
     Node* game = new Node("Game");
 
     Level* level = new Level("Level");
-    const auto levelOverSubscription = level->LevelOverObservable.Subscribe(new LevelOverListener());
+    const auto levelOverListener = new LevelOverListener();
+    const auto levelOverSubscription = level->LevelOverObservable.Subscribe(levelOverListener);
 
     level->AddNode(new Player("WarriorPlayer"));
     level->AddNode(new Goblin(++globalId));
@@ -36,25 +43,19 @@ int main()
 
     game->AddNode(level);
 
-    bool firstRun = true;
+    game->SendNotification(NotificationType::Draw);
 
     while (InputState::GetInstance().GetInputCode() != 0)
     {
-        if (firstRun)
-        {
-            firstRun = false;
-        }
-        else
-        {
-            game->SendNotification(NotificationType::Process);
-        }
+        game->SendNotification(NotificationType::Process);
 
         NodeDeletingQueue::GetInstance().DeleteNodes();
 
         std::cout << std::endl;
+
         game->SendNotification(NotificationType::Draw);
 
-        if (GlobalLevelStatus != 0)
+        if (levelOverListener->GetLevelStatus() != 0)
         {
             break;
         }
@@ -67,6 +68,7 @@ int main()
     }
 
     delete levelOverSubscription;
+    delete levelOverListener;
     delete game;
 
     std::cout << std::endl;
