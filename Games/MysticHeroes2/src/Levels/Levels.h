@@ -7,7 +7,7 @@ class NewSorpigal : public Level
 {
 public:
     NewSorpigal()
-        : Level("New Sorpigal")
+        : Level(1, "New Sorpigal")
     {
         AddNode(new Goblin(++_globalId));
         AddNode(new Goblin(++_globalId));
@@ -23,7 +23,7 @@ class GoblinWatch : public Level
 {
 public:
     GoblinWatch()
-        : Level("Goblin Watch Dungeon")
+        : Level(2, "Goblin Watch Dungeon")
     {
         AddNode(new Goblin(++_globalId));
         AddNode(new Goblin(++_globalId));
@@ -40,7 +40,7 @@ class SunkenTemple : public Level
 {
 public:
     SunkenTemple()
-        : Level("Sunken Temple Dungeon")
+        : Level(3, "Sunken Temple Dungeon")
     {
         AddNode(new Hobgoblin(++_globalId));
         AddNode(new Hobgoblin(++_globalId));

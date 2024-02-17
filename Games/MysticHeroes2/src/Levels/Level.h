@@ -6,20 +6,30 @@
 #include "../Nodes/ConsolePrinter.h"
 #include "../PlayerCharacters/Player.h"
 
-// TODO: to enum
-constexpr int PlayerDied = 1;
-constexpr int PlayerWin = 2;
+
+enum PlayerStatus
+{
+    PlayerDied,
+    PlayerWin
+};
+
+
+struct LevelOverResult
+{
+    int LevelId;
+    PlayerStatus PlayerStatus;
+};
 
 
 class Level : public ConsolePrinter
 {
 public:
-    Level(const char* nodeName)
-        : ConsolePrinter(nodeName)
+    Level(const int levelId, const char* nodeName)
+        : ConsolePrinter(nodeName), _levelId(levelId)
     {
     }
 
-    Observable<int> LevelOverObservable;
+    Observable<LevelOverResult> LevelOverObservable;
 
     void Draw() override
     {
@@ -29,7 +39,7 @@ public:
             std::cout << std::endl;
             std::cout << "YOU DIED" << std::endl;
             std::cout << std::endl;
-            LevelOverObservable.Emit(PlayerDied);
+            LevelOverObservable.Emit({ _levelId, PlayerStatus::PlayerDied });
             return;
         }
 
@@ -39,13 +49,19 @@ public:
             std::cout << std::endl;
             std::cout << "YOU WIN!" << std::endl;
             std::cout << std::endl;
-            LevelOverObservable.Emit(PlayerWin);
+            LevelOverObservable.Emit({ _levelId, PlayerStatus::PlayerWin });
             return;
         }
 
         InputState::GetInstance().SetInputMessage("Type monster id for attack or type 0 to exit: ");
     }
 
+    int GetLevelId() const
+    {
+        return _levelId;
+    }
+
 protected:
+    int _levelId = 0;
     int _globalId = 0;
 };

@@ -2,9 +2,10 @@
 
 #include <vector>
 
-#include "Engine/Node.h"
-#include "Engine/Signals.h"
+#include "Levels/Level.h"
 #include "Levels/GameLevel.h"
+#include "Engine/Signals.h"
+#include "Engine/Node.h"
 
 
 class Game : public Node
@@ -21,12 +22,12 @@ public:
 private:
     std::vector<GameLevel> _gameLevels;
     Subscription<int>* _levelWasChosenSubscription = nullptr;
-    Subscription<int>* _levelOverSubscription = nullptr;
+    Subscription<LevelOverResult>* _levelOverSubscription = nullptr;
     Subscription<bool>* _exitGameSubscription = nullptr;
 
     void OnLevelWasChosenHandler(int level);
 
-    void OnLevelOverHandler(int levelStatus);
+    void OnLevelOverHandler(LevelOverResult levelOverResult);
 
-    void OnExitGameHandler(bool isExit);
+    void OnExitGameHandler(bool isExit) const;
 };

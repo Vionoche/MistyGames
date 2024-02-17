@@ -37,17 +37,26 @@ Game::~Game()
 }
 
 
-void Game::OnLevelOverHandler(int levelStatus)
+void Game::OnLevelOverHandler(LevelOverResult levelOverResult)
 {
-
+    
 }
 
-void Game::OnLevelWasChosenHandler(int level)
+void Game::OnLevelWasChosenHandler(const int level)
 {
-
+    for (const auto& gameLevel : _gameLevels)
+    {
+        if (gameLevel.LevelId == level)
+        {
+            
+        }
+    }
 }
 
-void Game::OnExitGameHandler(bool isExit)
+void Game::OnExitGameHandler(const bool isExit) const
 {
-
+    if (isExit)
+    {
+        GameOverObservable.Emit(0);
+    }
 }
