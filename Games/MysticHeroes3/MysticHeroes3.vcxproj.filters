@@ -18,5 +18,28 @@
     <ClCompile Include="src\MysticHeroes3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Engine\ShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\texture.vert" />
+    <None Include="shaders\texture.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="sprites\awesomeface.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -133,6 +133,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\MysticHeroes3.cpp" />
+    <ClCompile Include="src\stb_image.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Engine\ShaderProgram.h" />
+    <ClInclude Include="src\stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\texture.frag" />
+    <None Include="shaders\texture.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="sprites\awesomeface.png" />
+    <Image Include="sprites\container.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

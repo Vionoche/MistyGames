@@ -97,5 +97,6 @@
     <None Include="shaders\1.model_loading.vert" />
     <None Include="shaders\1.model_loading.frag" />
     <None Include="README.md" />
+    <None Include="imgui.ini" />
   </ItemGroup>
 </Project>
