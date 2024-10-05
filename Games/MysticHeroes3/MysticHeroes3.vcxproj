@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\ShaderProgram.cpp" />
     <ClCompile Include="src\MysticHeroes3.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
   </ItemGroup>

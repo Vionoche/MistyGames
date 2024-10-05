@@ -145,11 +145,11 @@ int main()
 
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
-    ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
+    ourShader.Use(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
-    glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
+    glUniform1i(glGetUniformLocation(ourShader.ProgramId, "texture1"), 0);
     // or set it via the texture class
-    ourShader.setInt("texture2", 1);
+    ourShader.SetInt("texture2", 1);
 
 
 
@@ -173,7 +173,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         // render container
-        ourShader.use();
+        ourShader.Use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
