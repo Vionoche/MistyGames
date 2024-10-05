@@ -51,14 +51,21 @@ MixedSprite::~MixedSprite()
     glDeleteBuffers(1, &_elementBuffer);
 }
 
-void MixedSprite::Render()
+void MixedSprite::Render(const glm::vec3& position)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture1->TextureId);
+
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, _texture2->TextureId);
 
+    glm::mat4 transform = glm::mat4(1.0f);
+    transform = glm::translate(transform, position);
+    transform = glm::scale(transform, glm::vec3(0.5, 0.5, 0.5));
+
     _shader->Use();
+    _shader->SetMat4("transform", transform);
+
     glBindVertexArray(_vertexArray);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

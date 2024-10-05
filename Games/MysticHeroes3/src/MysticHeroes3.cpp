@@ -16,6 +16,14 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+// Timing
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
+
+// Player
+float speed = 0.5f;
+glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+
 int main()
 {
     // glfw: initialize and configure
@@ -56,16 +64,29 @@ int main()
     
     while (!glfwWindowShouldClose(window))
     {
+        const float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         // input
         // -----
         processInput(window);
+
+        // logic
+        // -----
+        const float speed = 2.0f;
+        const float velocity = speed * deltaTime;
 
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        sprite.Render();
+        sprite.Render(glm::vec3(0.5f, -0.5f, 0.0f));
+        sprite.Render(glm::vec3(-0.5f, 0.5f, 0.0f));
+
+        // player
+        sprite.Render(position);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -81,8 +102,33 @@ int main()
 
 void processInput(GLFWwindow* window)
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
         glfwSetWindowShouldClose(window, true);
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        const float velocity = speed * deltaTime;
+        position += glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        const float velocity = speed * deltaTime;
+        position -= glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        const float velocity = speed * deltaTime;
+        position -= glm::vec3(1.0f, 0.0f, 0.0f) * velocity;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+        const float velocity = speed * deltaTime;
+        position += glm::vec3(1.0f, 0.0f, 0.0f) * velocity;
     }
 }
 

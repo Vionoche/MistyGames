@@ -4,6 +4,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "ShaderProgram.h";
 #include "Texture.h";
@@ -19,7 +22,7 @@ public:
 
     ~MixedSprite();
 
-    void Render();
+    void Render(const glm::vec3& position);
 
 private:
     ShaderProgram* _shader = nullptr;
