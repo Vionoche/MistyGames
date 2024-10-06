@@ -22,7 +22,7 @@ public:
 
     ~MixedSprite();
 
-    void Render(const glm::vec3& position);
+    void Render(const glm::vec3& position, const glm::mat4& projection);
 
 private:
     ShaderProgram* _shader = nullptr;
@@ -32,6 +32,9 @@ private:
     unsigned int _vertexArray;
     unsigned int _vertexBuffer;
     unsigned int _elementBuffer;
+
+    float _spriteWidth = 0.5f;
+    float _spriteHeight = 0.5f;
 
     float _vertices[32] = {
         // positions         // colors           // texture coords

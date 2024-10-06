@@ -13,8 +13,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+float windowWidth = 800.0f;
+float windowHeight = 600.0f;
 
 // Timing
 float deltaTime = 0.0f;
@@ -35,7 +35,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Mystic Heroes 3", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Mystic Heroes 3", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -82,11 +82,27 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        sprite.Render(glm::vec3(0.5f, -0.5f, 0.0f));
-        sprite.Render(glm::vec3(-0.5f, 0.5f, 0.0f));
+        // Projection
+        float globalAspectRatio = windowWidth / windowHeight;
+        float scaleX = 1.0f;
+        float scaleY = 1.0f;
+
+        if (globalAspectRatio > 1)
+        {
+            scaleX = globalAspectRatio;
+        }
+        else
+        {
+            scaleY = 1 / globalAspectRatio;
+        }
+
+        glm::mat4 projection = glm::ortho(-scaleX, scaleX, -scaleY, scaleY, 0.0f, 1.0f);
+
+        sprite.Render(glm::vec3(0.5f, -0.5f, 0.0f), projection);
+        sprite.Render(glm::vec3(-0.5f, 0.5f, 0.0f), projection);
 
         // player
-        sprite.Render(position);
+        sprite.Render(position, projection);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -135,4 +151,6 @@ void processInput(GLFWwindow* window)
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+    windowWidth = static_cast<float>(width);
+    windowHeight = static_cast<float>(height);
 }

@@ -51,7 +51,7 @@ MixedSprite::~MixedSprite()
     glDeleteBuffers(1, &_elementBuffer);
 }
 
-void MixedSprite::Render(const glm::vec3& position)
+void MixedSprite::Render(const glm::vec3& position, const glm::mat4& projection)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture1->TextureId);
@@ -59,11 +59,13 @@ void MixedSprite::Render(const glm::vec3& position)
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, _texture2->TextureId);
 
+    // Transform
     glm::mat4 transform = glm::mat4(1.0f);
     transform = glm::translate(transform, position);
-    transform = glm::scale(transform, glm::vec3(0.5, 0.5, 0.5));
+    transform = glm::scale(transform, glm::vec3(_spriteWidth, _spriteHeight, 1.0));
 
     _shader->Use();
+    _shader->SetMat4("projection", projection);
     _shader->SetMat4("transform", transform);
 
     glBindVertexArray(_vertexArray);
