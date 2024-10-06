@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="src\Engine\MixedSprite.cpp" />
     <ClCompile Include="src\Engine\ShaderProgram.cpp" />
+    <ClCompile Include="src\Engine\Sprite.cpp" />
     <ClCompile Include="src\Engine\Texture.cpp" />
     <ClCompile Include="src\MysticHeroes3.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
@@ -141,16 +142,23 @@
   <ItemGroup>
     <ClInclude Include="src\Engine\MixedSprite.h" />
     <ClInclude Include="src\Engine\ShaderProgram.h" />
+    <ClInclude Include="src\Engine\Sprite.h" />
     <ClInclude Include="src\Engine\Texture.h" />
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\texture.frag" />
-    <None Include="shaders\texture.vert" />
+    <None Include="shaders\mixed_sprite.frag" />
+    <None Include="shaders\sprite.frag" />
+    <None Include="shaders\sprite.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="sprites\animals.png" />
     <Image Include="sprites\awesomeface.png" />
     <Image Include="sprites\container.jpg" />
+    <Image Include="sprites\items.png" />
+    <Image Include="sprites\monsters.png" />
+    <Image Include="sprites\rogues.png" />
+    <Image Include="sprites\tiles.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

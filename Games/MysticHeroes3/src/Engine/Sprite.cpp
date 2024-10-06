@@ -1,19 +1,17 @@
-#include "MixedSprite.h"
+#include "Sprite.h"
 
-MixedSprite::MixedSprite(const char* texturePath1, const char* texturePath2)
+Sprite::Sprite(const char* spriteImage)
 {
     // Shader
     const auto currentPath = std::filesystem::current_path();
     const auto textureVertexPath = currentPath / "shaders" / "sprite.vert";
-    const auto textureFragmentPath = currentPath / "shaders" / "mixed_sprite.frag";
+    const auto textureFragmentPath = currentPath / "shaders" / "sprite.frag";
 
     _shader = new ShaderProgram(textureVertexPath.string().c_str(), textureFragmentPath.string().c_str());
     _shader->Use();
-    _shader->SetInt("texture1", 0);
-    _shader->SetInt("texture2", 1);
+    _shader->SetInt("spriteImage", 0);
 
-    _texture1 = new Texture(texturePath1, false);
-    _texture2 = new Texture(texturePath2, true);
+    _spriteImage = new Texture(spriteImage, true);
 
     // Vertex Array
     glGenVertexArrays(1, &_vertexArray);
@@ -40,24 +38,20 @@ MixedSprite::MixedSprite(const char* texturePath1, const char* texturePath2)
     glEnableVertexAttribArray(2);
 }
 
-MixedSprite::~MixedSprite()
+Sprite::~Sprite()
 {
     delete _shader;
-    delete _texture1;
-    delete _texture2;
+    delete _spriteImage;
 
     glDeleteVertexArrays(1, &_vertexArray);
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_elementBuffer);
 }
 
-void MixedSprite::Render(const glm::vec3& position, const glm::mat4& projection)
+void Sprite::Render(const glm::vec3& position, const glm::mat4& projection)
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture1->TextureId);
-
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, _texture2->TextureId);
+    glBindTexture(GL_TEXTURE_2D, _spriteImage->TextureId);
 
     // Transform
     glm::mat4 transform = glm::mat4(1.0f);

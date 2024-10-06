@@ -8,27 +8,26 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "ShaderProgram.h";
-#include "Texture.h";
+#include "ShaderProgram.h"
+#include "Texture.h"
 
-class MixedSprite
+class Sprite
 {
 public:
-    MixedSprite(const char* texturePath1, const char* texturePath2);
+    Sprite(const char* spriteImage);
 
-    MixedSprite(const MixedSprite& other) = delete;
+    Sprite(const Sprite& other) = delete;
 
-    void operator=(MixedSprite const&) = delete;
+    void operator=(Sprite const&) = delete;
 
-    ~MixedSprite();
+    ~Sprite();
 
     void Render(const glm::vec3& position, const glm::mat4& projection);
 
 private:
     ShaderProgram* _shader = nullptr;
-    Texture* _texture1 = nullptr;
-    Texture* _texture2 = nullptr;
-    
+    Texture* _spriteImage = nullptr;
+
     unsigned int _vertexArray;
     unsigned int _vertexBuffer;
     unsigned int _elementBuffer;
@@ -38,10 +37,10 @@ private:
 
     float _vertices[32] = {
         // positions         // colors           // texture coords
-        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-       -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-       -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   3.0f / 6.0f, 6.0f / 7.0f,  // top right
+        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   3.0f / 6.0f, 5.0f / 7.0f,         // bottom right
+       -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   2.0f / 6.0f, 5.0f / 7.0f,                // bottom left
+       -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   2.0f / 6.0f, 6.0f / 7.0f          // top left 
     };
 
     unsigned int _indices[6] = {

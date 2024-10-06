@@ -7,6 +7,7 @@
 
 #include "Engine/MixedSprite.h"
 #include "Engine/ShaderProgram.h"
+#include "Engine/Sprite.h"
 #include "Engine/Texture.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -24,7 +25,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // Player
-float speed = 0.5f;
+float speed = 1.0f;
 glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 
 int main()
@@ -58,12 +59,16 @@ int main()
 
     stbi_set_flip_vertically_on_load(true);
 
-    // Create Sprite
     const auto currentPath = std::filesystem::current_path();
+
+    // Create Sprite
     const auto containerSpritePath = currentPath / "sprites" / "container.jpg";
     const auto awesomefaceSpritePath = currentPath / "sprites" / "awesomeface.png";
-
     MixedSprite sprite(containerSpritePath.string().c_str(), awesomefaceSpritePath.string().c_str());
+
+    // Create Player
+    const auto roguesPath = currentPath / "sprites" / "rogues.png";
+    Sprite playerSprite(roguesPath.string().c_str());
     
     while (!glfwWindowShouldClose(window))
     {
@@ -99,13 +104,14 @@ int main()
             scaleY = 1 / globalAspectRatio;
         }
 
-        glm::mat4 projection = glm::ortho(-scaleX + deltaX, scaleX + deltaX, -scaleY + deltaY, scaleY + deltaY, 0.0f, 1.0f);
+        float cameraScale = 5.0f;
+        glm::mat4 projection = glm::ortho((-scaleX + deltaX) * cameraScale, (scaleX + deltaX) * cameraScale, (-scaleY + deltaY) * cameraScale, (scaleY + deltaY) * cameraScale, 0.0f, 1.0f);
 
-        sprite.Render(glm::vec3(0.5f, -0.5f, 0.0f), projection);
-        sprite.Render(glm::vec3(-0.5f, 0.5f, 0.0f), projection);
+        sprite.Render(glm::vec3(1.5f, -1.5f, 0.0f), projection);
+        sprite.Render(glm::vec3(-1.5f, 1.5f, 0.0f), projection);
 
         // player
-        sprite.Render(position, projection);
+        playerSprite.Render(position, projection);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

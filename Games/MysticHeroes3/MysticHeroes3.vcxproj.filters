@@ -30,6 +30,9 @@
     <ClCompile Include="src\Engine\MixedSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\ShaderProgram.h">
@@ -44,16 +47,35 @@
     <ClInclude Include="src\Engine\MixedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\texture.vert" />
-    <None Include="shaders\texture.frag" />
+    <None Include="shaders\sprite.vert" />
+    <None Include="shaders\mixed_sprite.frag" />
+    <None Include="shaders\sprite.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="sprites\awesomeface.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="sprites\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\animals.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\items.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\monsters.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\rogues.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\tiles.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
