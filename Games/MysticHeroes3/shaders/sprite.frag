@@ -10,8 +10,10 @@ void main()
 {
 	vec4 texColor = texture(spriteImage, TexCoord);
 
-    if(texColor.a < 0.1)
+    if (texColor.a < 0.1)
+    {
         discard;
+    }
 
     FragColor = texColor;
 }

@@ -11,32 +11,39 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 
-class MixedSprite
+struct Tile
 {
 public:
-    MixedSprite(const char* texturePath1, const char* texturePath2);
+    unsigned int VertexArray;
+    unsigned int VertexBuffer;
+    unsigned int ElementBuffer;
+};
 
-    MixedSprite(const MixedSprite& other) = delete;
+class TileSet
+{
+public:
+    TileSet(const char* tileSetImage, int rows, int cols);
 
-    void operator=(MixedSprite const&) = delete;
+    TileSet(const TileSet& other) = delete;
 
-    ~MixedSprite();
+    void operator=(TileSet const&) = delete;
 
-    void Render(const glm::vec3& position, const glm::mat4& projection);
+    ~TileSet();
+
+    void Render(int row, int col, const glm::vec3& position, const glm::mat4& projection);
 
 private:
     ShaderProgram* _shader = nullptr;
-    Texture* _texture1 = nullptr;
-    Texture* _texture2 = nullptr;
-    
-    unsigned int _vertexArray;
-    unsigned int _vertexBuffer;
-    unsigned int _elementBuffer;
+    Texture* _tilesImage = nullptr;
+    Tile*** _tiles = nullptr;
 
-    float _spriteWidth = 1.0f;
-    float _spriteHeight = 1.0f;
+    int _rows;
+    int _cols;
 
-    float _vertices[32] = {
+    const float _spriteWidth = 1.0f;
+    const float _spriteHeight = 1.0f;
+
+    const float _baseVertices[32] = {
         // positions         // colors           // texture coords
         0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
         0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 0.0f,   1.0f, 0.0f,   // bottom right
@@ -44,7 +51,7 @@ private:
        -0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 0.0f,   0.0f, 1.0f    // top left 
     };
 
-    unsigned int _indices[6] = {
+    const unsigned int _baseIndices[6] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };

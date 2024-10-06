@@ -9,6 +9,7 @@
 #include "Engine/ShaderProgram.h"
 #include "Engine/Sprite.h"
 #include "Engine/Texture.h"
+#include "Engine/TileSet.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -68,7 +69,9 @@ int main()
 
     // Create Player
     const auto roguesPath = currentPath / "sprites" / "rogues.png";
-    Sprite playerSprite(roguesPath.string().c_str());
+
+    //Sprite playerSprite(roguesPath.string().c_str());
+    TileSet roguesTileSet(roguesPath.string().c_str(), 7, 6);
     
     while (!glfwWindowShouldClose(window))
     {
@@ -111,7 +114,7 @@ int main()
         sprite.Render(glm::vec3(-1.5f, 1.5f, 0.0f), projection);
 
         // player
-        playerSprite.Render(position, projection);
+        roguesTileSet.Render(3, 1, position, projection);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

@@ -138,6 +138,7 @@
     <ClCompile Include="src\Engine\Texture.cpp" />
     <ClCompile Include="src\MysticHeroes3.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
+    <ClCompile Include="src\Engine\TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\MixedSprite.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="src\Engine\Sprite.h" />
     <ClInclude Include="src\Engine\Texture.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\Engine\TileSet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\mixed_sprite.frag" />
