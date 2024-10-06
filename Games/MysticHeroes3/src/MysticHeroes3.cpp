@@ -12,9 +12,12 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
-// settings
+// Camera
 float windowWidth = 800.0f;
 float windowHeight = 600.0f;
+float deltaX = 0.0f;
+float deltaY = 0.0f;
+float cameraSpeed = 0.5f;
 
 // Timing
 float deltaTime = 0.0f;
@@ -96,7 +99,7 @@ int main()
             scaleY = 1 / globalAspectRatio;
         }
 
-        glm::mat4 projection = glm::ortho(-scaleX, scaleX, -scaleY, scaleY, 0.0f, 1.0f);
+        glm::mat4 projection = glm::ortho(-scaleX + deltaX, scaleX + deltaX, -scaleY + deltaY, scaleY + deltaY, 0.0f, 1.0f);
 
         sprite.Render(glm::vec3(0.5f, -0.5f, 0.0f), projection);
         sprite.Render(glm::vec3(-0.5f, 0.5f, 0.0f), projection);
@@ -145,6 +148,30 @@ void processInput(GLFWwindow* window)
     {
         const float velocity = speed * deltaTime;
         position += glm::vec3(1.0f, 0.0f, 0.0f) * velocity;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+        const float velocity = cameraSpeed * deltaTime;
+        deltaY += 1.0f * velocity;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+        const float velocity = cameraSpeed * deltaTime;
+        deltaY -= 1.0f * velocity;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    {
+        const float velocity = cameraSpeed * deltaTime;
+        deltaX -= 1.0f * velocity;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    {
+        const float velocity = cameraSpeed * deltaTime;
+        deltaX += 1.0f * velocity;
     }
 }
 
