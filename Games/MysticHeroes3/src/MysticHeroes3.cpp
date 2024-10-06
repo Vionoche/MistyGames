@@ -5,9 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
 
-#include "Engine/MixedSprite.h"
 #include "Engine/ShaderProgram.h"
-#include "Engine/Sprite.h"
 #include "Engine/Texture.h"
 #include "Engine/TileSet.h"
 
@@ -62,15 +60,16 @@ int main()
 
     const auto currentPath = std::filesystem::current_path();
 
-    // Create Sprite
-    const auto containerSpritePath = currentPath / "sprites" / "container.jpg";
-    const auto awesomefaceSpritePath = currentPath / "sprites" / "awesomeface.png";
-    MixedSprite sprite(containerSpritePath.string().c_str(), awesomefaceSpritePath.string().c_str());
+    // Create decorations
+    const auto decorationsPath = currentPath / "sprites" / "tiles.png";
+    TileSet decorationsTileSet(decorationsPath.string().c_str(), 24, 21);
+
+    // Create monsters
+    const auto monstersPath = currentPath / "sprites" / "monsters.png";
+    TileSet monstersTileSet(monstersPath.string().c_str(), 13, 12);
 
     // Create Player
     const auto roguesPath = currentPath / "sprites" / "rogues.png";
-
-    //Sprite playerSprite(roguesPath.string().c_str());
     TileSet roguesTileSet(roguesPath.string().c_str(), 7, 6);
     
     while (!glfwWindowShouldClose(window))
@@ -110,8 +109,31 @@ int main()
         float cameraScale = 5.0f;
         glm::mat4 projection = glm::ortho((-scaleX + deltaX) * cameraScale, (scaleX + deltaX) * cameraScale, (-scaleY + deltaY) * cameraScale, (scaleY + deltaY) * cameraScale, 0.0f, 1.0f);
 
-        sprite.Render(glm::vec3(1.5f, -1.5f, 0.0f), projection);
-        sprite.Render(glm::vec3(-1.5f, 1.5f, 0.0f), projection);
+        // Level
+        for (int i = 0; i < 11; i++)
+        {
+            if (i == 5)
+            {
+                continue;
+            }
+            decorationsTileSet.Render(22, 1, glm::vec3(-5.0f + static_cast<float>(i), 4.0f, 0.0f), projection);
+        }
+        decorationsTileSet.Render(7, 6, glm::vec3(0.0f, 4.0f, 0.0f), projection);
+        for (int i = 0; i < 13; i++)
+        {
+            decorationsTileSet.Render(22, 1, glm::vec3(-6.0f + static_cast<float>(i), -4.0f, 0.0f), projection);
+        }
+        for (int i = 0; i < 8; i++)
+        {
+            decorationsTileSet.Render(22, 0, glm::vec3(-6.0f, 4.0f - static_cast<float>(i), 0.0f), projection);
+            decorationsTileSet.Render(22, 0, glm::vec3(6.0f, 4.0f - static_cast<float>(i), 0.0f), projection);
+        }
+
+        decorationsTileSet.Render(6, 0, glm::vec3(-2.0f, 2.0f, 0.0f), projection);
+
+        monstersTileSet.Render(8, 0, glm::vec3(2.0f, -2.0f, 0.0f), projection);
+        monstersTileSet.Render(8, 0, glm::vec3(4.0f, -1.0f, 0.0f), projection);
+        monstersTileSet.Render(8, 1, glm::vec3(5.0f, 2.0f, 0.0f), projection);
 
         // player
         roguesTileSet.Render(3, 1, position, projection);
