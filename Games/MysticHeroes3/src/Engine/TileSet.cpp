@@ -15,19 +15,12 @@ TileSet::TileSet(const char* tileSetImage, int rows, int cols)
 
     _rows = rows;
     _cols = cols;
-
-    _tiles = new Tile**[_rows];
+    _tiles = std::vector<std::vector<Tile>>(rows, std::vector<Tile>(cols));
 
     for (auto row = 0; row < _rows; row++)
     {
-        _tiles[row] = new Tile*[cols];
-
         for (auto col = 0; col < _cols; col++)
         {
-            Tile* tile = new Tile{ 0, 0, 0 };
-
-            _tiles[row][col] = tile;
-
             float tileVertices[32];
 
             memcpy(tileVertices, _baseVertices, sizeof(float) * 32);
@@ -52,15 +45,15 @@ TileSet::TileSet(const char* tileSetImage, int rows, int cols)
             tileVertices[31] = (textCoordY + 1.0f) / _rows;
 
             // Vertex Array
-            glGenVertexArrays(1, &tile->VertexArray);
-            glBindVertexArray(tile->VertexArray);
+            glGenVertexArrays(1, &_tiles[row][col].VertexArray);
+            glBindVertexArray(_tiles[row][col].VertexArray);
 
-            glGenBuffers(1, &tile->VertexBuffer);
-            glBindBuffer(GL_ARRAY_BUFFER, tile->VertexBuffer);
+            glGenBuffers(1, &_tiles[row][col].VertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, _tiles[row][col].VertexBuffer);
             glBufferData(GL_ARRAY_BUFFER, sizeof(tileVertices), tileVertices, GL_STATIC_DRAW);
 
-            glGenBuffers(1, &tile->ElementBuffer);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tile->ElementBuffer);
+            glGenBuffers(1, &_tiles[row][col].ElementBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _tiles[row][col].ElementBuffer);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_baseIndices), _baseIndices, GL_STATIC_DRAW);
 
             // position attribute
@@ -87,19 +80,11 @@ TileSet::~TileSet()
     {
         for (auto col = 0; col < _cols; col++)
         {
-            Tile* tile = _tiles[row][col];
-
-            glDeleteVertexArrays(1, &tile->VertexArray);
-            glDeleteBuffers(1, &tile->VertexBuffer);
-            glDeleteBuffers(1, &tile->ElementBuffer);
-
-            delete tile;
+            glDeleteVertexArrays(1, &_tiles[row][col].VertexArray);
+            glDeleteBuffers(1, &_tiles[row][col].VertexBuffer);
+            glDeleteBuffers(1, &_tiles[row][col].ElementBuffer);
         }
-
-        delete _tiles[row];
     }
-
-    delete _tiles;
 }
 
 void TileSet::Render(int row, int col, const glm::vec3& position, const glm::mat4& projection)
@@ -116,7 +101,6 @@ void TileSet::Render(int row, int col, const glm::vec3& position, const glm::mat
     _shader->SetMat4("projection", projection);
     _shader->SetMat4("transform", transform);
 
-    Tile* tile = _tiles[row][col];
-    glBindVertexArray(tile->VertexArray);
+    glBindVertexArray(_tiles[row][col].VertexArray);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

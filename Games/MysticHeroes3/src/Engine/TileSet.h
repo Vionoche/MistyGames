@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <vector>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -35,7 +36,7 @@ public:
 private:
     ShaderProgram* _shader = nullptr;
     Texture* _tilesImage = nullptr;
-    Tile*** _tiles = nullptr;
+    std::vector<std::vector<Tile>> _tiles;
 
     int _rows;
     int _cols;
