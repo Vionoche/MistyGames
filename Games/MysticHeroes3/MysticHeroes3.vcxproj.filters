@@ -61,14 +61,9 @@
     <None Include="shaders\sprite.vert" />
     <None Include="shaders\mixed_sprite.frag" />
     <None Include="shaders\sprite.frag" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="sprites\awesomeface.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="sprites\container.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="sprites\animals.png">
       <Filter>Resource Files</Filter>
     </Image>

@@ -149,14 +149,13 @@
     <ClInclude Include="src\Engine\TileSet.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="shaders\mixed_sprite.frag" />
     <None Include="shaders\sprite.frag" />
     <None Include="shaders\sprite.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="sprites\animals.png" />
-    <Image Include="sprites\awesomeface.png" />
-    <Image Include="sprites\container.jpg" />
     <Image Include="sprites\items.png" />
     <Image Include="sprites\monsters.png" />
     <Image Include="sprites\rogues.png" />
