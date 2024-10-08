@@ -15,88 +15,69 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Main.cpp">
+    <ClCompile Include="src\MysticHeroes3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Game.cpp">
+    <ClCompile Include="src\Engine\ShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\GameBuilder.cpp">
+    <ClCompile Include="src\Engine\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\systems\BoundaryBoxSystem.h">
+    <ClCompile Include="src\Engine\MixedSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\systems\PositionSystem.h">
+    <ClCompile Include="src\Engine\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\TileSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\ShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\shader_m.h">
+    <ClInclude Include="src\Engine\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\shader_s.h">
+    <ClInclude Include="src\Engine\MixedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\camera.h">
+    <ClInclude Include="src\Engine\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\GameBuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\World.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\systems\HealthSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\System.h">
+    <ClInclude Include="src\Engine\TileSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="textures\container.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textures\container2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textures\container2_specular.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textures\awesomeface.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\5.1.transform.frag" />
-    <None Include="shaders\5.1.transform.vert" />
-    <None Include="shaders\7.3.camera.frag" />
-    <None Include="shaders\7.3.camera.vert" />
-    <None Include="shaders\1.model_loading.vert" />
-    <None Include="shaders\1.model_loading.frag" />
+    <None Include="shaders\sprite.vert" />
+    <None Include="shaders\mixed_sprite.frag" />
+    <None Include="shaders\sprite.frag" />
     <None Include="README.md" />
-    <None Include="imgui.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="sprites\animals.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\items.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\monsters.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\rogues.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\tiles.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
