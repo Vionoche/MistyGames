@@ -7,13 +7,18 @@
 
 class Dungeon : public Level
 {
-    Dungeon()
+public:
+    Dungeon(TileSet& staticTileSet) : Level(staticTileSet)
     {
-        Rows = 8;
-        Cols = 13;
-
-        StaticLayer = std::vector<std::vector<LevelTile>>(Rows, std::vector<LevelTile>(Cols));
-
-        StaticLayer[0][0] = StoneBrickWallTop;
+        StaticLayer = {
+            {{ StoneBrickWallTop },   { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { Empty },               { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },   { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },   { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },   { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },   { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },   { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },   { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { Empty },               { StoneBrickWallTop }},
+            {{ StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }}
+        };
     }
 };

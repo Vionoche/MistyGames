@@ -142,6 +142,7 @@
     <ClCompile Include="src\Engine\TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Levels\Dungeon.h" />
     <ClInclude Include="src\Systems\Level.h" />
     <ClInclude Include="src\Engine\MixedSprite.h" />
     <ClInclude Include="src\Engine\ShaderProgram.h" />
@@ -149,6 +150,9 @@
     <ClInclude Include="src\Engine\Texture.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Engine\TileSet.h" />
+    <ClInclude Include="src\Systems\MonstersLevelTiles.h" />
+    <ClInclude Include="src\Systems\RoguesLevelTiles.h" />
+    <ClInclude Include="src\Systems\StaticLevelTiles.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

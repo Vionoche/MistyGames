@@ -2,6 +2,14 @@
 
 #include <vector>
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "../Engine/TileSet.h"
+
 enum TileSetType
 {
     None,
@@ -18,12 +26,19 @@ public:
     int Col;
 };
 
+const static LevelTile Empty = { TileSetType::None, 0, 0 };
+
 class Level
 {
 public:
-    int Rows;
-    int Cols;
     std::vector<std::vector<LevelTile>> StaticLayer;
     std::vector<std::vector<LevelTile>> ActorsLayer;
+
+    Level(TileSet& staticTileSet) : _staticTileSet(staticTileSet) {}
+
+    void Render(const glm::mat4& projection);
+
+protected:
+    TileSet& _staticTileSet;
 };
 

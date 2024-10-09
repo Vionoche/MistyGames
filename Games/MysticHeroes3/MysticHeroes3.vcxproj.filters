@@ -62,6 +62,18 @@
     <ClInclude Include="src\Systems\Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Levels\Dungeon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\StaticLevelTiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\RoguesLevelTiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\MonstersLevelTiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\sprite.vert" />
