@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\Level.cpp" />
     <ClCompile Include="src\Engine\MixedSprite.cpp" />
     <ClCompile Include="src\Engine\ShaderProgram.cpp" />
     <ClCompile Include="src\Engine\Sprite.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="src\Engine\TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\Level.h" />
     <ClInclude Include="src\Engine\MixedSprite.h" />
     <ClInclude Include="src\Engine\ShaderProgram.h" />
     <ClInclude Include="src\Engine\Sprite.h" />
