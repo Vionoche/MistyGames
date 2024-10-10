@@ -103,8 +103,36 @@ int main()
 
         // Collect Debug Info
         // ------------------
+
+        // Projection
+        float globalAspectRatio = windowWidth / windowHeight;
+        float scaleX = 1.0f;
+        float scaleY = 1.0f;
+        float cameraScale = 8.0f;
+
+        if (globalAspectRatio > 1)
+        {
+            scaleX = globalAspectRatio;
+        }
+        else
+        {
+            scaleY = 1 / globalAspectRatio;
+        }
+
+        float orthoLeft = (-scaleX + deltaX) * cameraScale;
+        float orthoRight = (scaleX + deltaX) * cameraScale;
+        float orthoTop = (scaleY + deltaY) * cameraScale;
+        float orthoBottom = (-scaleY + deltaY) * cameraScale;
+
+        // Mouse Position
         double mouseX, mouseY;
         glfwGetCursorPos(window, &mouseX, &mouseY);
+
+        float ndcMouseX = (mouseX / windowWidth) * 2.0f - 1.0f;
+        float ndcMouseY = 1.0f - (mouseY / windowHeight) * 2.0f;
+
+        float worldMouseX = (ndcMouseX + 1.0f) / 2.0f * (orthoRight - orthoLeft) + orthoLeft;
+        float worldMouseY = (ndcMouseY + 1.0f) / 2.0f * (orthoTop - orthoBottom) + orthoBottom;
 
         // Render UI
         // ---------
@@ -113,7 +141,7 @@ int main()
         ImGui::NewFrame();
 
         ImGui::Begin("Debug Info");
-        ImGui::Text("Cursor Position: X: %.3f Y: %.3f", mouseX, mouseY);
+        ImGui::Text("Cursor Position: X: %.3f Y: %.3f", worldMouseX, worldMouseY);
         ImGui::End();
 
         ImGui::Render();
@@ -133,21 +161,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Projection
-        float globalAspectRatio = windowWidth / windowHeight;
-        float scaleX = 1.0f;
-        float scaleY = 1.0f;
-
-        if (globalAspectRatio > 1)
-        {
-            scaleX = globalAspectRatio;
-        }
-        else
-        {
-            scaleY = 1 / globalAspectRatio;
-        }
-
-        float cameraScale = 5.0f;
-        glm::mat4 projection = glm::ortho((-scaleX + deltaX) * cameraScale, (scaleX + deltaX) * cameraScale, (-scaleY + deltaY) * cameraScale, (scaleY + deltaY) * cameraScale, 0.0f, 1.0f);
+        glm::mat4 projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, 0.0f, 1.0f);
 
         // Level
         dungeon.Render(projection);
