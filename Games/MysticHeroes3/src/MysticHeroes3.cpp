@@ -32,7 +32,7 @@ float lastFrame = 0.0f;
 
 // Player
 float speed = 1.0f;
-glm::vec3 position = glm::vec3(3.0f, -3.0f, 0.0f);
+glm::vec3 position = glm::vec3(4.0f, -3.0f, 0.0f);
 
 int main()
 {
