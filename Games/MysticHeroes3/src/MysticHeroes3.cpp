@@ -3,6 +3,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 #include <stb_image.h>
 
 #include "Engine/ShaderProgram.h"
@@ -17,8 +20,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
 // Camera
-float windowWidth = 800.0f;
-float windowHeight = 600.0f;
+float windowWidth = 1024.0f;
+float windowHeight = 800.0f;
 float deltaX = 1.0f;
 float deltaY = -0.8f;
 float cameraSpeed = 0.5f;
@@ -37,12 +40,12 @@ int main()
     // ------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Mystic Heroes 3", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1024, 800, "Mystic Heroes 3", nullptr, nullptr);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -50,6 +53,7 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // glad: load all OpenGL function pointers
@@ -60,8 +64,20 @@ int main()
         return -1;
     }
 
+    // Image loading setup
+    // ---------------------------------------
     stbi_set_flip_vertically_on_load(true);
 
+    // Setup Dear ImGui context
+    // ---------------------------------------
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    const char* glsl_version = "#version 130";
+    ImGui_ImplOpenGL3_Init(glsl_version);
+
+    // Setup sprites
     const auto currentPath = std::filesystem::current_path();
 
     // Create decorations
@@ -84,6 +100,23 @@ int main()
         const float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        // Collect Debug Info
+        // ------------------
+        double mouseX, mouseY;
+        glfwGetCursorPos(window, &mouseX, &mouseY);
+
+        // Render UI
+        // ---------
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::Begin("Debug Info");
+        ImGui::Text("Cursor Position: X: %.3f Y: %.3f", mouseX, mouseY);
+        ImGui::End();
+
+        ImGui::Render();
 
         // input
         // -----
@@ -129,13 +162,21 @@ int main()
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    // Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
+    glfwDestroyWindow(window);
     glfwTerminate();
+
     return 0;
 }
 

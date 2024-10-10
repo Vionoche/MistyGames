@@ -155,6 +155,7 @@
     <ClInclude Include="src\Systems\StaticLevelTiles.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="imgui.ini" />
     <None Include="README.md" />
     <None Include="shaders\mixed_sprite.frag" />
     <None Include="shaders\sprite.frag" />

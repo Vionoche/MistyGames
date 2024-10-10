@@ -80,6 +80,7 @@
     <None Include="shaders\mixed_sprite.frag" />
     <None Include="shaders\sprite.frag" />
     <None Include="README.md" />
+    <None Include="imgui.ini" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="sprites\animals.png">
