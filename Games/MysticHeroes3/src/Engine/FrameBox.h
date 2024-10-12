@@ -21,7 +21,7 @@ public:
 
     ~FrameBox();
 
-    void Render(const glm::vec3& position, const glm::mat4& projection);
+    void Render(const glm::vec4& color, const glm::vec3& position, const glm::mat4& projection);
 
 private:
     ShaderProgram* _shader = nullptr;

@@ -16,15 +16,14 @@ FrameBox::~FrameBox()
     delete _shader;
 }
 
-void FrameBox::Render(const glm::vec3& position, const glm::mat4& projection)
+void FrameBox::Render(const glm::vec4& color, const glm::vec3& position, const glm::mat4& projection)
 {
-    glBindTexture(GL_TEXTURE_2D, 0);
-
     glm::mat4 transform = glm::mat4(1.0f);
     transform = glm::translate(transform, position);
     transform = glm::scale(transform, glm::vec3(_width, _height, 1.0));
 
     _shader->Use();
+    _shader->SetVec4("color", color);
     _shader->SetMat4("projection", projection);
     _shader->SetMat4("transform", transform);
 

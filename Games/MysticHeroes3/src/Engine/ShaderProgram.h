@@ -25,6 +25,8 @@ public:
 
     void SetMat4(const std::string& name, const glm::mat4& mat) const;
 
+    void SetVec4(const std::string& name, const glm::vec4& vec) const;
+
 private:
     std::string GetShaderCode(const char* codePath);
 

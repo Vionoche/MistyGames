@@ -172,12 +172,13 @@ int main()
 
         // monsters
         monstersTileSet.Render(8, 0, glm::vec3(2.0f, -2.0f, 0.0f), projection);
+        box.Render(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f), glm::vec3(2.0f, -2.0f, 0.0f), projection);
         monstersTileSet.Render(8, 0, glm::vec3(4.0f, -1.0f, 0.0f), projection);
         monstersTileSet.Render(8, 1, glm::vec3(5.0f, -6.0f, 0.0f), projection);
 
         // player
         roguesTileSet.Render(3, 1, position, projection);
-        box.Render(position, projection);
+        box.Render(glm::vec4(0.0f, 0.5f, 0.2f, 1.0f), position, projection);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
