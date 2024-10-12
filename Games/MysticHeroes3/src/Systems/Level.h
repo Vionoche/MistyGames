@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "../Engine//FrameBox.h"
 #include "../Engine/TileSet.h"
 
 enum TileSetType
@@ -24,6 +25,7 @@ public:
     TileSetType TileSetType;
     int Row;
     int Col;
+    bool IsGround;
 };
 
 const static LevelTile Empty = { TileSetType::None, 0, 0 };
@@ -34,11 +36,13 @@ public:
     std::vector<std::vector<LevelTile>> StaticLayer;
     std::vector<std::vector<LevelTile>> ActorsLayer;
 
-    Level(TileSet& staticTileSet) : _staticTileSet(staticTileSet) {}
+    Level(TileSet& staticTileSet, FrameBox& frameBox)
+        : _staticTileSet(staticTileSet), _frameBox(frameBox) {}
 
-    void Render(const glm::mat4& projection);
+    void Render(const glm::mat4& projection, const bool showGrid);
 
 protected:
     TileSet& _staticTileSet;
+    FrameBox& _frameBox;
 };
 

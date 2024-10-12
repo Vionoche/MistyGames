@@ -1,6 +1,6 @@
 #include "Level.h"
 
-void Level::Render(const glm::mat4& projection)
+void Level::Render(const glm::mat4& projection, const bool showGrid)
 {
     for (auto row = 0; row < StaticLayer.size(); row++)
     {
@@ -17,7 +17,16 @@ void Level::Render(const glm::mat4& projection)
             _staticTileSet.Render(
                 StaticLayer[row][col].Row,
                 StaticLayer[row][col].Col,
-                glm::vec3(x, y, 0.0f), projection);
+                glm::vec3(x, y, 0.0f),
+                projection);
+
+            if (showGrid && StaticLayer[row][col].IsGround)
+            {
+                _frameBox.Render(
+                    glm::vec4(0.0f, 0.5f, 0.2f, 1.0f),
+                    glm::vec3(x, y, 0.0f),
+                    projection);
+            }
         }
     }
 }

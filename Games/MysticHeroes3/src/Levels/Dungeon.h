@@ -2,13 +2,15 @@
 
 #include <vector>
 
+#include "../Engine/FrameBox.h"
 #include "../Systems/Level.h"
 #include "../Systems/StaticLevelTiles.h"
 
 class Dungeon : public Level
 {
 public:
-    Dungeon(TileSet& staticTileSet) : Level(staticTileSet)
+    Dungeon(TileSet& staticTileSet, FrameBox& frameBox)
+        : Level(staticTileSet, frameBox)
     {
         StaticLayer = {
             {{ StoneBrickWallTop },   { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { BlankFloorDarkGrey },  { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallTop }},

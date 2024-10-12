@@ -20,6 +20,9 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
+// Game Settings
+bool ShowGrid = false;
+
 // Camera
 float windowWidth = 1024.0f;
 float windowHeight = 800.0f;
@@ -78,6 +81,9 @@ int main()
     const char* glsl_version = "#version 130";
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+    // Create FrameBox
+    FrameBox frameBox;
+
     // Setup sprites
     const auto currentPath = std::filesystem::current_path();
 
@@ -93,11 +99,8 @@ int main()
     const auto roguesPath = currentPath / "sprites" / "rogues.png";
     TileSet roguesTileSet(roguesPath.string().c_str(), 7, 6);
 
-    // Create FrameBox
-    FrameBox box;
-
     // Create level
-    Dungeon dungeon(decorationsTileSet);
+    Dungeon dungeon(decorationsTileSet, frameBox);
     
     while (!glfwWindowShouldClose(window))
     {
@@ -148,6 +151,13 @@ int main()
         ImGui::Text("Cursor Position: X: %.3f Y: %.3f", worldMouseX, worldMouseY);
         ImGui::End();
 
+        ImGui::Begin("Game Settings");
+        if (ImGui::Button("Toggle Grid"))
+        {
+            ShowGrid = !ShowGrid;
+        }
+        ImGui::End();
+
         ImGui::Render();
 
         // input
@@ -168,17 +178,15 @@ int main()
         glm::mat4 projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, 0.0f, 1.0f);
 
         // Level
-        dungeon.Render(projection);
+        dungeon.Render(projection, ShowGrid);
 
         // monsters
         monstersTileSet.Render(8, 0, glm::vec3(2.0f, -2.0f, 0.0f), projection);
-        box.Render(glm::vec4(1.0f, 0.5f, 0.2f, 1.0f), glm::vec3(2.0f, -2.0f, 0.0f), projection);
         monstersTileSet.Render(8, 0, glm::vec3(4.0f, -1.0f, 0.0f), projection);
         monstersTileSet.Render(8, 1, glm::vec3(5.0f, -6.0f, 0.0f), projection);
 
         // player
         roguesTileSet.Render(3, 1, position, projection);
-        box.Render(glm::vec4(0.0f, 0.5f, 0.2f, 1.0f), position, projection);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
