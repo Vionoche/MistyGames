@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\FrameBox.cpp" />
     <ClCompile Include="src\Systems\Level.cpp" />
     <ClCompile Include="src\Engine\MixedSprite.cpp" />
     <ClCompile Include="src\Engine\ShaderProgram.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="src\Engine\TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\FrameBox.h" />
     <ClInclude Include="src\Levels\Dungeon.h" />
     <ClInclude Include="src\Systems\Level.h" />
     <ClInclude Include="src\Engine\MixedSprite.h" />
@@ -157,6 +159,8 @@
   <ItemGroup>
     <None Include="imgui.ini" />
     <None Include="README.md" />
+    <None Include="shaders\frame_box.frag" />
+    <None Include="shaders\frame_box.vert" />
     <None Include="shaders\mixed_sprite.frag" />
     <None Include="shaders\sprite.frag" />
     <None Include="shaders\sprite.vert" />

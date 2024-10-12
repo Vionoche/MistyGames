@@ -8,6 +8,7 @@
 #include <imgui_impl_opengl3.h>
 #include <stb_image.h>
 
+#include "Engine/FrameBox.h"
 #include "Engine/ShaderProgram.h"
 #include "Engine/Texture.h"
 #include "Engine/TileSet.h"
@@ -92,6 +93,9 @@ int main()
     const auto roguesPath = currentPath / "sprites" / "rogues.png";
     TileSet roguesTileSet(roguesPath.string().c_str(), 7, 6);
 
+    // Create FrameBox
+    FrameBox box;
+
     // Create level
     Dungeon dungeon(decorationsTileSet);
     
@@ -173,6 +177,7 @@ int main()
 
         // player
         roguesTileSet.Render(3, 1, position, projection);
+        box.Render(position, projection);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
