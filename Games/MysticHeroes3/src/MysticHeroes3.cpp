@@ -45,7 +45,6 @@ int main()
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // glfw window creation
     // --------------------
@@ -100,7 +99,7 @@ int main()
     TileSet roguesTileSet(roguesPath.string().c_str(), 7, 6);
 
     // Create level
-    Dungeon dungeon(decorationsTileSet, frameBox);
+    Dungeon level(decorationsTileSet, frameBox);
     
     while (!glfwWindowShouldClose(window))
     {
@@ -141,6 +140,8 @@ int main()
         float worldMouseX = (ndcMouseX + 1.0f) / 2.0f * (orthoRight - orthoLeft) + orthoLeft;
         float worldMouseY = (ndcMouseY + 1.0f) / 2.0f * (orthoTop - orthoBottom) + orthoBottom;
 
+        level.ProcessInput(glm::vec2(worldMouseX, worldMouseX));
+
         // Render UI
         // ---------
         ImGui_ImplOpenGL3_NewFrame();
@@ -178,7 +179,7 @@ int main()
         glm::mat4 projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, 0.0f, 1.0f);
 
         // Level
-        dungeon.Render(projection, ShowGrid);
+        level.Render(projection, ShowGrid);
 
         // monsters
         monstersTileSet.Render(8, 0, glm::vec3(2.0f, -2.0f, 0.0f), projection);

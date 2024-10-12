@@ -22,27 +22,39 @@ enum TileSetType
 struct LevelTile
 {
 public:
-    TileSetType TileSetType;
-    int Row;
-    int Col;
-    bool IsGround;
+    TileSetType TileSetType = None;
+    int Row = 0;
+    int Col = 0;
+    bool IsGround = false;
 };
 
-const static LevelTile Empty = { TileSetType::None, 0, 0 };
+const static LevelTile Empty = { TileSetType::None, 0, 0, false };
+
+struct LevelGridItem
+{
+public:
+    LevelTile LevelTile = Empty;
+    bool IsMouseHovered = false;
+};
+
 
 class Level
 {
 public:
-    std::vector<std::vector<LevelTile>> StaticLayer;
-    std::vector<std::vector<LevelTile>> ActorsLayer;
+    std::vector<std::vector<LevelGridItem>> StaticLayer;
+    std::vector<std::vector<LevelGridItem>> ActorsLayer;
 
     Level(TileSet& staticTileSet, FrameBox& frameBox)
         : _staticTileSet(staticTileSet), _frameBox(frameBox) {}
+
+    void ProcessInput(const glm::vec2 mousePosition);
 
     void Render(const glm::mat4& projection, const bool showGrid);
 
 protected:
     TileSet& _staticTileSet;
     FrameBox& _frameBox;
+
+    std::vector<std::vector<LevelGridItem>> MapToLevelGridItems(const std::vector<std::vector<LevelTile>>& levelTiles);
 };
 

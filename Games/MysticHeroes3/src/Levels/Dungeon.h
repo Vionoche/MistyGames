@@ -12,7 +12,7 @@ public:
     Dungeon(TileSet& staticTileSet, FrameBox& frameBox)
         : Level(staticTileSet, frameBox)
     {
-        StaticLayer = {
+        StaticLayer = MapToLevelGridItems({
             {{ StoneBrickWallTop },   { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { BlankFloorDarkGrey },  { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallTop }},
             {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
             {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { Bone1 },               { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
@@ -21,6 +21,6 @@ public:
             {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { Bone2 },               { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
             {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { FloorStone1 },         { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
             {{ StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }}
-        };
+        });
     }
 };
