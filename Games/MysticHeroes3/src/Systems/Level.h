@@ -56,5 +56,8 @@ protected:
     FrameBox& _frameBox;
 
     std::vector<std::vector<LevelGridItem>> MapToLevelGridItems(const std::vector<std::vector<LevelTile>>& levelTiles);
+
+private:
+    bool IsMouseHover(const int row, const int col, const glm::vec2 mousePosition);
 };
 

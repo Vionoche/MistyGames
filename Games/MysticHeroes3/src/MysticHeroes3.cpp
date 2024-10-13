@@ -140,7 +140,7 @@ int main()
         float worldMouseX = (ndcMouseX + 1.0f) / 2.0f * (orthoRight - orthoLeft) + orthoLeft;
         float worldMouseY = (ndcMouseY + 1.0f) / 2.0f * (orthoTop - orthoBottom) + orthoBottom;
 
-        level.ProcessInput(glm::vec2(worldMouseX, worldMouseX));
+        level.ProcessInput(glm::vec2(worldMouseX, worldMouseY));
 
         // Render UI
         // ---------
