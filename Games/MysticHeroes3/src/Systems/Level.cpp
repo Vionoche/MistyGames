@@ -23,7 +23,7 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
         {
             const StaticObject gridItem = StaticLayer[row][col];
 
-            if (gridItem.LevelTile.TileSetType == TileSetType::None)
+            if (gridItem.LevelTile.Asset == TileSetAsset::None)
             {
                 continue;
             }
@@ -32,8 +32,8 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
             float y = -1.0f * static_cast<float>(row);
 
             _staticTileSet.Render(
-                gridItem.LevelTile.TileSetRow,
-                gridItem.LevelTile.TileSetCol,
+                gridItem.LevelTile.AssetRow,
+                gridItem.LevelTile.AssetCol,
                 glm::vec3(x, y, 0.0f),
                 projection);
 
@@ -54,11 +54,11 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
 
             const StaticObject actor = ActorsLayer[row][col];
 
-            if (actor.LevelTile.TileSetType != TileSetType::None)
+            if (actor.LevelTile.Asset != TileSetAsset::None)
             {
                 _monstersTileSet.Render(
-                    actor.LevelTile.TileSetRow,
-                    actor.LevelTile.TileSetCol,
+                    actor.LevelTile.AssetRow,
+                    actor.LevelTile.AssetCol,
                     glm::vec3(x, y, 0.0f),
                     projection);
             }
@@ -74,7 +74,7 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
     }
 }
 
-std::vector<std::vector<StaticObject>> Level::MapToLevelGridItems(const std::vector<std::vector<LevelTile>>& levelTiles)
+std::vector<std::vector<StaticObject>> Level::MapToLevelGridItems(const std::vector<std::vector<TileSetUnit>>& levelTiles)
 {
     std::vector<std::vector<StaticObject>> gridItems(levelTiles.size(), std::vector<StaticObject>(levelTiles[0].size()));
 
@@ -91,12 +91,12 @@ std::vector<std::vector<StaticObject>> Level::MapToLevelGridItems(const std::vec
 
 std::vector<std::vector<StaticObject>> Level::InitializeActorsLevel()
 {
-    std::vector<std::vector<StaticObject>> gridItems(StaticLayer.size(), std::vector<StaticObject>(StaticLayer[0].size(), { EmptyLevelTile, false }));
+    std::vector<std::vector<StaticObject>> gridItems(StaticLayer.size(), std::vector<StaticObject>(StaticLayer[0].size(), { EmptyTileSetUnit, false }));
 
     return gridItems;
 }
 
-void Level::AddActor(LevelTile actor, int row, int col)
+void Level::AddActor(TileSetUnit actor, int row, int col)
 {
     ActorsLayer[row][col] = { actor, false };
 }

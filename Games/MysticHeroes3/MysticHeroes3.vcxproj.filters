@@ -68,16 +68,19 @@
     <ClInclude Include="src\Levels\Dungeon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\StaticLevelTiles.h">
+    <ClInclude Include="src\Assets\StaticAssetUnits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\RoguesLevelTiles.h">
+    <ClInclude Include="src\Assets\RoguesAssetUnits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Systems\MonstersLevelTiles.h">
+    <ClInclude Include="src\Assets\MonstersAssetUnits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\FrameBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Assets\TileSetUnit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,86 +8,67 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "../Assets/TileSetUnit.h"
 #include "../Engine/FrameBox.h"
 #include "../Engine/TileSet.h"
-
-enum TileSetType
-{
-    None,
-    Static,
-    Rogues,
-    Monsters
-};
-
-struct LevelTile
-{
-public:
-    TileSetType TileSetType = TileSetType::None;
-    int TileSetRow = 0;
-    int TileSetCol = 0;
-    bool IsGround = false;
-};
-
-const static LevelTile EmptyLevelTile = { TileSetType::None, 0, 0, false };
 
 struct StaticObject
 {
 public:
-    LevelTile LevelTile = EmptyLevelTile;
+    TileSetUnit LevelTile = EmptyTileSetUnit;
     bool IsGround = false;
     bool IsMouseHovered = false;
 };
 
-class Actor
-{
-public:
-    LevelTile LevelTile = EmptyLevelTile;
-    bool IsMouseHovered = false;
-    virtual ~Actor() {}
-};
-
-enum MonsterClass
-{
-    Skeleton,
-    SkeletonArcher
-};
-
-class Monster : public Actor
-{
-public:
-    MonsterClass Class = MonsterClass::Skeleton;
-    uint32_t Health = 20;
-    uint32_t Mana = 0;
-    uint32_t ExperienceReward = 10;
-    uint32_t Level = 1;
-    uint32_t BaseDamage = 5;
-};
-
-enum PlayerClass
-{
-    Fighter,
-    Mage,
-    Archer
-};
-
-struct Player : public Actor
-{
-public:
-    PlayerClass Class = PlayerClass::Fighter;
-    uint32_t Health = 100;
-    uint32_t Mana = 0;
-    uint32_t Experience = 0;
-    uint32_t Level = 1;
-    uint32_t BaseDamage = 10;
-};
-
-struct PlayerPosition
-{
-public:
-    int LevelRow = 0;
-    int LevelCol = 0;
-};
-
+//class Actor
+//{
+//public:
+//    LevelTile LevelTile = EmptyLevelTile;
+//    bool IsMouseHovered = false;
+//    virtual ~Actor() {}
+//};
+//
+//enum MonsterClass
+//{
+//    Skeleton,
+//    SkeletonArcher
+//};
+//
+//class Monster : public Actor
+//{
+//public:
+//    MonsterClass Class = MonsterClass::Skeleton;
+//    uint32_t Health = 20;
+//    uint32_t Mana = 0;
+//    uint32_t ExperienceReward = 10;
+//    uint32_t Level = 1;
+//    uint32_t BaseDamage = 5;
+//};
+//
+//enum PlayerClass
+//{
+//    Fighter,
+//    Mage,
+//    Archer
+//};
+//
+//struct Player : public Actor
+//{
+//public:
+//    PlayerClass Class = PlayerClass::Fighter;
+//    uint32_t Health = 100;
+//    uint32_t Mana = 0;
+//    uint32_t Experience = 0;
+//    uint32_t Level = 1;
+//    uint32_t BaseDamage = 10;
+//};
+//
+//struct PlayerPosition
+//{
+//public:
+//    int LevelRow = 0;
+//    int LevelCol = 0;
+//};
 
 class Level
 {
@@ -107,11 +88,11 @@ protected:
     TileSet& _monstersTileSet;
     FrameBox& _frameBox;
 
-    std::vector<std::vector<StaticObject>> MapToLevelGridItems(const std::vector<std::vector<LevelTile>>& levelTiles);
+    std::vector<std::vector<StaticObject>> MapToLevelGridItems(const std::vector<std::vector<TileSetUnit>>& levelTiles);
 
     std::vector<std::vector<StaticObject>> InitializeActorsLevel();
 
-    void AddActor(LevelTile actor, int row, int col);
+    void AddActor(TileSetUnit actor, int row, int col);
 
 private:
     bool IsMouseHover(const int row, const int col, const glm::vec2 mousePosition);

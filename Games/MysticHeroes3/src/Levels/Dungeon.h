@@ -2,10 +2,10 @@
 
 #include <vector>
 
+#include "../Assets/MonstersAssetUnits.h"
+#include "../Assets/StaticAssetUnits.h"
 #include "../Engine/FrameBox.h"
 #include "../Systems/Level.h"
-#include "../Systems/MonstersLevelTiles.h"
-#include "../Systems/StaticLevelTiles.h"
 
 class Dungeon : public Level
 {
