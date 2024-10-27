@@ -23,29 +23,56 @@ struct LevelTile
 {
 public:
     TileSetType TileSetType = None;
-    int Row = 0;
-    int Col = 0;
+    int TileSetRow = 0;
+    int TileSetCol = 0;
     bool IsGround = false;
 };
 
-const static LevelTile Empty = { TileSetType::None, 0, 0, false };
+const static LevelTile EmptyLevelTile = { TileSetType::None, 0, 0, false };
 
-struct LevelGridItem
+struct StaticObject
 {
 public:
-    LevelTile LevelTile = Empty;
+    LevelTile LevelTile = EmptyLevelTile;
+    bool IsGround = false;
     bool IsMouseHovered = false;
 };
 
+enum ActorType
+{
+    Player,
+    Monster
+};
+
+struct Actor
+{
+public:
+    LevelTile LevelTile = EmptyLevelTile;
+    ActorType ActorType = Player;
+    bool IsMouseHovered = false;
+};
+
+struct PlayerPosition
+{
+public:
+    int LevelRow = 0;
+    int LevelCol = 0;
+};
+
+struct Player
+{
+public:
+    PlayerPosition Position = { 0, 0 };
+};
 
 class Level
 {
 public:
-    std::vector<std::vector<LevelGridItem>> StaticLayer;
-    std::vector<std::vector<LevelGridItem>> ActorsLayer;
+    std::vector<std::vector<StaticObject>> StaticLayer;
+    std::vector<std::vector<StaticObject>> ActorsLayer;
 
     Level(TileSet& staticTileSet, TileSet& monstersTileSet, FrameBox& frameBox)
-        : _staticTileSet(staticTileSet),_monstersTileSet(monstersTileSet), _frameBox(frameBox) {}
+        : _staticTileSet(staticTileSet), _monstersTileSet(monstersTileSet), _frameBox(frameBox) {}
 
     void ProcessInput(const glm::vec2 mousePosition);
 
@@ -56,9 +83,9 @@ protected:
     TileSet& _monstersTileSet;
     FrameBox& _frameBox;
 
-    std::vector<std::vector<LevelGridItem>> MapToLevelGridItems(const std::vector<std::vector<LevelTile>>& levelTiles);
+    std::vector<std::vector<StaticObject>> MapToLevelGridItems(const std::vector<std::vector<LevelTile>>& levelTiles);
 
-    std::vector<std::vector<LevelGridItem>> InitializeActorsLevel();
+    std::vector<std::vector<StaticObject>> InitializeActorsLevel();
 
     void AddActor(LevelTile actor, int row, int col);
 
