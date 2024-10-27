@@ -38,19 +38,12 @@ public:
     bool IsMouseHovered = false;
 };
 
-enum ActorType
-{
-    Monster,
-    Chest,
-    Artifact
-};
-
-struct Actor
+class Actor
 {
 public:
     LevelTile LevelTile = EmptyLevelTile;
-    ActorType ActorType = ActorType::Monster;
     bool IsMouseHovered = false;
+    virtual ~Actor() {}
 };
 
 enum MonsterClass
@@ -59,21 +52,15 @@ enum MonsterClass
     SkeletonArcher
 };
 
-struct Monster
+class Monster : public Actor
 {
 public:
     MonsterClass Class = MonsterClass::Skeleton;
     uint32_t Health = 20;
+    uint32_t Mana = 0;
     uint32_t ExperienceReward = 10;
     uint32_t Level = 1;
     uint32_t BaseDamage = 5;
-};
-
-struct ActorPosition
-{
-public:
-    int LevelRow = 0;
-    int LevelCol = 0;
 };
 
 enum PlayerClass
@@ -83,15 +70,24 @@ enum PlayerClass
     Archer
 };
 
-struct Player
+struct Player : public Actor
 {
 public:
     PlayerClass Class = PlayerClass::Fighter;
     uint32_t Health = 100;
+    uint32_t Mana = 0;
     uint32_t Experience = 0;
     uint32_t Level = 1;
     uint32_t BaseDamage = 10;
 };
+
+struct PlayerPosition
+{
+public:
+    int LevelRow = 0;
+    int LevelCol = 0;
+};
+
 
 class Level
 {
