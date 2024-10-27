@@ -22,7 +22,7 @@ enum TileSetType
 struct LevelTile
 {
 public:
-    TileSetType TileSetType = None;
+    TileSetType TileSetType = TileSetType::None;
     int TileSetRow = 0;
     int TileSetCol = 0;
     bool IsGround = false;
@@ -40,29 +40,57 @@ public:
 
 enum ActorType
 {
-    Player,
-    Monster
+    Monster,
+    Chest,
+    Artifact
 };
 
 struct Actor
 {
 public:
     LevelTile LevelTile = EmptyLevelTile;
-    ActorType ActorType = Player;
+    ActorType ActorType = ActorType::Monster;
     bool IsMouseHovered = false;
 };
 
-struct PlayerPosition
+enum MonsterClass
+{
+    Skeleton,
+    SkeletonArcher
+};
+
+struct Monster
+{
+public:
+    MonsterClass Class = MonsterClass::Skeleton;
+    uint32_t Health = 20;
+    uint32_t ExperienceReward = 10;
+    uint32_t Level = 1;
+    uint32_t BaseDamage = 5;
+};
+
+struct ActorPosition
 {
 public:
     int LevelRow = 0;
     int LevelCol = 0;
 };
 
+enum PlayerClass
+{
+    Fighter,
+    Mage,
+    Archer
+};
+
 struct Player
 {
 public:
-    PlayerPosition Position = { 0, 0 };
+    PlayerClass Class = PlayerClass::Fighter;
+    uint32_t Health = 100;
+    uint32_t Experience = 0;
+    uint32_t Level = 1;
+    uint32_t BaseDamage = 10;
 };
 
 class Level
