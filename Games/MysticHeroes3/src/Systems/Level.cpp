@@ -78,6 +78,18 @@ std::vector<std::vector<LevelGridItem>> Level::MapToLevelGridItems(const std::ve
     return gridItems;
 }
 
+std::vector<std::vector<LevelGridItem>> Level::InitializeActorsLevel()
+{
+    std::vector<std::vector<LevelGridItem>> gridItems(StaticLayer.size(), std::vector<LevelGridItem>(StaticLayer[0].size(), { Empty, false }));
+
+    return gridItems;
+}
+
+void Level::AddActor(LevelTile actor, int row, int col)
+{
+    ActorsLayer[row][col] = { actor, false };
+}
+
 bool Level::IsMouseHover(const int row, const int col, const glm::vec2 mousePosition)
 {
     float x = static_cast<float>(col);

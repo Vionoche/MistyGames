@@ -99,7 +99,7 @@ int main()
     TileSet roguesTileSet(roguesPath.string().c_str(), 7, 6);
 
     // Create level
-    Dungeon level(decorationsTileSet, frameBox);
+    Dungeon level(decorationsTileSet, monstersTileSet, frameBox);
     
     while (!glfwWindowShouldClose(window))
     {
@@ -180,11 +180,6 @@ int main()
 
         // Level
         level.Render(projection, ShowGrid);
-
-        // monsters
-        monstersTileSet.Render(8, 0, glm::vec3(2.0f, -2.0f, 0.0f), projection);
-        monstersTileSet.Render(8, 0, glm::vec3(4.0f, -1.0f, 0.0f), projection);
-        monstersTileSet.Render(8, 1, glm::vec3(5.0f, -6.0f, 0.0f), projection);
 
         // player
         roguesTileSet.Render(3, 1, position, projection);

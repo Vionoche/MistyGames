@@ -4,13 +4,14 @@
 
 #include "../Engine/FrameBox.h"
 #include "../Systems/Level.h"
+#include "../Systems/MonstersLevelTiles.h"
 #include "../Systems/StaticLevelTiles.h"
 
 class Dungeon : public Level
 {
 public:
-    Dungeon(TileSet& staticTileSet, FrameBox& frameBox)
-        : Level(staticTileSet, frameBox)
+    Dungeon(TileSet& staticTileSet, TileSet& monstersTileSet, FrameBox& frameBox)
+        : Level(staticTileSet, monstersTileSet, frameBox)
     {
         StaticLayer = MapToLevelGridItems({
             {{ StoneBrickWallTop },   { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { BlankFloorDarkGrey },  { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallTop }},
@@ -22,5 +23,10 @@ public:
             {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { FloorStone1 },         { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
             {{ StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }}
         });
+
+        ActorsLayer = InitializeActorsLevel();
+        AddActor(Skeleton, 1, 4);
+        AddActor(Skeleton, 2, 2);
+        AddActor(SkeletonArcher, 6, 6);
     }
 };

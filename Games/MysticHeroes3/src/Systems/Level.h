@@ -44,8 +44,8 @@ public:
     std::vector<std::vector<LevelGridItem>> StaticLayer;
     std::vector<std::vector<LevelGridItem>> ActorsLayer;
 
-    Level(TileSet& staticTileSet, FrameBox& frameBox)
-        : _staticTileSet(staticTileSet), _frameBox(frameBox) {}
+    Level(TileSet& staticTileSet, TileSet& monstersTileSet, FrameBox& frameBox)
+        : _staticTileSet(staticTileSet),_monstersTileSet(monstersTileSet), _frameBox(frameBox) {}
 
     void ProcessInput(const glm::vec2 mousePosition);
 
@@ -53,9 +53,14 @@ public:
 
 protected:
     TileSet& _staticTileSet;
+    TileSet& _monstersTileSet;
     FrameBox& _frameBox;
 
     std::vector<std::vector<LevelGridItem>> MapToLevelGridItems(const std::vector<std::vector<LevelTile>>& levelTiles);
+
+    std::vector<std::vector<LevelGridItem>> InitializeActorsLevel();
+
+    void AddActor(LevelTile actor, int row, int col);
 
 private:
     bool IsMouseHover(const int row, const int col, const glm::vec2 mousePosition);
