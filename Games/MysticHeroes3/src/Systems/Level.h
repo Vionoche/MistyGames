@@ -11,78 +11,8 @@
 #include "../Assets/TileSetUnit.h"
 #include "../Engine/FrameBox.h"
 #include "../Engine/TileSet.h"
-
-struct StaticObject
-{
-public:
-    StaticObject(TileSetUnit tileSetUnit)
-    {
-        TileSetUnit = tileSetUnit;
-        IsGround = false;
-        IsMouseHovered = false;
-    }
-
-    StaticObject(TileSetUnit tileSetUnit, bool isGround)
-    {
-        TileSetUnit = tileSetUnit;
-        IsGround = isGround;
-        IsMouseHovered = false;
-    }
-
-    TileSetUnit TileSetUnit;
-    bool IsGround;
-    bool IsMouseHovered;
-};
-
-//class Actor
-//{
-//public:
-//    LevelTile LevelTile = EmptyLevelTile;
-//    bool IsMouseHovered = false;
-//    virtual ~Actor() {}
-//};
-//
-//enum MonsterClass
-//{
-//    Skeleton,
-//    SkeletonArcher
-//};
-//
-//class Monster : public Actor
-//{
-//public:
-//    MonsterClass Class = MonsterClass::Skeleton;
-//    uint32_t Health = 20;
-//    uint32_t Mana = 0;
-//    uint32_t ExperienceReward = 10;
-//    uint32_t Level = 1;
-//    uint32_t BaseDamage = 5;
-//};
-//
-//enum PlayerClass
-//{
-//    Fighter,
-//    Mage,
-//    Archer
-//};
-//
-//struct Player : public Actor
-//{
-//public:
-//    PlayerClass Class = PlayerClass::Fighter;
-//    uint32_t Health = 100;
-//    uint32_t Mana = 0;
-//    uint32_t Experience = 0;
-//    uint32_t Level = 1;
-//    uint32_t BaseDamage = 10;
-//};
-//
-//struct PlayerPosition
-//{
-//public:
-//    int LevelRow = 0;
-//    int LevelCol = 0;
-//};
+#include "Actor.h"
+#include "StaticObject.h"
 
 class Level
 {

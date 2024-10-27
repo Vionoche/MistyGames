@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "../Actors/MonsterFactory.h"
 #include "../Assets/MonstersAssetUnits.h"
 #include "../Assets/StaticAssetUnits.h"
 #include "../Engine/FrameBox.h"
@@ -28,5 +29,23 @@ public:
         AddActor(Skeleton, 1, 4);
         AddActor(Skeleton, 2, 2);
         AddActor(SkeletonArcher, 6, 6);
+
+        //Actor actor = MonsterFactory::CreateSkeleton();
+        Actor* actorPtr = new Monster;
+        actorPtr->TileSetUnit = Skeleton;
+
+        int xxx = 0;
+
+        if (Monster* monster = dynamic_cast<Monster*>(actorPtr))
+        {
+            xxx++;
+        }
+
+        if (Player* player = dynamic_cast<Player*>(actorPtr))
+        {
+            xxx++;
+        }
+
+        delete actorPtr;
     }
 };

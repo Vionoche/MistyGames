@@ -143,9 +143,12 @@
     <ClCompile Include="src\Engine\TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Actors\MonsterFactory.h" />
+    <ClInclude Include="src\Actors\PlayerFactory.h" />
     <ClInclude Include="src\Assets\TileSetUnit.h" />
     <ClInclude Include="src\Engine\FrameBox.h" />
     <ClInclude Include="src\Levels\Dungeon.h" />
+    <ClInclude Include="src\Systems\Actor.h" />
     <ClInclude Include="src\Systems\Level.h" />
     <ClInclude Include="src\Engine\MixedSprite.h" />
     <ClInclude Include="src\Engine\ShaderProgram.h" />
@@ -156,6 +159,7 @@
     <ClInclude Include="src\Assets\MonstersAssetUnits.h" />
     <ClInclude Include="src\Assets\RoguesAssetUnits.h" />
     <ClInclude Include="src\Assets\StaticAssetUnits.h" />
+    <ClInclude Include="src\Systems\StaticObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
