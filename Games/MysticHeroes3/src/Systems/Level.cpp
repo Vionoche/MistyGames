@@ -51,6 +51,17 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
                 hoveredX = x;
                 hoveredY = y;
             }
+
+            const LevelGridItem actor = ActorsLayer[row][col];
+
+            if (actor.LevelTile.TileSetType != TileSetType::None)
+            {
+                _monstersTileSet.Render(
+                    actor.LevelTile.Row,
+                    actor.LevelTile.Col,
+                    glm::vec3(x, y, 0.0f),
+                    projection);
+            }
         }
     }
 
