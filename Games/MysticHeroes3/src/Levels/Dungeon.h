@@ -13,18 +13,18 @@ public:
     Dungeon(TileSet& staticTileSet, TileSet& monstersTileSet, FrameBox& frameBox)
         : Level(staticTileSet, monstersTileSet, frameBox)
     {
-        StaticLayer = MapToLevelGridItems({
-            {{ StoneBrickWallTop },   { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { BlankFloorDarkGrey },  { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallTop }},
-            {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
-            {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { Bone1 },               { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
-            {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { FloorStone2 },         { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
-            {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { FloorStone2 },         { BlankFloorDarkGrey },  { StoneBrickWallTop }},
-            {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { Bone2 },               { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
-            {{ StoneBrickWallTop },   { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { FloorStone1 },         { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { BlankFloorDarkGrey },  { StoneBrickWallTop }},
-            {{ StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }, { StoneBrickWallSide1 }}
-        });
+        StaticLayer = {
+            {{ StoneBrickWallTop },    { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { BlankFloorDarkGrey, true },  { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },    { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },    { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { Bone1, true },               { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },    { BlankFloorDarkGrey, true },  { FloorStone2, true },         { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },    { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { FloorStone2, true },         { BlankFloorDarkGrey, true },  { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },    { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { Bone2, true },               { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { StoneBrickWallTop }},
+            {{ StoneBrickWallTop },    { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { FloorStone1, true },         { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { BlankFloorDarkGrey, true },  { StoneBrickWallTop }},
+            {{ StoneBrickWallSide1 },  { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 }}
+        };
 
-        ActorsLayer = InitializeActorsLevel();
+        ActorsLayer = InitializeActorsLayer();
         AddActor(Skeleton, 1, 4);
         AddActor(Skeleton, 2, 2);
         AddActor(SkeletonArcher, 6, 6);

@@ -15,9 +15,23 @@
 struct StaticObject
 {
 public:
-    TileSetUnit LevelTile = EmptyTileSetUnit;
-    bool IsGround = false;
-    bool IsMouseHovered = false;
+    StaticObject(TileSetUnit tileSetUnit)
+    {
+        TileSetUnit = tileSetUnit;
+        IsGround = false;
+        IsMouseHovered = false;
+    }
+
+    StaticObject(TileSetUnit tileSetUnit, bool isGround)
+    {
+        TileSetUnit = tileSetUnit;
+        IsGround = isGround;
+        IsMouseHovered = false;
+    }
+
+    TileSetUnit TileSetUnit;
+    bool IsGround;
+    bool IsMouseHovered;
 };
 
 //class Actor
@@ -88,9 +102,7 @@ protected:
     TileSet& _monstersTileSet;
     FrameBox& _frameBox;
 
-    std::vector<std::vector<StaticObject>> MapToLevelGridItems(const std::vector<std::vector<TileSetUnit>>& levelTiles);
-
-    std::vector<std::vector<StaticObject>> InitializeActorsLevel();
+    std::vector<std::vector<StaticObject>> InitializeActorsLayer();
 
     void AddActor(TileSetUnit actor, int row, int col);
 

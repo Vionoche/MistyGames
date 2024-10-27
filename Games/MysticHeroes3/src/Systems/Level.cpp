@@ -23,7 +23,7 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
         {
             const StaticObject gridItem = StaticLayer[row][col];
 
-            if (gridItem.LevelTile.Asset == TileSetAsset::None)
+            if (gridItem.TileSetUnit.Asset == TileSetAsset::None)
             {
                 continue;
             }
@@ -32,12 +32,12 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
             float y = -1.0f * static_cast<float>(row);
 
             _staticTileSet.Render(
-                gridItem.LevelTile.AssetRow,
-                gridItem.LevelTile.AssetCol,
+                gridItem.TileSetUnit.AssetRow,
+                gridItem.TileSetUnit.AssetCol,
                 glm::vec3(x, y, 0.0f),
                 projection);
 
-            if (showGrid && gridItem.LevelTile.IsGround && !gridItem.IsMouseHovered)
+            if (showGrid && gridItem.IsGround && !gridItem.IsMouseHovered)
             {
                 _frameBox.Render(
                     glm::vec4(0.0f, 0.5f, 0.2f, 1.0f),
@@ -45,7 +45,7 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
                     projection);
             }
 
-            if (gridItem.LevelTile.IsGround && gridItem.IsMouseHovered)
+            if (gridItem.IsGround && gridItem.IsMouseHovered)
             {
                 isHovered = true;
                 hoveredX = x;
@@ -54,11 +54,11 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
 
             const StaticObject actor = ActorsLayer[row][col];
 
-            if (actor.LevelTile.Asset != TileSetAsset::None)
+            if (actor.TileSetUnit.Asset != TileSetAsset::None)
             {
                 _monstersTileSet.Render(
-                    actor.LevelTile.AssetRow,
-                    actor.LevelTile.AssetCol,
+                    actor.TileSetUnit.AssetRow,
+                    actor.TileSetUnit.AssetCol,
                     glm::vec3(x, y, 0.0f),
                     projection);
             }
@@ -74,22 +74,7 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
     }
 }
 
-std::vector<std::vector<StaticObject>> Level::MapToLevelGridItems(const std::vector<std::vector<TileSetUnit>>& levelTiles)
-{
-    std::vector<std::vector<StaticObject>> gridItems(levelTiles.size(), std::vector<StaticObject>(levelTiles[0].size()));
-
-    for (auto row = 0; row < gridItems.size(); row++)
-    {
-        for (auto col = 0; col < gridItems[0].size(); col++)
-        {
-            gridItems[row][col] = { levelTiles[row][col] };
-        }
-    }
-
-    return gridItems;
-}
-
-std::vector<std::vector<StaticObject>> Level::InitializeActorsLevel()
+std::vector<std::vector<StaticObject>> Level::InitializeActorsLayer()
 {
     std::vector<std::vector<StaticObject>> gridItems(StaticLayer.size(), std::vector<StaticObject>(StaticLayer[0].size(), { EmptyTileSetUnit, false }));
 
