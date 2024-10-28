@@ -20,8 +20,20 @@ public:
     std::vector<std::vector<StaticObject>> StaticLayer;
     std::vector<std::vector<Actor*>> ActorsLayer;
 
-    Level(TileSet& staticTileSet, TileSet& monstersTileSet, FrameBox& frameBox)
-        : _staticTileSet(staticTileSet), _monstersTileSet(monstersTileSet), _frameBox(frameBox) {}
+    Level(
+        TileSet& staticTileSet,
+        TileSet& monstersTileSet,
+        TileSet& roguesTileSet,
+        FrameBox& frameBox,
+        Player& player
+    ) :
+        _staticTileSet(staticTileSet),
+        _monstersTileSet(monstersTileSet),
+        _roguesTileSet(roguesTileSet),
+        _frameBox(frameBox),
+        _player(player)
+    {
+    }
 
     void ProcessInput(const glm::vec2 mousePosition);
 
@@ -32,7 +44,9 @@ public:
 protected:
     TileSet& _staticTileSet;
     TileSet& _monstersTileSet;
+    TileSet& _roguesTileSet;
     FrameBox& _frameBox;
+    Player& _player;
 
     std::vector<std::vector<Actor*>> InitializeActorsLayer();
 

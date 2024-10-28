@@ -1,14 +1,12 @@
 #pragma once
 
-#include <iostream>
-
 #include "../Assets/MonstersAssetUnits.h"
 #include "../Systems/Actor.h"
 
 class MonsterFactory
 {
 public:
-    static Actor* CreateSkeleton()
+    static Monster* CreateSkeleton()
     {
         Monster* m = new Monster();
         m->TileSetUnit = Skeleton;
@@ -17,7 +15,7 @@ public:
         return m;
     }
 
-    static Actor* CreateSkeletonArcher()
+    static Monster* CreateSkeletonArcher()
     {
         Monster* m = new Monster();
         m->TileSetUnit = Skeleton;

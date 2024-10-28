@@ -52,18 +52,30 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
                 hoveredY = y;
             }
 
-            const Actor* actor = ActorsLayer[row][col];
+            Actor* actor = ActorsLayer[row][col];
 
             if (actor == nullptr || actor->TileSetUnit.Asset == TileSetAsset::None)
             {
                 continue;
             }
 
-            _monstersTileSet.Render(
-                actor->TileSetUnit.AssetRow,
-                actor->TileSetUnit.AssetCol,
-                glm::vec3(x, y, 0.0f),
-                projection);
+            if (Monster* monster = dynamic_cast<Monster*>(actor))
+            {
+                _monstersTileSet.Render(
+                    monster->TileSetUnit.AssetRow,
+                    monster->TileSetUnit.AssetCol,
+                    glm::vec3(x, y, 0.0f),
+                    projection);
+            }
+
+            if (Player* player = dynamic_cast<Player*>(actor))
+            {
+                _roguesTileSet.Render(
+                    player->TileSetUnit.AssetRow,
+                    player->TileSetUnit.AssetCol,
+                    glm::vec3(x, y, 0.0f),
+                    projection);
+            }
         }
     }
 
@@ -83,7 +95,8 @@ Level::~Level()
         for (auto col = 0; col < ActorsLayer[0].size(); col++)
         {
             Actor* actor = ActorsLayer[row][col];
-            if (actor != nullptr)
+            Player* player = dynamic_cast<Player*>(actor);
+            if (actor != nullptr && player == nullptr)
             {
                 delete actor;
                 ActorsLayer[row][col] = nullptr;

@@ -8,6 +8,8 @@
 #include <imgui_impl_opengl3.h>
 #include <stb_image.h>
 
+#include "Actors/PlayerFactory.h"
+
 #include "Engine/FrameBox.h"
 #include "Engine/ShaderProgram.h"
 #include "Engine/Texture.h"
@@ -98,8 +100,11 @@ int main()
     const auto roguesPath = currentPath / "sprites" / "rogues.png";
     TileSet roguesTileSet(roguesPath.string().c_str(), 7, 6);
 
+    // Create player
+    Player* player = PlayerFactory::CreateMage();
+
     // Create level
-    Dungeon level(decorationsTileSet, monstersTileSet, frameBox);
+    Level* level = new Dungeon(decorationsTileSet, monstersTileSet, roguesTileSet, frameBox, *player);
     
     while (!glfwWindowShouldClose(window))
     {
@@ -134,13 +139,13 @@ int main()
         double mouseX, mouseY;
         glfwGetCursorPos(window, &mouseX, &mouseY);
 
-        float ndcMouseX = (mouseX / windowWidth) * 2.0f - 1.0f;
-        float ndcMouseY = 1.0f - (mouseY / windowHeight) * 2.0f;
+        float ndcMouseX = (static_cast<float>(mouseX) / windowWidth) * 2.0f - 1.0f;
+        float ndcMouseY = 1.0f - (static_cast<float>(mouseY) / windowHeight) * 2.0f;
 
         float worldMouseX = (ndcMouseX + 1.0f) / 2.0f * (orthoRight - orthoLeft) + orthoLeft;
         float worldMouseY = (ndcMouseY + 1.0f) / 2.0f * (orthoTop - orthoBottom) + orthoBottom;
 
-        level.ProcessInput(glm::vec2(worldMouseX, worldMouseY));
+        level->ProcessInput(glm::vec2(worldMouseX, worldMouseY));
 
         // Render UI
         // ---------
@@ -179,10 +184,7 @@ int main()
         glm::mat4 projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, 0.0f, 1.0f);
 
         // Level
-        level.Render(projection, ShowGrid);
-
-        // player
-        roguesTileSet.Render(3, 1, position, projection);
+        level->Render(projection, ShowGrid);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -190,6 +192,9 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    delete level;
+    delete player;
 
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();

@@ -11,8 +11,19 @@
 class Dungeon : public Level
 {
 public:
-    Dungeon(TileSet& staticTileSet, TileSet& monstersTileSet, FrameBox& frameBox)
-        : Level(staticTileSet, monstersTileSet, frameBox)
+    Dungeon(
+        TileSet& staticTileSet,
+        TileSet& monstersTileSet,
+        TileSet& roguesTileSet,
+        FrameBox& frameBox,
+        Player& player
+    ) : Level(
+        staticTileSet,
+        monstersTileSet,
+        roguesTileSet,
+        frameBox,
+        player
+    )
     {
         StaticLayer = {
             {{ StoneBrickWallTop },    { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { BlankFloorDarkGrey, true },  { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallSide1 },       { StoneBrickWallTop }},
@@ -29,5 +40,7 @@ public:
         AddActor(MonsterFactory::CreateSkeleton(), 1, 4);
         AddActor(MonsterFactory::CreateSkeleton(), 2, 2);
         AddActor(MonsterFactory::CreateSkeletonArcher(), 6, 6);
+
+        AddActor(&player, 4, 1);
     }
 };
