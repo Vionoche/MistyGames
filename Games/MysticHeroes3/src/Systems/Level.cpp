@@ -52,16 +52,18 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
                 hoveredY = y;
             }
 
-            const StaticObject actor = ActorsLayer[row][col];
+            const Actor* actor = ActorsLayer[row][col];
 
-            if (actor.TileSetUnit.Asset != TileSetAsset::None)
+            if (actor == nullptr || actor->TileSetUnit.Asset == TileSetAsset::None)
             {
-                _monstersTileSet.Render(
-                    actor.TileSetUnit.AssetRow,
-                    actor.TileSetUnit.AssetCol,
-                    glm::vec3(x, y, 0.0f),
-                    projection);
+                continue;
             }
+
+            _monstersTileSet.Render(
+                actor->TileSetUnit.AssetRow,
+                actor->TileSetUnit.AssetCol,
+                glm::vec3(x, y, 0.0f),
+                projection);
         }
     }
 
@@ -74,16 +76,31 @@ void Level::Render(const glm::mat4& projection, const bool showGrid)
     }
 }
 
-std::vector<std::vector<StaticObject>> Level::InitializeActorsLayer()
+Level::~Level()
 {
-    std::vector<std::vector<StaticObject>> gridItems(StaticLayer.size(), std::vector<StaticObject>(StaticLayer[0].size(), { EmptyTileSetUnit, false }));
-
-    return gridItems;
+    for (auto row = 0; row < ActorsLayer.size(); row++)
+    {
+        for (auto col = 0; col < ActorsLayer[0].size(); col++)
+        {
+            Actor* actor = ActorsLayer[row][col];
+            if (actor != nullptr)
+            {
+                delete actor;
+                ActorsLayer[row][col] = nullptr;
+            }
+        }
+    }
 }
 
-void Level::AddActor(TileSetUnit actor, int row, int col)
+std::vector<std::vector<Actor*>> Level::InitializeActorsLayer()
 {
-    ActorsLayer[row][col] = { actor, false };
+    std::vector<std::vector<Actor*>> actorLayer(StaticLayer.size(), std::vector<Actor*>(StaticLayer[0].size(), nullptr));
+    return actorLayer;
+}
+
+void Level::AddActor(Actor* actor, int row, int col)
+{
+    ActorsLayer[row][col] = actor;
 }
 
 bool Level::IsMouseHover(const int row, const int col, const glm::vec2 mousePosition)

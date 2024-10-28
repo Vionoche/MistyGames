@@ -8,21 +8,21 @@
 class MonsterFactory
 {
 public:
-    static Actor CreateSkeleton()
+    static Actor* CreateSkeleton()
     {
-        Monster m;
-        m.TileSetUnit = Skeleton;
-        m.Class = MonsterClass::SkeletonClass;
+        Monster* m = new Monster();
+        m->TileSetUnit = Skeleton;
+        m->Class = MonsterClass::SkeletonClass;
 
-        return std::move(m);
+        return m;
     }
 
-    static Actor CreateSkeletonArcher()
+    static Actor* CreateSkeletonArcher()
     {
-        Monster m;
-        m.TileSetUnit = Skeleton;
-        m.Class = MonsterClass::SkeletonArcherClass;
+        Monster* m = new Monster();
+        m->TileSetUnit = Skeleton;
+        m->Class = MonsterClass::SkeletonArcherClass;
 
-        return std::move(m);
+        return m;
     }
 };
