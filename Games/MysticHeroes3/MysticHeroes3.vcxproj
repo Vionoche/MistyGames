@@ -132,6 +132,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\FrameBox.cpp" />
+    <ClCompile Include="src\Systems\Level.cpp" />
     <ClCompile Include="src\Engine\MixedSprite.cpp" />
     <ClCompile Include="src\Engine\ShaderProgram.cpp" />
     <ClCompile Include="src\Engine\Sprite.cpp" />
@@ -141,15 +143,29 @@
     <ClCompile Include="src\Engine\TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Actors\MonsterFactory.h" />
+    <ClInclude Include="src\Actors\PlayerFactory.h" />
+    <ClInclude Include="src\Assets\TileSetUnit.h" />
+    <ClInclude Include="src\Engine\FrameBox.h" />
+    <ClInclude Include="src\Levels\Dungeon.h" />
+    <ClInclude Include="src\Systems\Actor.h" />
+    <ClInclude Include="src\Systems\Level.h" />
     <ClInclude Include="src\Engine\MixedSprite.h" />
     <ClInclude Include="src\Engine\ShaderProgram.h" />
     <ClInclude Include="src\Engine\Sprite.h" />
     <ClInclude Include="src\Engine\Texture.h" />
     <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\Engine\TileSet.h" />
+    <ClInclude Include="src\Assets\MonstersAssetUnits.h" />
+    <ClInclude Include="src\Assets\RoguesAssetUnits.h" />
+    <ClInclude Include="src\Assets\StaticAssetUnits.h" />
+    <ClInclude Include="src\Systems\StaticObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="imgui.ini" />
     <None Include="README.md" />
+    <None Include="shaders\frame_box.frag" />
+    <None Include="shaders\frame_box.vert" />
     <None Include="shaders\mixed_sprite.frag" />
     <None Include="shaders\sprite.frag" />
     <None Include="shaders\sprite.vert" />

@@ -92,7 +92,6 @@ void TileSet::Render(int row, int col, const glm::vec3& position, const glm::mat
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _tilesImage->TextureId);
 
-    // Transform
     glm::mat4 transform = glm::mat4(1.0f);
     transform = glm::translate(transform, position);
     transform = glm::scale(transform, glm::vec3(_spriteWidth, _spriteHeight, 1.0));
