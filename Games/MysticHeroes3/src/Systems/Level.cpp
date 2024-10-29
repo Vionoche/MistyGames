@@ -1,12 +1,85 @@
 #include "Level.h"
 
-void Level::ProcessInput(const glm::vec2 mousePosition)
+void Level::ProcessInput(const glm::vec2 mousePosition, const bool leftMouseButtonClicked)
 {
+    Position clickedPosition = { -1, -1 };
+
     for (auto row = 0; row < StaticLayer.size(); row++)
     {
         for (auto col = 0; col < StaticLayer[0].size(); col++)
         {
             StaticLayer[row][col].IsMouseHovered = IsMouseHover(row, col, mousePosition);
+
+            if (leftMouseButtonClicked && StaticLayer[row][col].IsMouseHovered)
+            {
+                clickedPosition = { row, col };
+            }
+        }
+    }
+
+    if (leftMouseButtonClicked)
+    {
+        // Check ground
+        if (!StaticLayer[clickedPosition.Row][clickedPosition.Col].IsGround)
+        {
+            return;
+        }
+        
+        // Check player is nearby
+        std::vector<Position> roundPositions;
+        roundPositions.reserve(9);
+        int counter = 0;
+        int rowIndex = _playerPosition.Row - 1;
+        int colIndex = _playerPosition.Col - 1;
+
+        for (int index = 0; index < 9; index++)
+        {
+            bool isRowIndexInBoundary = rowIndex >= 0 && rowIndex < StaticLayer.size();
+            bool isColIndexInBoundary = colIndex >= 0 && colIndex < StaticLayer[0].size();
+            bool isPlayer = rowIndex == _playerPosition.Row && colIndex == _playerPosition.Col;
+
+            if (isRowIndexInBoundary && isColIndexInBoundary && !isPlayer)
+            {
+                roundPositions.push_back({ rowIndex, colIndex });
+            }
+
+            colIndex++;
+
+            if (colIndex > _playerPosition.Col + 1)
+            {
+                rowIndex++;
+                colIndex = _playerPosition.Col - 1;
+            }
+        }
+
+        bool isNearby = false;
+        for (const auto& position : roundPositions)
+        {
+            if (clickedPosition.Row == position.Row && clickedPosition.Col == position.Col)
+            {
+                isNearby = true;
+                break;
+            }
+        }
+
+        if (!isNearby)
+        {
+            return;
+        }
+
+        // Check actors layer
+        Actor* actor = ActorsLayer[clickedPosition.Row][clickedPosition.Col];
+        if (actor != nullptr)
+        {
+            return;
+        }
+
+        // Move player if possible
+        Actor* playerActor = ActorsLayer[_playerPosition.Row][_playerPosition.Col];
+        Player* player = dynamic_cast<Player*>(playerActor);
+        if (player != nullptr)
+        {
+            SetPlayer(player, clickedPosition.Row, clickedPosition.Col);
         }
     }
 }

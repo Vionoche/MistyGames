@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ranges>
 #include <stdexcept>
 #include <vector>
 
@@ -15,7 +16,7 @@
 #include "Actor.h"
 #include "StaticObject.h"
 
-struct PlayerPosition
+struct Position
 {
 public:
     int Row;
@@ -43,7 +44,7 @@ public:
     {
     }
 
-    void ProcessInput(const glm::vec2 mousePosition);
+    void ProcessInput(const glm::vec2 mousePosition, const bool leftMouseButtonClicked);
 
     void Render(const glm::mat4& projection, const bool showGrid);
 
@@ -55,7 +56,7 @@ protected:
     TileSet& _roguesTileSet;
     FrameBox& _frameBox;
     Player& _player;
-    PlayerPosition _playerPosition = { 0, 0 };
+    Position _playerPosition = { 0, 0 };
 
     std::vector<std::vector<Actor*>> InitializeActorsLayer();
 

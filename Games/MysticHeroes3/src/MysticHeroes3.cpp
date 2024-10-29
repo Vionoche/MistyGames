@@ -19,7 +19,10 @@
 
 #include "Levels/Dungeon.h"
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 void processInput(GLFWwindow* window);
 
 // Game Settings
@@ -36,9 +39,8 @@ float cameraSpeed = 0.5f;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-// Player
-float speed = 1.0f;
-glm::vec3 position = glm::vec3(4.0f, -3.0f, 0.0f);
+// Mouse
+bool leftMouseButtonClicked = false;
 
 int main()
 {
@@ -59,7 +61,9 @@ int main()
     }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    glfwSetMouseButtonCallback(window, mouseButtonCallback);
+    glfwSetKeyCallback(window, keyCallback);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -145,7 +149,8 @@ int main()
         float worldMouseX = (ndcMouseX + 1.0f) / 2.0f * (orthoRight - orthoLeft) + orthoLeft;
         float worldMouseY = (ndcMouseY + 1.0f) / 2.0f * (orthoTop - orthoBottom) + orthoBottom;
 
-        level->ProcessInput(glm::vec2(worldMouseX, worldMouseY));
+        level->ProcessInput(glm::vec2(worldMouseX, worldMouseY), leftMouseButtonClicked);
+        leftMouseButtonClicked = false;
 
         // Render UI
         // ---------
@@ -216,30 +221,6 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
     }
 
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-    {
-        const float velocity = speed * deltaTime;
-        position += glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
-    }
-
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-    {
-        const float velocity = speed * deltaTime;
-        position -= glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
-    }
-
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    {
-        const float velocity = speed * deltaTime;
-        position -= glm::vec3(1.0f, 0.0f, 0.0f) * velocity;
-    }
-
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    {
-        const float velocity = speed * deltaTime;
-        position += glm::vec3(1.0f, 0.0f, 0.0f) * velocity;
-    }
-
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
         const float velocity = cameraSpeed * deltaTime;
@@ -265,9 +246,28 @@ void processInput(GLFWwindow* window)
     }
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
     windowWidth = static_cast<float>(width);
     windowHeight = static_cast<float>(height);
+}
+
+void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        leftMouseButtonClicked = true;
+    }
+}
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    /*if (action == GLFW_PRESS)
+    {
+        if (key == GLFW_KEY_W)
+        {
+            // One step
+        }
+    }*/
 }
