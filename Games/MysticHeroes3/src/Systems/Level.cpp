@@ -116,6 +116,26 @@ void Level::AddActor(Actor* actor, int row, int col)
     ActorsLayer[row][col] = actor;
 }
 
+void Level::SetPlayer(Player* player, int row, int col)
+{
+    Actor* currentPlayerActor = ActorsLayer[row][col];
+
+    if (currentPlayerActor != nullptr)
+    {
+        throw std::domain_error("Cannot place the player on the level grid. The place is not available.");
+    }
+
+    Actor* lastPlayerActor = ActorsLayer[_playerPosition.Row][_playerPosition.Col];
+    Player* lastPlayer = dynamic_cast<Player*>(lastPlayerActor);
+    if (lastPlayer != nullptr)
+    {
+        ActorsLayer[_playerPosition.Row][_playerPosition.Col] = nullptr;
+    }
+
+    _playerPosition = { row, col };
+    ActorsLayer[_playerPosition.Row][_playerPosition.Col] = player;
+}
+
 bool Level::IsMouseHover(const int row, const int col, const glm::vec2 mousePosition)
 {
     float x = static_cast<float>(col);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <vector>
 
 #include <glad/glad.h>
@@ -13,6 +14,13 @@
 #include "../Engine/TileSet.h"
 #include "Actor.h"
 #include "StaticObject.h"
+
+struct PlayerPosition
+{
+public:
+    int Row;
+    int Col;
+};
 
 class Level
 {
@@ -47,10 +55,13 @@ protected:
     TileSet& _roguesTileSet;
     FrameBox& _frameBox;
     Player& _player;
+    PlayerPosition _playerPosition = { 0, 0 };
 
     std::vector<std::vector<Actor*>> InitializeActorsLayer();
 
     void AddActor(Actor* actor, int row, int col);
+
+    void SetPlayer(Player* player, int row, int col);
 
 private:
     bool IsMouseHover(const int row, const int col, const glm::vec2 mousePosition);

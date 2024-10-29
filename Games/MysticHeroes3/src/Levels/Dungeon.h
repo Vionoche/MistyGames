@@ -37,10 +37,11 @@ public:
         };
 
         ActorsLayer = InitializeActorsLayer();
+
         AddActor(MonsterFactory::CreateSkeleton(), 1, 4);
         AddActor(MonsterFactory::CreateSkeleton(), 2, 2);
         AddActor(MonsterFactory::CreateSkeletonArcher(), 6, 6);
 
-        AddActor(&player, 4, 1);
+        SetPlayer(&player, 4, 2);
     }
 };
